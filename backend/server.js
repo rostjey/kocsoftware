@@ -1,0 +1,41 @@
+const express = require("express");
+const mongoose = require("mongoose");
+const cors = require("cors");
+const cookieParser = require("cookie-parser");
+const authRoutes = require("./routes/auth.routes");
+const productRoutes = require("./routes/product.routes");
+const cafeRoutes = require("./routes/cafe.routes");
+const uploadRoutes = require("./routes/upload.routes");
+const errorMiddleware = require("./middlewares/error.middleware");
+require("dotenv").config();
+
+const app = express();
+
+app.use(cors({
+    origin: "http://localhost:3000", // Sabit string olsun
+    credentials: true
+}));
+app.use(express.json());
+app.use(cookieParser());
+
+app.get("/", (req, res) => {
+    res.send("Backend çalışıyor!");
+});
+
+const PORT = process.env.PORT || 5050;
+
+app.use("/api/admin", authRoutes);
+app.use("/api/products", productRoutes);
+app.use("/api/cafe", cafeRoutes);
+app.use("/api/upload", uploadRoutes);
+
+app.use(errorMiddleware); // Global error handler en sonda olmalı
+
+mongoose.connect(process.env.MONGO_URI)
+    .then(() => {
+        console.log("MongoDB bağlantısı başarılı");
+        app.listen(PORT, () => {
+            console.log(`Server ${PORT} portunda çalışıyor`);
+        });
+    })
+    .catch((err) => console.log("Mongo bağlantı hatası:", err));
