@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect } from "react";
+import { useState, useRef, useEffect, useMemo, createRef } from "react";
 import { useRouter } from "next/navigation";
 import { FaInstagram } from "react-icons/fa";
 
@@ -30,11 +30,21 @@ export default function CafeClient({ name, logo, instagram, products }: Props) {
   const categories = [...new Set(products.filter(p => !p.featured).map(p => p.category))];
 
   // ✅ Ref'leri tanımla
-  const categoryRefs: { [key: string]: React.RefObject<HTMLDivElement> } = {};
-  categories.forEach((cat) => {
-    categoryRefs[cat] = categoryRefs[cat] || useRef(null);
-  });
+  //const categoryRefs: { [key: string]: React.RefObject<HTMLDivElement> } = {};
+  //categories.forEach((cat) => {
+    //categoryRefs[cat] = categoryRefs[cat] || useRef(null);
+  //});
 
+
+  // ✅ Kategoriler için ref'leri oluştur düzenlenmiş hali ✅
+  const categoryRefs = useMemo(() => {
+    const refs: Record<string, React.RefObject<HTMLDivElement | null>> = {};
+    categories.forEach((cat) => {
+      refs[cat] = createRef<HTMLDivElement>();
+    });
+    return refs;
+  }, [categories]);
+  
   // ✅ Scroll kontrolü
   useEffect(() => {
     const handleScroll = () => {
