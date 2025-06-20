@@ -2,22 +2,25 @@
 
 import { Trash, Pencil, Star } from "lucide-react";
 
+type Product = {
+  _id: string;
+  name: string;
+  description: string;
+  price: number;
+  category: string;
+  featured: boolean;
+};
+
+
 export default function ProductCard({
   product,
   onDelete,
   onEdit,
   onToggleFeatured,
 }: {
-  product: {
-    _id: string;
-    name: string;
-    description: string;
-    price: number;
-    category: string;
-    featured: boolean;
-  };
+  product: Product;
   onDelete: (id: string) => void;
-  onEdit: (product: any) => void;
+  onEdit: (product: Product) => void;
   onToggleFeatured: (id: string) => void;
 }) {
   return (
