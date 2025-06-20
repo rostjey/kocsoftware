@@ -1,4 +1,5 @@
 export const dynamic = "force-dynamic"; // ISR devre dışı — her seferinde taze veri
+import Image from "next/image";
 
 interface Product {
   _id: string;
@@ -35,9 +36,11 @@ export default async function FeaturedPage({ params }: { params: Promise<{ slug:
     <div className="bg-black text-white min-h-screen p-4 max-w-4xl mx-auto">
       <div className="text-center mb-8">
         {cafe.logo && (
-          <img
+          <Image
             src={cafe.logo}
             alt="Logo"
+            width={128}
+            height={128}
             className="mx-auto w-32 h-32 object-contain"
           />
         )}
