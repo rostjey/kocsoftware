@@ -18,7 +18,7 @@ export default function Home() {
         {/* İşletmeniz var mı? */}
         <Link href="/admin/login">
           <button className="bg-gray-700 hover:bg-gray-500 text-white py-3 px-6 rounded-md text-sm transition flex-col flex items-center duration-300">
-            Dashboard'unuzu görüntüleyin
+            Dashboar&apos;dunuzu görüntüleyin
           </button>
         </Link>
       </div>

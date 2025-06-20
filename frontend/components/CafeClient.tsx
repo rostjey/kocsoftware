@@ -28,7 +28,13 @@ export default function CafeClient({ name, logo, instagram, products }: Props) {
   const [scrollVisible, setScrollVisible] = useState(false);
 
   // ✅ Kategorileri oluştur
-  const categories = [...new Set(products.filter(p => !p.featured).map(p => p.category))];
+  //const categories = [...new Set(products.filter(p => !p.featured).map(p => p.category))];
+
+  // Kategorileri oluştur düzenlenmiş hali ✅
+  const categories = useMemo(() => {
+    return [...new Set(products.filter(p => !p.featured).map(p => p.category))];
+  }, [products]);
+  
 
   // ✅ Ref'leri tanımla
   //const categoryRefs: { [key: string]: React.RefObject<HTMLDivElement> } = {};
