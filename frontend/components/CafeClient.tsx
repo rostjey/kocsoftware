@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useRef, useEffect, useMemo, createRef } from "react";
+import { useState, useEffect, useMemo, createRef } from "react";
 import { useRouter } from "next/navigation";
 import { FaInstagram } from "react-icons/fa";
 
