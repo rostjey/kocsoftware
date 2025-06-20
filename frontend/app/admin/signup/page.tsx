@@ -5,6 +5,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import React from "react";
+import { AxiosError } from "axios";
 
 export default function SignupPage() {
   const [name, setName] = useState("");
@@ -33,8 +34,14 @@ export default function SignupPage() {
       if (res.status === 201) {
         router.push(`/admin/dashboard/${res.data.cafeSlug}`);
       }
-    } catch (err: any) {
-      setError(err.response?.data?.message || "Bir hata oluştu.");
+    } catch (err) {
+      if (err instanceof AxiosError) {
+        setError(err.response?.data?.message || "Bir hata oluştu.");
+      } else if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("Beklenmeyen bir hata oluştu.");
+      }
     }
   };
 
