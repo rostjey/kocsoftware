@@ -8,7 +8,7 @@ const api = axios.create({
 const refreshAccessToken = async () => {
   try {
     // 🔥 BURADA api DEĞİL, axios kullandık
-    const res = await axios.post(
+    await axios.post(
       `${process.env.NEXT_PUBLIC_API_URL}/api/admin/refresh-token`,
       {},
       { withCredentials: true }

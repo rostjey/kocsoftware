@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import axios from "axios";
+import Image from "next/image";
 
 interface Product {
   _id: string;
@@ -23,7 +24,7 @@ export default function EditProductForm({ product, onClose, onUpdated }: Props) 
   const [price, setPrice] = useState(product?.price || 0);
   const [description, setDescription] = useState(product?.description || "");
   const [category, setCategory] = useState(product?.category || "");
-  const [image, setImage] = useState(product?.image || "");
+  const [image] = useState(product?.image || "");
   const [imageFile, setImageFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
   const [error, setError] = useState("");
@@ -118,9 +119,11 @@ export default function EditProductForm({ product, onClose, onUpdated }: Props) 
 
         {/* Görsel önizleme */}
         {(imageFile || image) && (
-          <img
+          <Image
             src={imageFile ? URL.createObjectURL(imageFile) : image}
             alt="Ürün görseli"
+            width={400}
+            height={200}
             className="w-full h-32 object-contain rounded bg-white"
           />
         )}

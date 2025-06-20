@@ -3,6 +3,7 @@
 import { useState, useEffect, useMemo, createRef } from "react";
 import { useRouter } from "next/navigation";
 import { FaInstagram } from "react-icons/fa";
+import Image from "next/image";
 
 interface Product {
   _id: string;
@@ -73,7 +74,7 @@ export default function CafeClient({ name, logo, instagram, products }: Props) {
       {/* Başlık ve Logo */}
       <div className="text-center mb-4">
         {logo ? (
-          <img src={logo} alt="Logo" className="mx-auto w-32 h-32 object-contain rounded-full border border-white" />
+          <Image src={logo} alt="Logo" width={128} height={128} className="mx-auto w-32 h-32 object-contain rounded-full border border-white" />
         ) : (
           <div className="text-gray-500">Logo bulunamadı</div>
         )}
@@ -127,9 +128,11 @@ export default function CafeClient({ name, logo, instagram, products }: Props) {
               .map((p) => (
                 <div key={p._id} className="border p-4 rounded bg-gray-900">
                   {p.image && (
-                    <img
+                    <Image
                       src={p.image}
                       alt={p.name}
+                      width={400}
+                      height={200}
                       className="w-full h-40 object-contain mb-2 rounded bg-white"
                     />
                   )}

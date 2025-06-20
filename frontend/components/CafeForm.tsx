@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import axios from "axios";
+import Image from "next/image";
 
 interface Props {
   initialName?: string;
@@ -91,9 +92,11 @@ export default function CafeForm({
       />
 
       {logo && (
-        <img
+        <Image
           src={logo}
           alt="Logo"
+          width={96}
+          height={96}
           className="w-24 h-24 object-contain mx-auto bg-white rounded"
         />
       )}
