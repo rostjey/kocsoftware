@@ -4,7 +4,7 @@ import { CafeData } from "@/types";
 
 // ✅ Slugları çekip statik sayfalar üret
 export async function generateStaticParams() {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/cafe/all-cafe-slugs`);
+  const res = await fetch(`${process.env.API_URL}/api/cafe/all-cafe-slugs`);
   const slugs: { slug: string }[] = await res.json();
   return slugs;
 }
