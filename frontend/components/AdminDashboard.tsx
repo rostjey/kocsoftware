@@ -55,13 +55,17 @@ export default function AdminDashboard({
 
   return (
     <div className="p-4 text-white max-w-4xl mx-auto space-y-6">
-      <CafeForm
-        initialName={cafe.name}
-        initialLogo={cafe.logo}
-        initialInstagram={cafe.instagram}
-        slug={slug}
-        onSaved={fetchCafeAndProducts}
-      />
+      {cafe.name && (
+         <CafeForm
+            key={cafe.name + cafe.logo + cafe.instagram} // Bileşeni sıfırdan mount etmeye zorlar
+            initialName={cafe.name}
+            initialLogo={cafe.logo}
+            initialInstagram={cafe.instagram}
+            slug={slug}
+           onSaved={fetchCafeAndProducts}
+          />
+        )}
+
 
       <CreateProductForm onCreated={fetchCafeAndProducts} />
 
