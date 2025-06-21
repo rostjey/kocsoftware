@@ -1,6 +1,7 @@
 import Link from "next/link";
 
 export default function Home() {
+  console.log("API URL:", process.env.NEXT_PUBLIC_API_URL);
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-black via-gray-900 to-gray-800 text-white px-4">
       <h1 className="text-5xl font-extrabold text-orange-400 mb-10">
