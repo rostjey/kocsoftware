@@ -27,7 +27,7 @@ export default function CafeForm({
       setLogo(cafe.logo || "");
       setInstagram(cafe.instagram || "");
     }
-  }, []); // <- boş dependency listesi sadece ilk yüklemede çalışır
+  }, [cafe]); // <- boş dependency listesi sadece ilk yüklemede çalışır
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
