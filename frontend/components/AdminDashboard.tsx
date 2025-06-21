@@ -11,11 +11,10 @@ import { Cafe, Product } from "@/types";
 export default function AdminDashboard({
   slug,
   initialCafe,
-  initialProducts = [],
 }: {
   slug: string;
   initialCafe: Cafe;
-  initialProducts?: Product[];
+  initialProducts?: Product[]; // Bu props artık kullanılmıyor
 }) {
   const [cafe, setCafe] = useState<Cafe>(initialCafe);
   const [products, setProducts] = useState<Product[]>([]);
@@ -35,8 +34,9 @@ export default function AdminDashboard({
   };
 
   useEffect(() => {
-    fetchCafeAndProducts(); // ✅ sadece client'ta çağrılıyor
-  }, []);
+    fetchCafeAndProducts();   // düzenlendi 
+  }, [fetchCafeAndProducts]);
+  
 
   const handleDelete = async (id: string) => {
     await api.delete(`/api/products/${id}`);
@@ -58,7 +58,7 @@ export default function AdminDashboard({
         onSaved={fetchCafeAndProducts}
       />
 
-      <CreateProductForm slug={slug} onCreated={fetchCafeAndProducts} />
+      <CreateProductForm onCreated={fetchCafeAndProducts} />
 
       <h2 className="text-xl font-bold">Ürünler</h2>
 

@@ -3,7 +3,7 @@
 import { useState } from "react";
 import axios from "axios";
 
-export default function CreateProductForm({ slug, onCreated }: { slug: string; onCreated: () => void }) {
+export default function CreateProductForm({ onCreated }: {onCreated: () => void }) {
   const [name, setName] = useState("");
   const [price, setPrice] = useState<number>(0);
   const [description, setDescription] = useState("");
