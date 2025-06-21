@@ -14,17 +14,20 @@ export default function CafeForm({
   slug: string;
   onSaved?: () => void;
 }) {
-  const [name, setName] = useState(cafe.name);
-  const [logo, setLogo] = useState(cafe.logo);
-  const [instagram, setInstagram] = useState(cafe.instagram);
+  const [name, setName] = useState<string>("");
+  const [logo, setLogo] = useState<string>("");
+  const [instagram, setInstagram] = useState<string>("");
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
 
+  // ❗ Sadece ilk mount'ta değerleri alıyoruz (bir daha güncellenmez)
   useEffect(() => {
-    setName(cafe.name);
-    setLogo(cafe.logo);
-    setInstagram(cafe.instagram);
-  }, [cafe]);
+    if (cafe) {
+      setName(cafe.name || "");
+      setLogo(cafe.logo || "");
+      setInstagram(cafe.instagram || "");
+    }
+  }, []); // <- boş dependency listesi sadece ilk yüklemede çalışır
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
