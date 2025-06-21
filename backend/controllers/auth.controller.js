@@ -53,8 +53,8 @@ const signup = asyncHandler(async (req, res) => {
 
   res.cookie("accessToken", accessToken, {
     httpOnly: true,
-    secure: false,      //process.env.NODE_ENV === "production",
-    sameSite: "Lax",       //"Strict",
+    secure: true,      //process.env.NODE_ENV === "production",
+    sameSite: "none",       //"Strict",
     maxAge: 15 * 60 * 1000 // 15 dakika
   });
 
@@ -62,8 +62,8 @@ const signup = asyncHandler(async (req, res) => {
   // Refresh token → cookie
   res.cookie("refreshToken", refreshToken, {
     httpOnly: true,
-    secure: false, // prod: true
-    sameSite: "Lax",
+    secure: true, // prod: true
+    sameSite: "none",
     maxAge: 7 * 24 * 60 * 60 * 1000,
   });
 
@@ -95,16 +95,16 @@ const login = asyncHandler(async (req, res) => {
 
   res.cookie("accessToken", accessToken, {
     httpOnly: true,
-    secure: false,      //process.env.NODE_ENV === "production",
-    sameSite: "Lax",       //"Strict",
+    secure: true,      //process.env.NODE_ENV === "production",
+    sameSite: "none",       //"Strict",
     maxAge: 15 * 60 * 1000 // 15 dakika
   });
 
   // Refresh token → cookie
   res.cookie("refreshToken", refreshToken, {
     httpOnly: true,
-    secure: false, // production'da true olmalı
-    sameSite: "Lax",
+    secure: true, // production'da true olmalı
+    sameSite: "none", // cross-site cookie için
     maxAge: 7 * 24 * 60 * 60 * 1000, // 7 gün
   });
 
