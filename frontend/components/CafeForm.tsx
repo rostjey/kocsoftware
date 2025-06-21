@@ -3,27 +3,28 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Image from "next/image";
-import { Props } from "@/types";
+import { Cafe } from "@/types";
 
 export default function CafeForm({
-  initialName = "",
-  initialLogo = "",
-  initialInstagram = "",
+  cafe,
   slug,
   onSaved,
-}: Props) {
-  const [name, setName] = useState(initialName);
-  const [logo, setLogo] = useState(initialLogo);
-  const [instagram, setInstagram] = useState(initialInstagram);
+}: {
+  cafe: Cafe;
+  slug: string;
+  onSaved?: () => void;
+}) {
+  const [name, setName] = useState(cafe.name);
+  const [logo, setLogo] = useState(cafe.logo);
+  const [instagram, setInstagram] = useState(cafe.instagram);
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
 
   useEffect(() => {
-    setName(initialName);
-    setLogo(initialLogo);
-    setInstagram(initialInstagram);
-  }, [initialName, initialLogo, initialInstagram]);
-  
+    setName(cafe.name);
+    setLogo(cafe.logo);
+    setInstagram(cafe.instagram);
+  }, [cafe]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

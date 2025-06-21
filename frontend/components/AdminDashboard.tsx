@@ -14,7 +14,6 @@ export default function AdminDashboard({
 }: {
   slug: string;
   initialCafe: Cafe;
-  initialProducts?: Product[]; // Bu props artık kullanılmıyor
 }) {
   const [cafe, setCafe] = useState<Cafe>(initialCafe);
   const [products, setProducts] = useState<Product[]>([]);
@@ -24,24 +23,23 @@ export default function AdminDashboard({
     try {
       const res = await api.get("/api/admin/me");
       const cafeData = res.data;
-  
+
       setCafe({
         name: cafeData.name || "",
         logo: cafeData.logo || "",
-        instagram: cafeData.instagram || ""
+        instagram: cafeData.instagram || "",
       });
-  
+
       const productsRes = await api.get("/api/products");
       setProducts(productsRes.data);
     } catch (err) {
       console.error("Veri alınamadı:", err);
     }
   }, []);
-  
+
   useEffect(() => {
-    fetchCafeAndProducts();   // düzenlendi 
+    fetchCafeAndProducts();
   }, [fetchCafeAndProducts]);
-  
 
   const handleDelete = async (id: string) => {
     await api.delete(`/api/products/${id}`);
@@ -55,15 +53,8 @@ export default function AdminDashboard({
 
   return (
     <div className="p-4 text-white max-w-4xl mx-auto space-y-6">
-      <CafeForm
-         key={cafe.name + cafe.logo + cafe.instagram}
-         initialName={cafe.name}
-         initialLogo={cafe.logo}
-         initialInstagram={cafe.instagram}
-         slug={slug}
-         onSaved={fetchCafeAndProducts}
-        />
-        
+      <CafeForm cafe={cafe} slug={slug} onSaved={fetchCafeAndProducts} />
+
       <CreateProductForm onCreated={fetchCafeAndProducts} />
 
       <h2 className="text-xl font-bold">Ürünler</h2>

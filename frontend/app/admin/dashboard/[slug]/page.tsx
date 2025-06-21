@@ -13,7 +13,6 @@ export default async function DashboardPage({ params }: { params: Promise<{ slug
     <AdminDashboard
       slug={slug}
       initialCafe={cafeData.cafe}
-      initialProducts={[]} // AdminDashboard içinde ayrı fetch
     />
   );
 }
