@@ -23,15 +23,21 @@ export default function AdminDashboard({
   const fetchCafeAndProducts = useCallback(async () => {
     try {
       const res = await api.get("/api/admin/me");
-      setCafe(res.data);
+      const cafeData = res.data;
+  
+      setCafe({
+        name: cafeData.name || "",
+        logo: cafeData.logo || "",
+        instagram: cafeData.instagram || ""
+      });
+  
       const productsRes = await api.get("/api/products");
       setProducts(productsRes.data);
     } catch (err) {
       console.error("Veri alınamadı:", err);
     }
-  }, []); // bağımlılık listesi boş kalabilir ya da gerekiyorsa ekle
+  }, []);
   
-
   useEffect(() => {
     fetchCafeAndProducts();   // düzenlendi 
   }, [fetchCafeAndProducts]);
