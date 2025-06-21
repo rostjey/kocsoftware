@@ -3,14 +3,7 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import Image from "next/image";
-
-interface Props {
-  initialName?: string;
-  initialLogo?: string;
-  initialInstagram?: string;
-  slug: string;
-  onSaved?: () => void;
-}
+import { Props } from "@/types";
 
 export default function CafeForm({
   initialName = "",

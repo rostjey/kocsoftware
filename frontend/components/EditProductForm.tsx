@@ -3,23 +3,10 @@
 import { useState } from "react";
 import axios from "axios";
 import Image from "next/image";
+import {EditProductFormProps} from "@/types";
 
-interface Product {
-  _id: string;
-  name: string;
-  price: number;
-  description: string;
-  category: string;
-  image: string;
-}
 
-interface Props {
-  product: Product;
-  onClose: () => void;
-  onUpdated: () => void;
-}
-
-export default function EditProductForm({ product, onClose, onUpdated }: Props) {
+export default function EditProductForm({ product, onClose, onUpdated }: EditProductFormProps) {
   const [name, setName] = useState(product?.name || "");
   const [price, setPrice] = useState(product?.price || 0);
   const [description, setDescription] = useState(product?.description || "");

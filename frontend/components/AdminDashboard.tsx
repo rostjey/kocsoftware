@@ -6,22 +6,7 @@ import CreateProductForm from "./CreateProductForm";
 import EditProductForm from "./EditProductForm";
 import ProductCard from "./ProductCard";
 import api from "@/lib/axios";
-
-interface Cafe {
-  name: string;
-  logo: string;
-  instagram: string;
-}
-
-interface Product {
-  _id: string;
-  name: string;
-  description: string;
-  price: number;
-  image: string;
-  category: string;
-  featured: boolean;
-}
+import { Cafe, Product } from "@/types";
 
 export default function AdminDashboard({
   slug,
@@ -85,7 +70,7 @@ export default function AdminDashboard({
             <ProductCard
               key={product._id}
               product={product}
-              onEdit={setEditingProduct}
+              onEdit={(product) => setEditingProduct(product)}
               onDelete={handleDelete}
               onToggleFeatured={handleToggleFeatured}
             />

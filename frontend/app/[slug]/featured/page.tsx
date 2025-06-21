@@ -1,22 +1,6 @@
 export const dynamic = "force-dynamic"; // ISR devre dışı — her seferinde taze veri
 import Image from "next/image";
-
-interface Product {
-  _id: string;
-  name: string;
-  description: string;
-  price: number;
-  image: string;
-  category: string;
-  featured: boolean;
-}
-
-interface CafeData {
-  name: string;
-  logo: string;
-  instagram: string;
-  products: Product[];
-}
+import { CafeData } from "@/types";
 
 export default async function FeaturedPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
@@ -35,16 +19,16 @@ export default async function FeaturedPage({ params }: { params: Promise<{ slug:
   return (
     <div className="bg-black text-white min-h-screen p-4 max-w-4xl mx-auto">
       <div className="text-center mb-8">
-        {cafe.logo && (
+        {cafe.cafe.logo && (
           <Image
-            src={cafe.logo}
+            src={cafe.cafe.logo}
             alt="Logo"
             width={128}
             height={128}
             className="mx-auto w-32 h-32 object-contain"
           />
         )}
-        <h1 className="text-3xl font-bold mt-2">{cafe.name}</h1>
+        <h1 className="text-3xl font-bold mt-2">{cafe.cafe.name}</h1>
         <p className="text-orange-400 text-lg">⭐ Öne Çıkan Ürünler</p>
       </div>
 

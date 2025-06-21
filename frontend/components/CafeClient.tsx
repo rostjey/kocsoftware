@@ -4,25 +4,10 @@ import { useState, useEffect, useMemo, createRef } from "react";
 import { useRouter } from "next/navigation";
 import { FaInstagram } from "react-icons/fa";
 import Image from "next/image";
+import {CafeClientProps} from "@/types";
 
-interface Product {
-  _id: string;
-  name: string;
-  description: string;
-  price: number;
-  image: string;
-  category: string;
-  featured: boolean;
-}
 
-interface Props {
-  name: string;
-  logo: string;
-  instagram: string;
-  products: Product[];
-}
-
-export default function CafeClient({ name, logo, instagram, products }: Props) {
+export default function CafeClient({ name, logo, instagram, products }: CafeClientProps) {
   const router = useRouter();
   const [showDropdown, setShowDropdown] = useState(false);
   const [scrollVisible, setScrollVisible] = useState(false);

@@ -1,23 +1,6 @@
 import CafeClient from "@/components/CafeClient";
+import { CafeData } from "@/types";
 
-interface Product {
-  _id: string;
-  name: string;
-  description: string;
-  price: number;
-  image: string;
-  category: string;
-  featured: boolean;
-}
-
-interface CafeData {
-  cafe: {
-    name: string;
-    logo: string;
-    instagram: string;
-  };
-  products: Product[];
-}
 
 // ✅ Slugları çekip statik sayfalar üret
 export async function generateStaticParams() {
