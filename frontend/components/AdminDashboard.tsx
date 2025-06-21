@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import CafeForm from "./CafeForm";
 import CreateProductForm from "./CreateProductForm";
 import EditProductForm from "./EditProductForm";
@@ -20,18 +20,17 @@ export default function AdminDashboard({
   const [products, setProducts] = useState<Product[]>([]);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
 
-  const fetchCafeAndProducts = async () => {
+  const fetchCafeAndProducts = useCallback(async () => {
     try {
-      const [cafeRes, productRes] = await Promise.all([
-        api.get(`/api/cafe/${slug}`),
-        api.get("/api/products"),
-      ]);
-      setCafe(cafeRes.data.cafe);
-      setProducts(productRes.data); // ✅ Backend array döndürüyor
+      const res = await api.get("/api/admin/me");
+      setCafe(res.data);
+      const productsRes = await api.get("/api/products");
+      setProducts(productsRes.data);
     } catch (err) {
-      console.error("Veri çekme hatası:", err);
+      console.error("Veri alınamadı:", err);
     }
-  };
+  }, []); // bağımlılık listesi boş kalabilir ya da gerekiyorsa ekle
+  
 
   useEffect(() => {
     fetchCafeAndProducts();   // düzenlendi 
