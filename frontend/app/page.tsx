@@ -4,7 +4,7 @@ export default function Home() {
   return (
     <div className="min-h-screen flex flex-col items-center justify-center bg-gradient-to-br from-black via-gray-900 to-gray-800 text-white px-4">
       <h1 className="text-5xl font-extrabold text-orange-400 mb-10">
-        KocSoftware
+        KOCSOFTWARE
       </h1>
 
       <div className="flex flex-col sm:flex-row gap-6">
