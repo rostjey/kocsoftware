@@ -3,6 +3,7 @@ const bcrypt = require("bcryptjs");
 const jwt = require("jsonwebtoken");
 const asyncHandler = require("../middlewares/asyncHandler");
 const { generateAccessToken, generateRefreshToken } = require("../utils/generateTokens");
+require("dotenv").config();
 
 const refreshTokenHandler = asyncHandler(async (req, res) => {
   const token = req.cookies.refreshToken;
