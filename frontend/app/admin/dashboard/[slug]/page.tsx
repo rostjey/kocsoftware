@@ -1,19 +1,18 @@
 import AdminDashboard from "@/components/AdminDashboard";
 
-export default async function DashboardPage({ params }: { params: { slug: string } }) {
+export default async function DashboardPage({ params }: any) {
   const { slug } = params;
 
-  const cafeRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/cafe/${slug}`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/cafe/${slug}`, {
     cache: "no-store",
   });
 
-  const cafeData = await cafeRes.json();
+  const data = await res.json();
 
   return (
     <AdminDashboard
       slug={slug}
-      initialCafe={cafeData.cafe}
+      initialCafe={data.cafe}
     />
   );
 }
-
