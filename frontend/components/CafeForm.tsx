@@ -18,6 +18,12 @@ export default function CafeForm({
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
 
+  useEffect(() => {
+    setName(initialName);
+    setLogo(initialLogo);
+    setInstagram(initialInstagram);
+  }, [initialName, initialLogo, initialInstagram]);
+  
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
