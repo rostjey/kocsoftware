@@ -28,6 +28,7 @@ const refreshTokenHandler = asyncHandler(async (req, res) => {
 
 const signup = asyncHandler(async (req, res) => {
   const { name, slug, email, password, signupKey } = req.body;
+  console.log("Signup key from env:", process.env.SIGNUP_KEY);
 
   if (signupKey !== process.env.SIGNUP_KEY) {
     return res.status(401).json({ message: "Geçersiz kayıt anahtarı" });
