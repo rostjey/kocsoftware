@@ -75,7 +75,7 @@ export default function SignupPage() {
         />
         <input
           type="text"
-          placeholder="Kafe Slug (örnek: retropol)"
+          placeholder="Kafe Slug (örnek: kocsoft)"
           value={slug}
           onChange={(e) => setSlug(e.target.value)}
           className="w-full px-4 py-3 rounded-lg bg-transparent border border-white placeholder-gray-200 text-white focus:outline-none focus:ring-2 focus:ring-white"

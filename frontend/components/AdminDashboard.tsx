@@ -52,36 +52,48 @@ export default function AdminDashboard({
   };
 
   return (
-    <div className="p-4 text-white max-w-4xl mx-auto space-y-6">
-      <CafeForm cafe={cafe} slug={slug} onSaved={fetchCafeAndProducts} />
-
-      <CreateProductForm onCreated={fetchCafeAndProducts} />
-
-      <h2 className="text-xl font-bold">Ürünler</h2>
-
-      {products.length === 0 ? (
-        <p className="text-gray-400">Henüz ürün eklenmemiş.</p>
-      ) : (
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          {products.map((product) => (
-            <ProductCard
-              key={product._id}
-              product={product}
-              onEdit={(product) => setEditingProduct(product)}
-              onDelete={handleDelete}
-              onToggleFeatured={handleToggleFeatured}
-            />
-          ))}
+    <div className="min-h-screen flex flex-col items-center bg-gradient-to-b from-purple-500 to-blue-400 px-4 py-10 text-white">
+      <div className="w-full max-w-4xl space-y-10">
+  
+        {/* Kafe Bilgisi Formu */}
+        <div className="bg-white bg-opacity-10 p-6 rounded-xl shadow-md">
+          <CafeForm cafe={cafe} slug={slug} onSaved={fetchCafeAndProducts} />
         </div>
-      )}
-
-      {editingProduct && (
-        <EditProductForm
-          product={editingProduct}
-          onClose={() => setEditingProduct(null)}
-          onUpdated={fetchCafeAndProducts}
-        />
-      )}
+  
+        {/* Ürün Oluşturma Formu */}
+        <div className="bg-white bg-opacity-10 p-6 rounded-xl shadow-md">
+          <CreateProductForm onCreated={fetchCafeAndProducts} />
+        </div>
+  
+        {/* Ürün Listesi Başlık */}
+        <h2 className="text-2xl font-bold tracking-wide">Ürünler</h2>
+  
+        {/* Ürün Listesi */}
+        {products.length === 0 ? (
+          <p className="text-gray-200">Henüz ürün eklenmemiş.</p>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {products.map((product) => (
+              <ProductCard
+                key={product._id}
+                product={product}
+                onEdit={(product) => setEditingProduct(product)}
+                onDelete={handleDelete}
+                onToggleFeatured={handleToggleFeatured}
+              />
+            ))}
+          </div>
+        )}
+  
+        {/* Ürün Düzenleme Formu */}
+        {editingProduct && (
+          <EditProductForm
+            product={editingProduct}
+            onClose={() => setEditingProduct(null)}
+            onUpdated={fetchCafeAndProducts}
+          />
+        )}
+      </div>
     </div>
   );
 }
