@@ -9,7 +9,7 @@ export default function Home() {
       <div className="flex flex-col items-center mb-16">
         <div className="w-24 h-24 rounded-full overflow-hidden shadow-lg mb-6 bg-white">
           <Image
-            src="/kocsoftware.png" // Public klasörden direkt erişim
+            src="/kocsoftwarelogo.png" // Public klasörden direkt erişim
             alt="Logo"
             width={96}
             height={96}
