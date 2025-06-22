@@ -87,7 +87,7 @@ export default function AdminDashboard({
 
           <button
             onClick={handleLogout}
-            className="inline-block bg-red-600 text-white font-semibold px-6 py-3 rounded-xl shadow-md transition hover:bg-red-700 text-lg"
+            className="inline-block bg-red-400 text-white font-semibold px-6 py-3 rounded-xl shadow-md transition hover:bg-red-600 text-lg"
             >
             Çıkış Yap
           </button>
