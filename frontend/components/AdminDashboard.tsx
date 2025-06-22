@@ -54,6 +54,18 @@ export default function AdminDashboard({
   return (
     <div className="min-h-screen flex flex-col items-center bg-gradient-to-b from-purple-500 to-blue-400 px-4 py-10 text-white">
       <div className="w-full max-w-4xl space-y-10">
+
+        {/* Menü Görüntüle Linki */}
+        <div className="mb-8 text-center">
+          <a
+            href={`https://kocsoftware.vercel.app/${slug}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-block bg-white text-purple-700 font-semibold px-6 py-3 rounded-xl shadow-md transition hover:bg-gray-100 text-lg"
+          >
+            Menünüzü Görüntüleyin
+          </a>
+        </div>
   
         {/* Kafe Bilgisi Formu */}
         <div className="bg-white bg-opacity-10 p-6 rounded-xl shadow-md">
