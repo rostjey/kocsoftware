@@ -65,7 +65,7 @@ export default function CreateProductForm({ onCreated }: {onCreated: () => void 
         value={name}
         onChange={(e) => setName(e.target.value)}
         placeholder="Ürün Adı"
-        className="w-full px-4 py-3 bg-[rgba(164,164,255,0.73)] border border-white text-black placeholder-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
+        className="w-full px-4 py-3 bg-[#e9eaf3] border border-white text-black placeholder-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
         required
       />
   
@@ -74,7 +74,7 @@ export default function CreateProductForm({ onCreated }: {onCreated: () => void 
         value={price}
         onChange={(e) => setPrice(Number(e.target.value))}
         placeholder="Fiyat"
-        className="w-full px-4 py-3 bg-[rgba(164,164,255,0.73)] border border-white text-black placeholder-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
+        className="w-full px-4 py-3 bg-[#e9eaf3] border border-white text-black placeholder-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
         required
       />
   
@@ -82,7 +82,7 @@ export default function CreateProductForm({ onCreated }: {onCreated: () => void 
         value={category}
         onChange={(e) => setCategory(e.target.value)}
         placeholder="Kategori"
-        className="w-full px-4 py-3 bg-[rgba(164,164,255,0.73)] border border-white text-black placeholder-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
+        className="w-full px-4 py-3 bg-[#e9eaf3] border border-white text-black placeholder-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
         required
       />
   
@@ -90,14 +90,14 @@ export default function CreateProductForm({ onCreated }: {onCreated: () => void 
         value={description}
         onChange={(e) => setDescription(e.target.value)}
         placeholder="Açıklama"
-        className="w-full px-4 py-3 bg-[rgba(164,164,255,0.73)] border border-white text-black placeholder-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
+        className="w-full px-4 py-3 bg-[#e9eaf3] border border-white text-black placeholder-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
       />
   
       <input
         type="file"
         accept="image/*"
         onChange={(e) => setImageFile(e.target.files?.[0] || null)}
-        className="w-full px-4 py-3 bg-[rgba(164,164,255,0.73)] border border-white text-black rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
+        className="w-full px-4 py-3 bg-[#e9eaf3] border border-white text-black rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
       />
   
       {uploading && <p className="text-yellow-600">Yükleniyor...</p>}
