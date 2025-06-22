@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 
 export default function Home() {
   return (
@@ -6,8 +7,14 @@ export default function Home() {
       
       {/* Logo ve Başlık */}
       <div className="flex flex-col items-center mb-16">
-        <div className="w-24 h-24 bg-white rounded-full flex items-center justify-center shadow-lg mb-6">
-          <span className="text-2xl font-bold text-purple-600">KS</span>
+        <div className="w-24 h-24 rounded-full overflow-hidden shadow-lg mb-6 bg-white">
+          <Image
+            src="/kocsoftware.png" // Public klasörden direkt erişim
+            alt="Logo"
+            width={96}
+            height={96}
+            className="object-contain"
+          />
         </div>
         <h1 className="text-2xl font-semibold text-gray-100 tracking-wider">
           KOCSOFTWARE
