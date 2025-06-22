@@ -11,7 +11,8 @@ export default function Home() {
           <Image
             src="/kocsoftwarelogo.png"
             alt="Logo"
-            fill
+            width={144}
+            height={144}
             className="object-cover"
           />
         </div>
