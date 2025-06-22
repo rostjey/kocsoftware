@@ -12,7 +12,6 @@ type Product = {
   featured: boolean;
 };
 
-
 export default function ProductCard({
   product,
   onDelete,
@@ -25,24 +24,34 @@ export default function ProductCard({
   onToggleFeatured: (id: string) => void;
 }) {
   return (
-    <div className="bg-gray-800 p-4 rounded shadow flex flex-col gap-2">
-      <div className="flex justify-between items-center">
-        <h3 className="text-lg font-bold">{product.name}</h3>
+    <div className="bg-white bg-opacity-10 rounded-xl p-5 shadow-md flex flex-col gap-3 text-white transition hover:scale-[1.01] duration-200">
+      {/* Üst kısım: başlık ve aksiyonlar */}
+      <div className="flex justify-between items-start">
+        <div className="flex flex-col">
+          <h3 className="text-lg font-semibold">{product.name}</h3>
+          <p className="text-sm text-gray-200">{product.category}</p>
+        </div>
         <div className="flex gap-2">
-          <button onClick={() => onEdit(product)} className="text-blue-400 hover:text-blue-300">
+          <button onClick={() => onEdit(product)} className="hover:text-blue-300">
             <Pencil size={18} />
           </button>
-          <button onClick={() => onToggleFeatured(product._id)} className="text-yellow-400 hover:text-yellow-300">
-            <Star fill={product.featured ? "yellow" : "none"} size={18} />
+          <button onClick={() => onToggleFeatured(product._id)} className="hover:text-yellow-300">
+            <Star
+              size={18}
+              className={product.featured ? "fill-yellow-400 text-yellow-400" : ""}
+            />
           </button>
-          <button onClick={() => onDelete(product._id)} className="text-red-500 hover:text-red-400">
+          <button onClick={() => onDelete(product._id)} className="hover:text-red-400">
             <Trash size={18} />
           </button>
         </div>
       </div>
-      <p className="text-sm">{product.description}</p>
-      <p className="text-orange-400 font-semibold">{product.price}₺</p>
-      <p className="text-xs text-gray-400">{product.category}</p>
+
+      {/* Açıklama */}
+      <p className="text-sm text-gray-100">{product.description}</p>
+
+      {/* Fiyat */}
+      <p className="text-orange-400 font-semibold text-lg">{product.price}₺</p>
     </div>
   );
 }
