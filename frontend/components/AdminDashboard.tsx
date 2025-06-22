@@ -45,9 +45,15 @@ export default function AdminDashboard({
     fetchCafeAndProducts();
   }, [fetchCafeAndProducts]);
 
+  // Çıkış yapma fonksiyonu
   const handleLogout = async () => {
     try {
       await api.post("/api/admin/logout", {}, { withCredentials: true }); // backend yolu
+
+      // cafe ve ürünleri temizle
+      setCafe({ name: "", logo: "", instagram: "" });
+      setProducts([]);
+
       router.push("/admin/login"); // logout sonrası login sayfasına yönlendirme
     } catch (error) {
       console.error("Logout başarısız:", error);
