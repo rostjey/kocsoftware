@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState} from "react";
 import axios from "axios";
 import Image from "next/image";
 import { Cafe } from "@/types";
