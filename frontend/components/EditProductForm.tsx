@@ -63,84 +63,83 @@ export default function EditProductForm({ product, onClose, onUpdated }: EditPro
   };
 
   return (
-    <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50">
+    <div className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 px-4">
       <form
         onSubmit={handleUpdate}
-        className="bg-gray-900 p-6 rounded-lg w-full max-w-md space-y-3"
+        className="w-full max-w-md bg-white bg-opacity-10 backdrop-blur-md border border-white/20 rounded-xl shadow-md p-6 space-y-5 text-black"
       >
-        <h2 className="text-xl font-bold">Ürünü Güncelle</h2>
-
-        {error && <p className="text-red-500 text-sm">{error}</p>}
-
+        <h2 className="text-2xl font-bold">Ürünü Güncelle</h2>
+  
+        {error && <p className="text-red-600 text-sm">{error}</p>}
+  
         <input
           value={name}
           onChange={(e) => setName(e.target.value)}
           placeholder="Ürün Adı"
-          className="w-full px-3 py-2 bg-gray-800 text-white rounded"
+          className="w-full px-4 py-3 bg-[#e9eaf3] border border-white text-black placeholder-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
           required
         />
-
+  
         <input
           type="number"
           value={price}
           onChange={(e) => setPrice(Number(e.target.value))}
           placeholder="Fiyat"
-          className="w-full px-3 py-2 bg-gray-800 text-white rounded"
+          className="w-full px-4 py-3 bg-[#e9eaf3] border border-white text-black placeholder-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
           required
         />
-
+  
         <input
           value={category}
           onChange={(e) => setCategory(e.target.value)}
           placeholder="Kategori"
-          className="w-full px-3 py-2 bg-gray-800 text-white rounded"
+          className="w-full px-4 py-3 bg-[#e9eaf3] border border-white text-black placeholder-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
           required
         />
-
+  
         <textarea
           value={description}
           onChange={(e) => setDescription(e.target.value)}
           placeholder="Açıklama"
-          className="w-full px-3 py-2 bg-gray-800 text-white rounded"
+          className="w-full px-4 py-3 bg-[#e9eaf3] border border-white text-black placeholder-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
         />
-
-        {/* Görsel önizleme */}
+  
         {(imageFile || image) && (
           <Image
             src={imageFile ? URL.createObjectURL(imageFile) : image}
             alt="Ürün görseli"
             width={400}
             height={200}
-            className="w-full h-32 object-contain rounded bg-white"
+            className="w-full h-32 object-contain rounded border border-white bg-[#e9eaf3] p-1"
           />
         )}
-
+  
         <input
           type="file"
           accept="image/*"
           onChange={(e) => setImageFile(e.target.files?.[0] || null)}
-          className="w-full px-3 py-2 bg-gray-800 text-white rounded"
+          className="w-full px-4 py-3 bg-[#e9eaf3] border border-white text-black rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
         />
-
-        {uploading && <p className="text-yellow-400">Yükleniyor...</p>}
-
+  
+        {uploading && <p className="text-yellow-600">Yükleniyor...</p>}
+  
         <div className="flex justify-between mt-4">
           <button
             type="button"
             onClick={onClose}
-            className="text-gray-400 hover:text-white"
+            className="text-gray-200 underline"
           >
             Vazgeç
           </button>
           <button
             type="submit"
-            className="bg-orange-600 hover:bg-orange-500 px-4 py-2 rounded text-white"
             disabled={uploading}
+            className="bg-white text-purple-700 font-semibold px-6 py-3 rounded-xl shadow-md transition hover:bg-gray-100 text-md"
           >
             Kaydet
           </button>
         </div>
       </form>
     </div>
-  );
+  );  
 }

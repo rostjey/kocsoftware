@@ -72,7 +72,7 @@ export default function CafeForm({
       onSubmit={handleSubmit}
       className="bg-white bg-opacity-10 backdrop-blur-md p-6 rounded-xl w-full max-w-md shadow-md space-y-5 text-black"
     >
-      <h2 className="text-2xl font-bold text-black">Kafe Bilgileri</h2>
+      <h2 className="text-2xl font-bold text-purple-700 ">Kafe Bilgileri</h2>
   
       <input
         value={name}
