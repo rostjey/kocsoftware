@@ -119,12 +119,18 @@ const login = asyncHandler(async (req, res) => {
 });
 
 const logout = asyncHandler(async (req, res) => {
-  res.clearCookie("refreshToken", {
+  res.clearCookie("accessToken", {
     httpOnly: true,
-    secure: false, // prod: true
-    sameSite: "Lax",
+    secure: true,
+    sameSite: "none",
   });
 
+  res.clearCookie("refreshToken", {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
+  });
+  
   res.json({ message: "Çıkış başarılı" });
 });
 
