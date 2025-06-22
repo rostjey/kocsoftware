@@ -15,7 +15,7 @@ export default function CafeForm({
   onSaved?: () => void;
 }) {
   const [name, setName] = useState<string>(cafe.name || "");
-  const [logo, setLogo] = useState<string>( cafe.logo || "");
+  const [logo] = useState<string>( cafe.logo || "");
   const [instagram, setInstagram] = useState<string>( cafe.instagram || "");
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
