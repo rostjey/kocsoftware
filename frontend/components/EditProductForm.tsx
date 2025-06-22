@@ -68,7 +68,7 @@ export default function EditProductForm({ product, onClose, onUpdated }: EditPro
         onSubmit={handleUpdate}
         className="w-full max-w-md bg-white bg-opacity-10 backdrop-blur-md border border-white/20 rounded-xl shadow-md p-6 space-y-5 text-black"
       >
-        <h2 className="text-2xl font-bold">Ürünü Güncelle</h2>
+        <h2 className="text-2xl text-purple-700 font-bold">Ürünü Güncelle</h2>
   
         {error && <p className="text-red-600 text-sm">{error}</p>}
   
@@ -127,7 +127,7 @@ export default function EditProductForm({ product, onClose, onUpdated }: EditPro
           <button
             type="button"
             onClick={onClose}
-            className="text-gray-200 underline"
+            className="text-black underline"
           >
             Vazgeç
           </button>
