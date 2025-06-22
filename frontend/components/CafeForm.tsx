@@ -70,50 +70,52 @@ export default function CafeForm({
   return (
     <form
       onSubmit={handleSubmit}
-      className="bg-gray-900 p-6 rounded-lg w-full max-w-md space-y-4"
+      className="bg-white bg-opacity-10 backdrop-blur-md p-6 rounded-xl w-full max-w-md shadow-md space-y-5 text-black"
     >
-      <h2 className="text-xl font-bold text-white">Kafe Bilgileri</h2>
-
+      <h2 className="text-2xl font-bold text-black">Kafe Bilgileri</h2>
+  
       <input
         value={name}
         onChange={(e) => setName(e.target.value)}
         placeholder="Kafe Adı"
-        className="w-full px-3 py-2 bg-gray-800 text-white rounded"
+        className="w-full px-4 py-3 bg-[#e9eaf3] border border-white text-black placeholder-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
         required
       />
-
+  
       <input
         value={instagram}
         onChange={(e) => setInstagram(e.target.value)}
         placeholder="Instagram Linki"
-        className="w-full px-3 py-2 bg-gray-800 text-white rounded"
+        className="w-full px-4 py-3 bg-[#e9eaf3] border border-white text-black placeholder-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
       />
-
+  
       {logo && (
-        <Image
-          src={logo}
-          alt="Logo"
-          width={96}
-          height={96}
-          className="w-24 h-24 object-contain mx-auto bg-white rounded"
-        />
+        <div className="flex justify-center">
+          <Image
+            src={logo}
+            alt="Logo"
+            width={96}
+            height={96}
+            className="w-24 h-24 object-contain rounded-lg border border-white bg-[#e9eaf3] p-1"
+          />
+        </div>
       )}
-
+  
       <input
         type="file"
         accept="image/*"
         onChange={(e) => setLogoFile(e.target.files?.[0] ?? null)}
-        className="w-full px-3 py-2 bg-gray-800 text-white rounded"
+        className="w-full px-4 py-3 bg-[#e9eaf3] border border-white text-black rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
       />
-
-      {uploading && <p className="text-yellow-400">Logo yükleniyor...</p>}
-
+  
+      {uploading && <p className="text-yellow-600 text-sm text-center">Logo yükleniyor...</p>}
+  
       <button
         type="submit"
-        className="bg-orange-600 hover:bg-orange-500 px-4 py-2 rounded text-white"
+        className="w-full bg-white text-purple-700 font-semibold py-3 rounded-xl shadow-md transition hover:bg-gray-100 text-lg"
       >
         Kaydet
       </button>
     </form>
-  );
+  );  
 }
