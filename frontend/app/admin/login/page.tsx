@@ -5,6 +5,7 @@ import axios from 'axios';
 import { useRouter } from 'next/navigation';
 import React from 'react';
 import { AxiosError } from "axios";
+import Link from 'next/link';
 
 export default function AdminLoginPage() {
   const router = useRouter();
@@ -83,9 +84,9 @@ export default function AdminLoginPage() {
       {/* Kayıt linki */}
       <div className="mt-10 text-sm text-gray-200">
         Hesabınız yok mu?{" "}
-        <a href="/admin/signup" className="underline text-white font-medium">
+        <Link href="/admin/signup" className="underline text-white font-medium">
           Hemen Kayıt Ol
-        </a>
+        </Link>
       </div>
     </div>
   );  
