@@ -55,53 +55,59 @@ export default function CreateProductForm({ onCreated }: {onCreated: () => void 
   };
 
   return (
-    <form onSubmit={handleSubmit} className="bg-gray-900 p-4 rounded mb-6 space-y-3">
-      <h2 className="text-xl font-bold">Yeni Ürün Ekle</h2>
-
+    <form
+      onSubmit={handleSubmit}
+      className="w-full space-y-4"
+    >
+      <h2 className="text-2xl font-bold">Yeni Ürün Ekle</h2>
+  
       <input
         value={name}
         onChange={(e) => setName(e.target.value)}
         placeholder="Ürün Adı"
-        className="w-full px-3 py-2 bg-gray-800 text-white rounded"
+        className="w-full px-4 py-3 bg-transparent border border-white text-white placeholder-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
         required
       />
-
+  
       <input
         type="number"
         value={price}
         onChange={(e) => setPrice(Number(e.target.value))}
         placeholder="Fiyat"
-        className="w-full px-3 py-2 bg-gray-800 text-white rounded"
+        className="w-full px-4 py-3 bg-transparent border border-white text-white placeholder-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
         required
       />
-
+  
       <input
         value={category}
         onChange={(e) => setCategory(e.target.value)}
         placeholder="Kategori"
-        className="w-full px-3 py-2 bg-gray-800 text-white rounded"
+        className="w-full px-4 py-3 bg-transparent border border-white text-white placeholder-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
         required
       />
-
+  
       <textarea
         value={description}
         onChange={(e) => setDescription(e.target.value)}
         placeholder="Açıklama"
-        className="w-full px-3 py-2 bg-gray-800 text-white rounded"
+        className="w-full px-4 py-3 bg-transparent border border-white text-white placeholder-gray-200 rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
       />
-
+  
       <input
         type="file"
         accept="image/*"
         onChange={(e) => setImageFile(e.target.files?.[0] || null)}
-        className="w-full px-3 py-2 bg-gray-800 text-white rounded"
+        className="w-full px-4 py-3 bg-transparent border border-white text-white rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
       />
-
-      {uploading && <p className="text-yellow-400">Yükleniyor...</p>}
-
-      <button type="submit" className="bg-orange-600 hover:bg-orange-500 px-4 py-2 rounded text-white">
+  
+      {uploading && <p className="text-yellow-300">Yükleniyor...</p>}
+  
+      <button
+        type="submit"
+        className="w-full bg-white text-purple-700 font-semibold py-3 rounded-xl shadow-md transition hover:bg-gray-100 text-lg"
+      >
         Ekle
       </button>
     </form>
-  );
+  );  
 }
