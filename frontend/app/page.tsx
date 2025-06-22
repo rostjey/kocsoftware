@@ -15,14 +15,14 @@ export default function Home() {
       </div>
 
       {/* Giriş ve Kayıt Butonları */}
-      <div className="w-full max-w-xs space-y-6">
-        <Link href="/admin/login">
+      <div className="w-full max-w-xs flex flex-col items-center">
+        <Link href="/admin/login" className="w-full mb-5">
           <button className="w-full h-14 bg-white text-purple-700 font-semibold rounded-xl shadow-md transition hover:bg-gray-100 text-lg">
             Giriş Yap
           </button>
         </Link>
 
-        <Link href="/admin/signup">
+        <Link href="/admin/signup" className="w-full">
           <button className="w-full h-14 border border-white text-white rounded-xl transition hover:bg-white hover:text-purple-700 text-lg">
             Kayıt Ol
           </button>
