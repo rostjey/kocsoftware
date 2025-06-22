@@ -66,7 +66,7 @@ export default function AdminDashboard({
         </div>
   
         {/* Ürün Listesi Başlık */}
-        <h2 className="text-2xl font-bold tracking-wide">Ürünler</h2>
+        <h2 className="text-2xl font-bold tracking-wide">Ürünleriniz</h2>
   
         {/* Ürün Listesi */}
         {products.length === 0 ? (
