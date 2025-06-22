@@ -37,33 +37,56 @@ export default function AdminLoginPage() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-black text-white p-4">
-      <form onSubmit={handleLogin} className="bg-gray-800 p-6 rounded-lg shadow-md w-full max-w-md space-y-4">
-        <h1 className="text-2xl font-bold text-center text-orange-400">Admin Girişi</h1>
-        {error && <p className="text-red-400 text-sm text-center">{error}</p>}
-        <input
-          type="email"
-          placeholder="E-posta"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-          className="w-full px-4 py-2 rounded bg-gray-700 placeholder-gray-400 focus:outline-none"
-          required
-        />
-        <input
-          type="password"
-          placeholder="Şifre"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          className="w-full px-4 py-2 rounded bg-gray-700 placeholder-gray-400 focus:outline-none"
-          required
-        />
+    <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-b from-purple-500 to-blue-400 px-6 text-white">
+      
+      {/* Başlık */}
+      <div className="text-center mb-10">
+        <h1 className="text-3xl font-bold">Hoş geldiniz</h1>
+        <p className="text-sm text-gray-200 mt-2">Sizi tekrar görmek güzel!</p>
+      </div>
+  
+      <form onSubmit={handleLogin} className="w-full max-w-sm space-y-6">
+        {error && (
+          <p className="text-red-300 text-sm text-center">{error}</p>
+        )}
+  
+        <div>
+          <input
+            type="email"
+            placeholder="E-posta adresi"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            className="w-full px-4 py-3 rounded-lg bg-transparent border border-white placeholder-gray-200 text-white focus:outline-none focus:ring-2 focus:ring-white"
+            required
+          />
+        </div>
+  
+        <div>
+          <input
+            type="password"
+            placeholder="Şifre"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            className="w-full px-4 py-3 rounded-lg bg-transparent border border-white placeholder-gray-200 text-white focus:outline-none focus:ring-2 focus:ring-white"
+            required
+          />
+        </div>
+  
         <button
           type="submit"
-          className="w-full bg-orange-500 hover:bg-orange-400 text-white py-2 rounded font-semibold"
+          className="w-full h-12 bg-white text-purple-700 font-semibold rounded-xl shadow-md transition hover:bg-gray-100 text-lg"
         >
           Giriş Yap
         </button>
       </form>
+  
+      {/* Kayıt linki */}
+      <div className="mt-10 text-sm text-gray-200">
+        Hesabınız yok mu?{" "}
+        <a href="/admin/signup" className="underline text-white font-medium">
+          Hemen Kayıt Ol
+        </a>
+      </div>
     </div>
-  );
+  );  
 }
