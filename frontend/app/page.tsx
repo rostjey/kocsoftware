@@ -7,17 +7,17 @@ export default function Home() {
       
       {/* Logo ve Başlık */}
       <div className="flex flex-col items-center mb-16">
-        <div className="w-24 h-24 rounded-full overflow-hidden shadow-lg mb-6 bg-white">
+        <div className="w-28 h-28 sm:w-32 sm:h-32 md:w-36 md:h-36 rounded-full overflow-hidden shadow-lg mb-6 bg-white">
           <Image
-            src="/kocsoftwarelogo.png" // Public klasörden direkt erişim
+            src="/kocsoftwarelogo.png"
             alt="Logo"
-            width={96}
-            height={96}
-            className="object-contain"
+            fill
+            className="object-cover"
           />
         </div>
+
         <h1 className="text-2xl font-semibold text-gray-100 tracking-wider">
-          KOCSOFTWARE
+          kocsoftware.com
         </h1>
       </div>
 
