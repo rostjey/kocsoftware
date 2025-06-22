@@ -28,7 +28,7 @@ export default function ProductCard({
       {/* Üst kısım: başlık ve aksiyonlar */}
       <div className="flex justify-between items-start">
         <div className="flex flex-col">
-          <h3 className="text-lg font-semibold">{product.name}</h3>
+          <h3 className="text-lg font-semibold text-purple-700">{product.name}</h3>
           <p className="text-sm text-gray-800">{product.category}</p>
         </div>
         <div className="flex gap-3">
