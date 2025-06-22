@@ -1,12 +1,7 @@
 import AdminDashboard from "@/components/AdminDashboard";
 
-interface PageProps {
-  params: { slug: string };
-  searchParams?: { [key: string]: string | string[] | undefined };
-}
-
-export default async function DashboardPage({ params }: PageProps) {
-  const { slug } = params;
+export default async function DashboardPage(props: { params: Promise<{ slug: string }> }) {
+  const { slug } = await props.params;
 
   const cafeRes = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/cafe/${slug}`, {
     cache: "no-store",
@@ -21,3 +16,4 @@ export default async function DashboardPage({ params }: PageProps) {
     />
   );
 }
+
