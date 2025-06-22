@@ -68,7 +68,7 @@ export default function AdminDashboard({
         </div>
   
         {/* Kafe Bilgisi Formu */}
-        <div className="bg-white bg-opacity-10 p-6 rounded-xl shadow-md">
+        <div className="p-6">
           <CafeForm cafe={cafe} slug={slug} onSaved={fetchCafeAndProducts} />
         </div>
   
