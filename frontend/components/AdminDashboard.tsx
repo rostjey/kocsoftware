@@ -5,6 +5,7 @@ import CafeForm from "./CafeForm";
 import CreateProductForm from "./CreateProductForm";
 import EditProductForm from "./EditProductForm";
 import ProductCard from "./ProductCard";
+import QrCodeSection from "./QrCodeSection";
 import api from "@/lib/axios";
 import { Cafe, Product } from "@/types";
 import { useRouter } from "next/navigation"; // App Router
@@ -93,6 +94,9 @@ export default function AdminDashboard({
             Çıkış Yap
           </button>
         </div>
+
+        {/* QR Kodu Gösterim ve İndirme */}
+        <QrCodeSection slug={slug} />
   
         {/* Kafe Bilgisi Formu */}
         <div className="w-full max-w-md mx-auto p-6">
