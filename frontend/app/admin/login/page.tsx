@@ -82,7 +82,7 @@ export default function AdminLoginPage() {
       </form>
 
       {/* Google ile devam et butonu */}
-      <div className="mt-8">
+      <div className="w-full max-w-sm mt-8">
         <button
           type="button"
           onClick={() => {
