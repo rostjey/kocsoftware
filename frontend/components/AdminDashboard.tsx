@@ -28,6 +28,11 @@ export default function AdminDashboard({
       const res = await api.get("/api/admin/me");
       const cafeData = res.data;
 
+      if (!cafeData || !cafeData.name) {
+        router.push("/admin/login");  // Eğer kafe verisi yoksa login sayfasına yönlendir
+        return;
+      }
+
       setCafe({
         name: cafeData.name || "",
         logo: cafeData.logo || "",
