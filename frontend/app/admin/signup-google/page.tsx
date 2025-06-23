@@ -1,12 +1,12 @@
 'use client';
 
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+//import { useRouter } from "next/navigation";
 
 export default function GoogleSignupKeyPage() {
   const [signupKey, setSignupKey] = useState("");
   const [error, setError] = useState("");
-  const router = useRouter();
+  //const router = useRouter();
 
   const handleRedirect = () => {
     if (!signupKey.trim()) {
