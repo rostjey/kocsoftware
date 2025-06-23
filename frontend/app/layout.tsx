@@ -16,9 +16,9 @@ export const metadata: Metadata = {
   title: "kocsoftware.net",
   description: "Koc Software - Cafe Yönetim Sistemi",
   icons: {
-    icon: "/favicon.ico", // varsayılan favicon
-    shortcut: "/favicon.ico", // Safari uyumluluğu
-    apple: "/apple-touch-icon-fixed.png", // iOS ekran kısayolu
+    icon: "https://kocsoftware.net/favicon.ico", // varsayılan favicon
+    shortcut: "https://kocsoftware.net/favicon.ico", // Safari uyumluluğu
+    apple: "https://kocsoftware.net/apple-touch-icon.png", // iOS ekran kısayolu
   },
 };
 
