@@ -53,22 +53,26 @@ const signup = asyncHandler(async (req, res) => {
   const accessToken = generateAccessToken(payload);
   const refreshToken = generateRefreshToken(payload);
 
+  // Refresh token → cookie
+  // Secure ve sameSite ayarları, cross-site cookie kullanımını destekler
   res.cookie("accessToken", accessToken, {
     httpOnly: true,
-    secure: true,      //process.env.NODE_ENV === "production",
-    sameSite: "none",       //"Strict",
-    maxAge: 15 * 60 * 1000 // 15 dakika
+    secure: true,
+    sameSite: "none",
+    domain: ".kocsoftware.net", // ← bu önemli: subdomain'leri de kapsar
+    maxAge: 15 * 60 * 1000
   });
-
-
+  
   // Refresh token → cookie
+  // Secure ve sameSite ayarları, cross-site cookie kullanımını destekler
   res.cookie("refreshToken", refreshToken, {
     httpOnly: true,
-    secure: true, // prod: true
+    secure: true,
     sameSite: "none",
+    domain: ".kocsoftware.net",
     maxAge: 7 * 24 * 60 * 60 * 1000,
   });
-
+  
   // Access token → response
   res.status(201).json({
     message: "Kafe başarıyla oluşturuldu",
@@ -95,20 +99,24 @@ const login = asyncHandler(async (req, res) => {
   const accessToken = generateAccessToken(payload);
   const refreshToken = generateRefreshToken(payload);
 
+  // Refresh token → cookie
   res.cookie("accessToken", accessToken, {
     httpOnly: true,
-    secure: true,      //process.env.NODE_ENV === "production",
-    sameSite: "none",       //"Strict",
-    maxAge: 15 * 60 * 1000 // 15 dakika
+    secure: true,
+    sameSite: "none",
+    domain: ".kocsoftware.net", // ← bu önemli: subdomain'leri de kapsar
+    maxAge: 15 * 60 * 1000
   });
-
+  
   // Refresh token → cookie
   res.cookie("refreshToken", refreshToken, {
     httpOnly: true,
-    secure: true, // production'da true olmalı
-    sameSite: "none", // cross-site cookie için
-    maxAge: 7 * 24 * 60 * 60 * 1000, // 7 gün
+    secure: true,
+    sameSite: "none",
+    domain: ".kocsoftware.net",
+    maxAge: 7 * 24 * 60 * 60 * 1000,
   });
+  
 
   // Access token → response
   res.json({
@@ -123,15 +131,18 @@ const logout = asyncHandler(async (req, res) => {
     httpOnly: true,
     secure: true,
     sameSite: "none",
+    domain: ".kocsoftware.net" // eklendi
   });
 
   res.clearCookie("refreshToken", {
     httpOnly: true,
     secure: true,
     sameSite: "none",
+    domain: ".kocsoftware.net" // eklendi
   });
   
   res.json({ message: "Çıkış başarılı" });
 });
+
 
 module.exports = { signup, login, refreshTokenHandler, logout };
