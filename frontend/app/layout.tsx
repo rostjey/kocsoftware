@@ -15,7 +15,13 @@ const geistMono = Geist_Mono({
 export const metadata: Metadata = {
   title: "kocsoftware.net",
   description: "Koc Software - Cafe Yönetim Sistemi",
+  icons: {
+    icon: "/favicon.ico", // varsayılan favicon
+    shortcut: "/favicon.ico", // Safari uyumluluğu
+    apple: "/apple-touch-icon.png", // iOS ekran kısayolu
+  },
 };
+
 
 export default function RootLayout({
   children,
