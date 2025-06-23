@@ -77,7 +77,7 @@ export default function AdminDashboard({
         {/* Menü Görüntüle Linki ve Çıkış Butonu */}
         <div className="mb-8 text-center">
           <a
-            href={`https://kocsoftware.vercel.app/${slug}`}
+            href={`https://kocsoftware.net/${slug}`}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-block bg-white text-purple-700 font-semibold px-6 py-3 rounded-xl shadow-md transition hover:bg-gray-100 text-lg"
