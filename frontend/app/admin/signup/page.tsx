@@ -119,7 +119,7 @@ export default function SignupPage() {
         <button
           type="button"
           onClick={() => router.push("/admin/signup-google")}
-          className="w-full h-12 bg-white text-red-600 font-semibold rounded-xl shadow-md transition hover:bg-gray-100 text-lg flex items-center justify-center gap-2"
+          className="w-full h-12 bg-white text-purple-700 font-semibold rounded-xl shadow-md transition hover:bg-gray-100 text-lg flex items-center justify-center gap-2"
         >
           <svg
             className="w-5 h-5"
