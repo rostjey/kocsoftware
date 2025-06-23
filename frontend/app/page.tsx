@@ -18,7 +18,7 @@ export default function Home() {
         </div>
 
         <h1 className="text-2xl font-semibold text-gray-100 tracking-wider">
-          kocsoftware.com
+          www.kocsoftware.net
         </h1>
       </div>
 
