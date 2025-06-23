@@ -6,7 +6,7 @@ passport.use(new GoogleStrategy(
   {
     clientID: process.env.GOOGLE_CLIENT_ID,
     clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: "/api/admin/google/callback", // ✅ /admin ile eşleştirildi
+    callbackURL: "https://api.kocsoftware.net/api/admin/google/callback", // ✅ /admin ile eşleştirildi
     passReqToCallback: true // ✅ req.query.state kullanabilmek için
   },
   async (req, accessToken, refreshToken, profile, done) => {
