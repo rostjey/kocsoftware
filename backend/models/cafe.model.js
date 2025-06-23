@@ -20,13 +20,28 @@ const CafeSchema = new mongoose.Schema({
     },
     password: {
         type: String,
-        required: true
+        required: false // Google ile giriş yapanlarda olmayacak
     },
     logo: {
         type: String,
         default: ""
     },
     instagram: {
+        type: String,
+        default: ""
+    },
+    googleId: {
+        type: String,
+        default: null,
+        unique: true,
+        sparse: true // sadece bazı kayıtlarda olur, boş olanlar hata vermez
+    },
+    provider: {
+        type: String,
+        enum: ["local", "google"],
+        default: "local"
+    },
+    avatar: {
         type: String,
         default: ""
     },

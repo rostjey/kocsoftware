@@ -80,7 +80,42 @@ export default function AdminLoginPage() {
           Giriş Yap
         </button>
       </form>
-  
+
+      {/* Google ile devam et butonu */}
+      <div className="mt-8">
+        <button
+          type="button"
+          onClick={() => {
+            window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/api/admin/google`;
+          }}
+          className="w-full h-12 bg-white text-red-600 font-semibold rounded-xl shadow-md transition hover:bg-gray-100 text-lg flex items-center justify-center gap-2"
+        >
+          <svg
+            className="w-5 h-5"
+            viewBox="0 0 533.5 544.3"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              fill="#4285F4"
+              d="M533.5 278.4c0-17.7-1.4-35.1-4.1-52H272.1v98.7h146.9c-6.4 34.7-25.7 64.3-54.9 83.9v69.5h88.9c52-47.8 80.5-118.2 80.5-200.1z"
+            />
+            <path
+              fill="#34A853"
+              d="M272.1 544.3c73.8 0 135.6-24.4 180.8-66.3l-88.9-69.5c-24.7 16.6-56.3 26.3-91.9 26.3-70.7 0-130.6-47.8-152-112.1H30.7v70.5c45.4 89.5 137.8 150.9 241.4 150.9z"
+            />
+            <path
+              fill="#FBBC05"
+              d="M120.1 322.7c-10.5-31.6-10.5-65.8 0-97.4V154.8H30.7c-37.2 72.9-37.2 158.1 0 231l89.4-63.1z"
+            />
+            <path
+              fill="#EA4335"
+              d="M272.1 107.7c38.5-.6 75.3 13.8 103.6 40.3l77.7-77.7C412.3 24.4 350.3 0 272.1 0 168.5 0 76.1 61.3 30.7 150.8l89.4 63.1c21.4-64.3 81.3-112.1 152-112.1z"
+            />
+          </svg>
+          Google ile Devam Et
+        </button>
+      </div>
+
       {/* Kayıt linki */}
       <div className="mt-10 text-sm text-gray-200">
         Hesabınız yok mu?{" "}

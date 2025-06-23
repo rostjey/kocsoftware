@@ -144,5 +144,31 @@ const logout = asyncHandler(async (req, res) => {
   res.json({ message: "Çıkış başarılı" });
 });
 
+const googleLoginCallback = asyncHandler(async (req, res) => {
+  const cafe = req.user;
 
-module.exports = { signup, login, refreshTokenHandler, logout };
+  const payload = { cafeId: cafe._id, cafeSlug: cafe.slug };
+  const accessToken = generateAccessToken(payload);
+  const refreshToken = generateRefreshToken(payload);
+
+  res.cookie("accessToken", accessToken, {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
+    domain: ".kocsoftware.net",
+    maxAge: 15 * 60 * 1000
+  });
+
+  res.cookie("refreshToken", refreshToken, {
+    httpOnly: true,
+    secure: true,
+    sameSite: "none",
+    domain: ".kocsoftware.net",
+    maxAge: 7 * 24 * 60 * 60 * 1000
+  });
+
+  res.redirect(`https://kocsoftware.net/admin/dashboard/${cafe.slug}`);
+});
+
+
+module.exports = { signup, login, refreshTokenHandler, logout, googleLoginCallback };

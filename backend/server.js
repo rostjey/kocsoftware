@@ -8,24 +8,28 @@ const cafeRoutes = require("./routes/cafe.routes");
 const uploadRoutes = require("./routes/upload.routes");
 const errorMiddleware = require("./middlewares/error.middleware");
 require("dotenv").config();
+const passport = require("passport");
+require("./config/passport"); // passport.js dosyasını çalıştır
 
 const app = express();
 
 const allowedOrigins = [
-    process.env.FRONTEND_URL,
-    process.env.FRONTEND_URL_WWW
-  ];
+  process.env.FRONTEND_URL,
+  process.env.FRONTEND_URL_WWW
+];
   
-  app.use(cors({
-    origin: (origin, callback) => {
-      if (!origin || allowedOrigins.includes(origin)) {
-        callback(null, true);
-      } else {
-        callback(new Error("CORS hatası: Bu origin izinli değil."));
-      }
-    },
-    credentials: true
-  }));
+app.use(cors({
+  origin: (origin, callback) => {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("CORS hatası: Bu origin izinli değil."));
+    }
+  },
+  credentials: true
+}));
+
+app.use(passport.initialize()); // Passport.js'i başlat
 
 app.use(express.json());
 app.use(cookieParser());
