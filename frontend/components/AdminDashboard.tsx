@@ -28,11 +28,6 @@ export default function AdminDashboard({
       const res = await api.get("/api/admin/me");
       const cafeData = res.data;
 
-      if (!cafeData || !cafeData.name) {
-        router.push("/admin/login");  // Eğer kafe verisi yoksa login sayfasına yönlendir
-        return;
-      }
-
       setCafe({
         name: cafeData.name || "",
         logo: cafeData.logo || "",
@@ -43,6 +38,7 @@ export default function AdminDashboard({
       setProducts(productsRes.data);
     } catch (err) {
       console.error("Veri alınamadı:", err);
+      router.push("/admin/login"); // Eğer admin oturumu kapatıldıysa login sayfasına yönlendir
     }
   }, []);
 
