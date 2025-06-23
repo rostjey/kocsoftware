@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   icons: {
     icon: "/favicon.ico", // varsayılan favicon
     shortcut: "/favicon.ico", // Safari uyumluluğu
-    apple: "/apple-touch-icon.png", // iOS ekran kısayolu
+    apple: "/apple-touch-icon-fixed.png", // iOS ekran kısayolu
   },
 };
 
