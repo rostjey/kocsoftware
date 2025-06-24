@@ -21,6 +21,7 @@ export default function AdminDashboard({
   const [cafe, setCafe] = useState<Cafe>(initialCafe);
   const [products, setProducts] = useState<Product[]>([]);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter(); // yönlendirme 
 
@@ -50,6 +51,7 @@ export default function AdminDashboard({
 
   // Çıkış yapma fonksiyonu
   const handleLogout = async () => {
+    setIsLoading(true);
     try {
       await api.post("/api/admin/logout", {}, { withCredentials: true }); // backend yolu
 
@@ -60,6 +62,10 @@ export default function AdminDashboard({
       router.push("/admin/login"); // logout sonrası login sayfasına yönlendirme
     } catch (error) {
       console.error("Logout başarısız:", error);
+      setIsLoading(false); 
+    }finally {
+      // Yönlendirme olmasa bile loading'i kapat
+      setIsLoading(false);
     }
   };
 
@@ -90,9 +96,21 @@ export default function AdminDashboard({
   
           <button
             onClick={handleLogout}
-            className="inline-block bg-red-400 text-white font-semibold px-6 py-3 rounded-xl shadow-md transition hover:bg-red-600 text-lg"
+            disabled={isLoading}
+            className={`inline-block font-semibold px-6 py-3 rounded-xl shadow-md transition text-lg ${
+            isLoading
+              ? "bg-gray-300 text-gray-600 cursor-not-allowed"
+              : "bg-red-400 text-white hover:bg-red-600"
+            }`}
           >
-            Çıkış Yap
+            {isLoading ? (
+              <div className="flex items-center gap-2">
+              <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+                Çıkılıyor...
+              </div>
+            ) : (
+            "Çıkış Yap"
+            )}
           </button>
         </div>
   
