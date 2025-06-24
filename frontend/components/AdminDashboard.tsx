@@ -111,7 +111,7 @@ export default function AdminDashboard({
                 key={value}
                 onClick={async () => {
                  try {
-                  await api.patch("/api/admin/update-template", { template: value });
+                  await api.patch("/api/cafe/admin/update-template", { template: value });
                     setCafe(prev => ({ ...prev, template: value as CafeTemplate,})); // şablon valueleri as ile eklendi types da sıkıntı olmasın diye.typesda olası valueler elle yazıldı bunun daha profesyonel bir yolu yok mu? CafeTemplate tipini kullanarak profesyonelleştirdik.
                   } catch (err) {
                     console.error("Şablon güncellenemedi:", err);
