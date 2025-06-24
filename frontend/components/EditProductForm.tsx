@@ -20,12 +20,12 @@ export default function EditProductForm({ product, onClose, onUpdated }: EditPro
   const handleUpdate = async (e: React.FormEvent) => {
     e.preventDefault();
     setError("");
+    setUploading(true);
 
     let updatedImage = image;
 
     try {
       if (imageFile) {
-        setUploading(true);
         const formData = new FormData();
         formData.append("image", imageFile);
 
@@ -39,7 +39,6 @@ export default function EditProductForm({ product, onClose, onUpdated }: EditPro
         );
 
         updatedImage = res.data.secure_url;
-        setUploading(false);
       }
 
       await axios.put(
@@ -59,6 +58,7 @@ export default function EditProductForm({ product, onClose, onUpdated }: EditPro
     } catch (err) {
       console.error("Ürün güncelleme hatası:", err);
       setError("Güncelleme başarısız oldu. Lütfen tekrar deneyin.");
+    } finally {
       setUploading(false);
     }
   };
