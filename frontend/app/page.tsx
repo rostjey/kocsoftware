@@ -14,6 +14,7 @@ export default function Home() {
             width={144}
             height={144}
             className="object-cover"
+            unoptimized
           />
         </div>
 
