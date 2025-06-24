@@ -12,10 +12,8 @@ import { useRouter } from "next/navigation";
 
 export default function AdminDashboard({
   slug,
-  initialCafe,
 }: {
   slug: string;
-  initialCafe: Cafe;
 }) {
   const [cafe, setCafe] = useState<Cafe | null>(null); // null olarak başlatıldı
   const [products, setProducts] = useState<Product[]>([]);
