@@ -49,7 +49,7 @@ export default async function FeaturedPage({ params }: { params: { slug: string 
   );
 }
 
-export async function generateMetadata({ params }: { params: { slug: string } }) {
+export function generateMetadata({ params }: { params: { slug: string } }) {
   const { slug } = params;
   return {
     title: `${slug} | Öne Çıkanlar`,
