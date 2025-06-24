@@ -10,12 +10,27 @@ router.post("/login", login);
 router.post("/refresh-token", refreshTokenHandler);
 router.post("/logout", logout);
 
-router.get("/me", authMiddleware, (req, res) => {
-    res.json({
-        message: "Yetkili erişim başarılı",
-        cafeSlug: req.user.cafeSlug
-    });
+router.get("/me", authMiddleware, async (req, res) => {
+  try {
+      const cafe = await Cafe.findOne({ slug: req.user.cafeSlug });
+
+      if (!cafe) {
+          return res.status(404).json({ error: "Kafe bulunamadı" });
+      }
+
+      res.json({
+          name: cafe.name,
+          logo: cafe.logo,
+          instagram: cafe.instagram,
+          template: cafe.template,
+          slug: cafe.slug,
+      });
+  } catch (err) {
+      console.error("Cafe verisi alınamadı", err);
+      res.status(500).json({ error: "Sunucu hatası" });
+  }
 });
+
 
 // Google Login-Signup? başlatma signupKey eklendi ama bu fonksiyon sadece google ile login yapanlar için mi yoksa hem login hem signup için mi kullanılacak?
 router.get("/google", (req, res, next) => {
