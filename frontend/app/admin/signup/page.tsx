@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import React from "react";
 import { AxiosError } from "axios";
 import Link from "next/link";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 export default function SignupPage() {
   const [name, setName] = useState("");
@@ -16,9 +17,11 @@ export default function SignupPage() {
   const [signupKey, setSignupKey] = useState("");
   const [error, setError] = useState("");
   const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSignup = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsLoading(true); // yükleniyor 
     try {
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/api/admin/signup`,
@@ -43,6 +46,8 @@ export default function SignupPage() {
       } else {
         setError("Beklenmeyen bir hata oluştu.");
       }
+    } finally {
+      setIsLoading(false); // her durumda yükleniyor durdur
     }
   };
 
@@ -109,8 +114,9 @@ export default function SignupPage() {
         <button
           type="submit"
           className="w-full h-12 bg-white text-purple-700 font-semibold rounded-xl shadow-md transition hover:bg-gray-100 text-lg"
+          disabled={isLoading}
         >
-          Kayıt Ol
+          {isLoading ? <LoadingSpinner /> : "Kayıt Ol"}
         </button>
       </form>
 

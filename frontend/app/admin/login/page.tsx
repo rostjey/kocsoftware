@@ -6,15 +6,18 @@ import { useRouter } from 'next/navigation';
 import React from 'react';
 import { AxiosError } from "axios";
 import Link from 'next/link';
+import LoadingSpinner from '@/components/LoadingSpinner';
 
 export default function AdminLoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleLogin = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    setIsLoading(true); // yükleniyor 
 
     try {
       const res = await axios.post(
@@ -34,6 +37,8 @@ export default function AdminLoginPage() {
       } else {
         setError("Beklenmeyen bir hata oluştu.");
       }
+    } finally {
+      setIsLoading(false); // her durumda yüklenme dursun
     }
   };
 
@@ -76,8 +81,9 @@ export default function AdminLoginPage() {
         <button
           type="submit"
           className="w-full h-12 bg-white text-purple-700 font-semibold rounded-xl shadow-md transition hover:bg-gray-100 text-lg"
+          disabled={isLoading}
         >
-          Giriş Yap
+          {isLoading ? <LoadingSpinner /> : "Kayıt Ol"}
         </button>
       </form>
 
