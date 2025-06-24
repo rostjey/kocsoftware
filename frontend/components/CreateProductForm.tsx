@@ -5,7 +5,7 @@ import axios from "axios";
 
 export default function CreateProductForm({ onCreated }: {onCreated: () => void }) {
   const [name, setName] = useState("");
-  const [price, setPrice] = useState<number>(0);
+  const [price, setPrice] = useState<string>(""); // boş string //const [price, setPrice] = useState<number>(0);
   const [description, setDescription] = useState("");
   const [category, setCategory] = useState("");
   const [imageFile, setImageFile] = useState<File | null>(null);
@@ -47,7 +47,7 @@ export default function CreateProductForm({ onCreated }: {onCreated: () => void 
 
     // Temizle
     setName("");
-    setPrice(0);
+    setPrice("");
     setDescription("");
     setCategory("");
     setImageFile(null);
@@ -72,7 +72,7 @@ export default function CreateProductForm({ onCreated }: {onCreated: () => void 
       <input
         type="number"
         value={price}
-        onChange={(e) => setPrice(Number(e.target.value))}
+        onChange={(e) => setPrice((e.target.value))}
         placeholder="Fiyat"
         className="w-full px-4 py-3 bg-[#e9eaf3] border border-white text-black placeholder-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
         required
