@@ -76,9 +76,9 @@ export default function AdminDashboard({
   return (
     <div className="min-h-screen flex flex-col items-center bg-gradient-to-b from-purple-500 to-blue-400 px-4 py-10 text-white">
       <div className="w-full max-w-4xl space-y-10">
-
+  
         {/* Menü Görüntüle Linki ve Çıkış Butonu */}
-        <div className="mb-8 text-center">
+        <div className="mb-8 text-center space-x-4">
           <a
             href={`https://kocsoftware.net/${slug}`}
             target="_blank"
@@ -87,18 +87,15 @@ export default function AdminDashboard({
           >
             Menünüzü Görüntüleyin
           </a>
-
+  
           <button
             onClick={handleLogout}
             className="inline-block bg-red-400 text-white font-semibold px-6 py-3 rounded-xl shadow-md transition hover:bg-red-600 text-lg"
-            >
+          >
             Çıkış Yap
           </button>
         </div>
-
-        {/* QR Kodu Gösterim ve İndirme */}
-        <QrCodeSection slug={slug} />
-
+  
         {/* Menü Şablonu Seçimi */}
         <div className="bg-white bg-opacity-10 p-6 rounded-xl shadow-md text-center space-y-4">
           <h2 className="text-xl font-bold text-purple-700 ">Menü Şablonunuzu Seçin</h2>
@@ -111,9 +108,9 @@ export default function AdminDashboard({
               <button
                 key={value}
                 onClick={async () => {
-                 try {
-                  await api.patch("/api/cafe/admin/update-template", { template: value });
-                    setCafe(prev => ({ ...prev, template: value as CafeTemplate,})); // şablon valueleri as ile eklendi types da sıkıntı olmasın diye.typesda olası valueler elle yazıldı bunun daha profesyonel bir yolu yok mu? CafeTemplate tipini kullanarak profesyonelleştirdik.
+                  try {
+                    await api.patch("/api/cafe/admin/update-template", { template: value });
+                    setCafe(prev => ({ ...prev, template: value as CafeTemplate }));
                   } catch (err) {
                     console.error("Şablon güncellenemedi:", err);
                   }
@@ -129,10 +126,18 @@ export default function AdminDashboard({
             ))}
           </div>
         </div>
-
-        {/* Kafe Bilgisi Formu */}
-        <div className="w-full max-w-md mx-auto p-6">
-          <CafeForm cafe={cafe} slug={slug} onSaved={fetchCafeAndProducts} />
+  
+        {/* Kafe Bilgileri ve QR Kod - YAN YANA */}
+        <div className="flex flex-col md:flex-row justify-between items-start gap-6 w-full">
+          {/* Sol: Kafe Formu */}
+          <div className="flex-1 max-w-md w-full">
+            <CafeForm cafe={cafe} slug={slug} onSaved={fetchCafeAndProducts} />
+          </div>
+  
+          {/* Sağ: QR Kod */}
+          <div className="flex-1 max-w-md w-full flex justify-center">
+            <QrCodeSection slug={slug} />
+          </div>
         </div>
   
         {/* Ürün Oluşturma Formu */}
@@ -170,5 +175,5 @@ export default function AdminDashboard({
         )}
       </div>
     </div>
-  );
+  );  
 }
