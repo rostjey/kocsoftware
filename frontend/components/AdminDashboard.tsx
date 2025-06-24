@@ -7,20 +7,23 @@ import EditProductForm from "./EditProductForm";
 import ProductCard from "./ProductCard";
 import QrCodeSection from "./QrCodeSection";
 import api from "@/lib/axios";
-import { Cafe, Product, CafeTemplate } from "@/types";
-import { useRouter } from "next/navigation";
+import { Cafe, Product, CafeTemplate} from "@/types";
+import { useRouter } from "next/navigation"; // App Router
+
 
 export default function AdminDashboard({
   slug,
+  initialCafe,
 }: {
   slug: string;
+  initialCafe: Cafe;
 }) {
-  const [cafe, setCafe] = useState<Cafe | null>(null); // null olarak başlatıldı
+  const [cafe, setCafe] = useState<Cafe>(initialCafe);
   const [products, setProducts] = useState<Product[]>([]);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
-  const router = useRouter();
+  const router = useRouter(); // yönlendirme 
 
   const fetchCafeAndProducts = useCallback(async () => {
     try {
@@ -31,31 +34,37 @@ export default function AdminDashboard({
         name: cafeData.name || "",
         logo: cafeData.logo || "",
         instagram: cafeData.instagram || "",
-        template: cafeData.template || "scroll",
+        template: cafeData.template !== undefined ? cafeData.template : "scroll" //burası önemli en son seçilen kategorinin logout sonrası gözükmesi için
       });
 
       const productsRes = await api.get("/api/products");
       setProducts(productsRes.data);
     } catch (err) {
       console.error("Veri alınamadı:", err);
-      router.push("/admin/login");
+      router.push("/admin/login"); // Eğer admin oturumu kapatıldıysa login sayfasına yönlendir
     }
-  }, [router]);
+  }, []);
 
   useEffect(() => {
     fetchCafeAndProducts();
   }, [fetchCafeAndProducts]);
 
+  // Çıkış yapma fonksiyonu
   const handleLogout = async () => {
     setIsLoading(true);
     try {
-      await api.post("/api/admin/logout", {}, { withCredentials: true });
-      setCafe(null);
+      await api.post("/api/admin/logout", {}, { withCredentials: true }); // backend yolu
+
+      // cafe ve ürünleri temizle
+      setCafe({ name: "", logo: "", instagram: "" });
       setProducts([]);
-      router.push("/admin/login");
+
+      router.push("/admin/login"); // logout sonrası login sayfasına yönlendirme
     } catch (error) {
       console.error("Logout başarısız:", error);
-    } finally {
+      setIsLoading(false); 
+    }finally {
+      // Yönlendirme olmasa bile loading'i kapat
       setIsLoading(false);
     }
   };
@@ -70,18 +79,11 @@ export default function AdminDashboard({
     fetchCafeAndProducts();
   };
 
-  if (!cafe) {
-    return (
-      <div className="min-h-screen flex justify-center items-center text-white">
-        Yükleniyor...
-      </div>
-    );
-  }
-
   return (
     <div className="min-h-screen flex flex-col items-center bg-gradient-to-b from-purple-500 to-blue-400 px-4 py-10 text-white">
       <div className="w-full max-w-4xl space-y-10">
-        {/* Menü Görüntüle ve Çıkış */}
+  
+        {/* Menü Görüntüle Linki ve Çıkış Butonu */}
         <div className="mb-8 text-center space-x-4">
           <a
             href={`https://kocsoftware.net/${slug}`}
@@ -91,30 +93,30 @@ export default function AdminDashboard({
           >
             Menünüzü Görüntüleyin
           </a>
-
+  
           <button
             onClick={handleLogout}
             disabled={isLoading}
             className={`inline-block font-semibold px-6 py-3 rounded-xl shadow-md transition text-lg ${
-              isLoading
-                ? "bg-gray-300 text-gray-600 cursor-not-allowed"
-                : "bg-red-400 text-white hover:bg-red-600"
+            isLoading
+              ? "bg-gray-300 text-gray-600 cursor-not-allowed"
+              : "bg-red-400 text-white hover:bg-red-600"
             }`}
           >
             {isLoading ? (
               <div className="flex items-center gap-2">
-                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+              <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
                 Çıkılıyor...
               </div>
             ) : (
-              "Çıkış Yap"
+            "Çıkış Yap"
             )}
           </button>
         </div>
-
+  
         {/* Menü Şablonu Seçimi */}
         <div className="bg-white bg-opacity-10 p-6 rounded-xl shadow-md text-center space-y-4">
-          <h2 className="text-xl font-bold text-purple-700">Menü Şablonunuzu Seçin</h2>
+          <h2 className="text-xl font-bold text-purple-700 ">Menü Şablonunuzu Seçin</h2>
           <div className="flex justify-center gap-4 flex-wrap">
             {[
               { label: "Sadece Kaydır", value: "scroll" },
@@ -125,12 +127,8 @@ export default function AdminDashboard({
                 key={value}
                 onClick={async () => {
                   try {
-                    await api.patch("/api/cafe/admin/update-template", {
-                      template: value,
-                    });
-                    setCafe((prev) =>
-                      prev ? { ...prev, template: value as CafeTemplate } : null
-                    );
+                    await api.patch("/api/cafe/admin/update-template", { template: value });
+                    setCafe(prev => ({ ...prev, template: value as CafeTemplate }));
                   } catch (err) {
                     console.error("Şablon güncellenemedi:", err);
                   }
@@ -146,26 +144,28 @@ export default function AdminDashboard({
             ))}
           </div>
         </div>
-
-        {/* Kafe Formu ve QR Kod */}
+  
+        {/* Kafe Bilgileri ve QR Kod - YAN YANA */}
         <div className="flex flex-col md:flex-row justify-between items-start gap-6 w-full">
+          {/* Sol: Kafe Formu */}
           <div className="flex-1 max-w-md w-full">
             <CafeForm cafe={cafe} slug={slug} onSaved={fetchCafeAndProducts} />
           </div>
-
+  
+          {/* Sağ: QR Kod */}
           <div className="flex-1 max-w-md w-full flex justify-center">
             <QrCodeSection slug={slug} />
           </div>
         </div>
-
-        {/* Ürün Oluştur */}
+  
+        {/* Ürün Oluşturma Formu */}
         <div className="bg-white bg-opacity-10 p-6 rounded-xl shadow-md">
           <CreateProductForm onCreated={fetchCafeAndProducts} />
         </div>
-
-        {/* Ürün Başlık */}
+  
+        {/* Ürün Listesi Başlık */}
         <h2 className="text-2xl font-bold tracking-wide">Ürünleriniz</h2>
-
+  
         {/* Ürün Listesi */}
         {products.length === 0 ? (
           <p className="text-gray-200">Henüz ürün eklenmemiş.</p>
@@ -182,8 +182,8 @@ export default function AdminDashboard({
             ))}
           </div>
         )}
-
-        {/* Ürün Düzenleme */}
+  
+        {/* Ürün Düzenleme Formu */}
         {editingProduct && (
           <EditProductForm
             product={editingProduct}
@@ -193,5 +193,6 @@ export default function AdminDashboard({
         )}
       </div>
     </div>
-  );
+  );  
 }
+
