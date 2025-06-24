@@ -3,7 +3,7 @@ import Image from "next/image";
 import { CafeData } from "@/types";
 
 export default async function FeaturedPage({ params }: { params: { slug: string } }) {
-  const { slug } = await params;
+  const { slug } = params;
 
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/cafe/${slug}`, {
     next: { tags: [`cafe-${slug}`] },
@@ -50,7 +50,7 @@ export default async function FeaturedPage({ params }: { params: { slug: string 
 }
 
 export async function generateMetadata({ params }: { params: { slug: string } }) {
-  const { slug } = await params;
+  const { slug } = params;
   return {
     title: `${slug} | Öne Çıkanlar`,
   };
