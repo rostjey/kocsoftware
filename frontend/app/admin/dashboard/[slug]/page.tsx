@@ -1,5 +1,5 @@
 import AdminDashboard from "@/components/AdminDashboard";
 
-export default async function DashboardPage({ params }: { params: { slug: string } }) {
+export default function DashboardPage({ params }: { params: { slug: string } }) {
   return <AdminDashboard slug={params.slug} />;
 }

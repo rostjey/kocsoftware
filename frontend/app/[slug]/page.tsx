@@ -11,7 +11,7 @@ export async function generateStaticParams() {
   return slugs;
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+export async function generateMetadata({ params }: { params: { slug: string } }) {
   const { slug } = await params;
 
   return {
@@ -19,7 +19,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   };
 }
 
-export default async function CafePage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function CafePage({ params }: { params: { slug: string } }) {
   const { slug } = await params;
 
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/cafe/${slug}`, {

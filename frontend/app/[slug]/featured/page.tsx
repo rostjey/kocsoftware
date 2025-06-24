@@ -2,7 +2,7 @@ export const dynamic = "force-dynamic"; // ISR devre dışı — her seferinde t
 import Image from "next/image";
 import { CafeData } from "@/types";
 
-export default async function FeaturedPage({ params }: { params: Promise<{ slug: string }> }) {
+export default async function FeaturedPage({ params }: { params: { slug: string } }) {
   const { slug } = await params;
 
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/cafe/${slug}`, {
@@ -49,7 +49,7 @@ export default async function FeaturedPage({ params }: { params: Promise<{ slug:
   );
 }
 
-export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }) {
+export async function generateMetadata({ params }: { params: { slug: string } }) {
   const { slug } = await params;
   return {
     title: `${slug} | Öne Çıkanlar`,
