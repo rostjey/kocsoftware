@@ -83,7 +83,7 @@ export default function AdminLoginPage() {
           className="w-full h-12 bg-white text-purple-700 font-semibold rounded-xl shadow-md transition hover:bg-gray-100 text-lg"
           disabled={isLoading}
         >
-          {isLoading ? <LoadingSpinner /> : "Kayıt Ol"}
+          {isLoading ? <LoadingSpinner /> : "Giriş Yap"}
         </button>
       </form>
 
