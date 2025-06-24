@@ -4,6 +4,7 @@ import { useState} from "react";
 import axios from "axios";
 import Image from "next/image";
 import { Cafe } from "@/types";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 export default function CafeForm({
   cafe,
@@ -23,11 +24,12 @@ export default function CafeForm({
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setUploading(true);
+
     let finalLogo = logo;
 
     try {
       if (logoFile) {
-        setUploading(true);
         const formData = new FormData();
         formData.append("image", logoFile);
 
@@ -40,7 +42,6 @@ export default function CafeForm({
           }
         );
         finalLogo = res.data.secure_url;
-        setUploading(false);
       }
 
       await axios.put(
@@ -56,6 +57,8 @@ export default function CafeForm({
       if (onSaved) onSaved();
     } catch (err) {
       console.error("Kafe güncelleme hatası:", err);
+    } finally {
+      setUploading(false);
     }
   };
 
@@ -100,13 +103,12 @@ export default function CafeForm({
         className="w-full px-4 py-3 bg-[#e9eaf3] border border-white text-black rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
       />
   
-      {uploading && <p className="text-yellow-600 text-sm text-center">Logo yükleniyor...</p>}
-  
       <button
         type="submit"
-        className="w-full bg-white text-purple-700 font-semibold py-3 rounded-xl shadow-md transition hover:bg-gray-100 text-lg"
+        disabled={uploading}
+        className="w-full bg-white text-purple-700 font-semibold py-3 rounded-xl shadow-md transition hover:bg-gray-100 text-lg flex items-center justify-center gap-2"
       >
-        Kaydet
+        {uploading ? <LoadingSpinner /> : "Kaydet"}
       </button>
     </form>
   );  
