@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import axios from "axios";
+import LoadingSpinner from "./LoadingSpinner"; 
 
 export default function CreateProductForm({ onCreated }: {onCreated: () => void }) {
   const [name, setName] = useState("");
@@ -13,46 +14,53 @@ export default function CreateProductForm({ onCreated }: {onCreated: () => void 
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-
+    setUploading(true); // spinner başlasın
+  
     let imageUrl = "";
-
-    if (imageFile) {
-      setUploading(true);
-      const formData = new FormData();
-      formData.append("image", imageFile);
-
-      const res = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/upload`,
-        formData,
+  
+    try {
+      if (imageFile) {
+        const formData = new FormData();
+        formData.append("image", imageFile);
+  
+        const res = await axios.post(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/upload`,
+          formData,
+          {
+            headers: { "Content-Type": "multipart/form-data" },
+            withCredentials: true,
+          }
+        );
+        imageUrl = res.data.secure_url;
+      }
+  
+      await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/products`,
         {
-          headers: { "Content-Type": "multipart/form-data" },
-          withCredentials: true,
-        }
+          name,
+          price: Number(price), // string olduğuna dikkat
+          description,
+          category,
+          image: imageUrl,
+        },
+        { withCredentials: true }
       );
-      imageUrl = res.data.secure_url;
-      setUploading(false);
+  
+      // Başarılıysa inputları temizle
+      setName("");
+      setPrice("");
+      setDescription("");
+      setCategory("");
+      setImageFile(null);
+      onCreated();
+    } catch (error) {
+      console.error("Ürün ekleme hatası:", error);
+      // Buraya istersen kullanıcıya mesaj gösterecek bir setError de ekleyebilirsin
+    } finally {
+      setUploading(false); // 🔥 her durumda spinner kapanır
     }
-
-    await axios.post(
-      `${process.env.NEXT_PUBLIC_API_URL}/api/products`,
-      {
-        name,
-        price,
-        description,
-        category,
-        image: imageUrl,
-      },
-      { withCredentials: true }
-    );
-
-    // Temizle
-    setName("");
-    setPrice("");
-    setDescription("");
-    setCategory("");
-    setImageFile(null);
-    onCreated();
   };
+  
 
   return (
     <form
@@ -99,14 +107,13 @@ export default function CreateProductForm({ onCreated }: {onCreated: () => void 
         onChange={(e) => setImageFile(e.target.files?.[0] || null)}
         className="w-full px-4 py-3 bg-[#e9eaf3] border border-white text-black rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
       />
-  
-      {uploading && <p className="text-yellow-600">Yükleniyor...</p>}
-  
+
       <button
         type="submit"
-        className="w-full bg-white text-purple-700 font-semibold py-3 rounded-xl shadow-md transition hover:bg-gray-100 text-lg"
+        disabled={uploading}
+        className="w-full bg-white text-purple-700 font-semibold py-3 rounded-xl shadow-md transition hover:bg-gray-100 text-lg flex items-center justify-center gap-2"
       >
-        Ekle
+        {uploading ? <LoadingSpinner /> : "Ekle"} 
       </button>
     </form>
   );  
