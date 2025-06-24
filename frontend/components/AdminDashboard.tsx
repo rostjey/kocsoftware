@@ -33,6 +33,7 @@ export default function AdminDashboard({
         name: cafeData.name || "",
         logo: cafeData.logo || "",
         instagram: cafeData.instagram || "",
+        template: cafeData.template || "scroll", //burası önemli en son seçilen kategorinin logout sonrası gözükmesi için
       });
 
       const productsRes = await api.get("/api/products");
