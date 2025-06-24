@@ -1,6 +1,8 @@
-import CafeClient from "@/components/CafeClient";
-import { CafeData } from "@/types";
+import ScrollTemplate from "@/components/templates/ScrollTemplate";
+import CategoryTemplate from "@/components/templates/CategoryTemplate";
+import HorizontalTemplate from "@/components/templates/HorizontalTemplate";
 
+import { CafeData,} from "@/types";
 
 // ✅ Slugları çekip statik sayfalar üret
 export async function generateStaticParams() {
@@ -17,8 +19,6 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   };
 }
 
-
-
 export default async function CafePage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params;
 
@@ -32,12 +32,20 @@ export default async function CafePage({ params }: { params: Promise<{ slug: str
 
   const data: CafeData = await res.json();
 
-  return (
-    <CafeClient
-      name={data.cafe.name}
-      logo={data.cafe.logo}
-      instagram={data.cafe.instagram}
-      products={data.products}
-    />
-  );
+  const sharedProps = {
+    name: data.cafe.name,
+    logo: data.cafe.logo,
+    instagram: data.cafe.instagram,
+    products: data.products,
+  };
+
+  switch (data.cafe.template) {
+    case "category":
+      return <CategoryTemplate {...sharedProps} />;
+    case "horizontal":
+      return <HorizontalTemplate {...sharedProps} />;
+    default:
+      return <ScrollTemplate {...sharedProps} />;
+  }
 }
+

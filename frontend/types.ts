@@ -8,17 +8,16 @@ export interface Product {
     featured: boolean;
 }
 export interface CafeData {
-    cafe: {
-      name: string;
-      logo: string;
-      instagram: string;
-    };
+    cafe: Cafe;
     products: Product[];
 }
+
+export type CafeTemplate = "scroll" | "category" | "horizontal";
 export interface Cafe {
     name: string;
     logo: string;
     instagram: string;
+    template?: CafeTemplate;
 }
 export interface Props {
     initialName?: string;
@@ -38,5 +37,5 @@ export interface EditProductFormProps {
     product: Product;
     onClose: () => void;
     onUpdated: () => void;
-  }
+}
   

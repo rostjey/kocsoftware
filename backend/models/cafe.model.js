@@ -30,6 +30,11 @@ const CafeSchema = new mongoose.Schema({
         type: String,
         default: ""
     },
+    template: {
+        type: String,
+        enum: ["scroll", "category", "horizontal"],
+        default: "scroll"
+    },
     googleId: {
         type: String,
         default: null,

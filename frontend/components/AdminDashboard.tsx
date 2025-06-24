@@ -7,7 +7,7 @@ import EditProductForm from "./EditProductForm";
 import ProductCard from "./ProductCard";
 import QrCodeSection from "./QrCodeSection";
 import api from "@/lib/axios";
-import { Cafe, Product } from "@/types";
+import { Cafe, Product, CafeTemplate} from "@/types";
 import { useRouter } from "next/navigation"; // App Router
 
 
@@ -97,7 +97,38 @@ export default function AdminDashboard({
 
         {/* QR Kodu Gösterim ve İndirme */}
         <QrCodeSection slug={slug} />
-  
+
+        {/* Menü Şablonu Seçimi */}
+        <div className="bg-white bg-opacity-10 p-6 rounded-xl shadow-md text-center space-y-4">
+          <h2 className="text-xl font-bold">Menü Şablonunuzu Seçin</h2>
+          <div className="flex justify-center gap-4 flex-wrap">
+            {[
+              { label: "Sadece Kaydır", value: "scroll" },
+              { label: "Kategorize", value: "category" },
+              { label: "Yatay Listeleme", value: "horizontal" },
+            ].map(({ label, value }) => (
+              <button
+                key={value}
+                onClick={async () => {
+                 try {
+                  await api.patch("/api/admin/update-template", { template: value });
+                    setCafe(prev => ({ ...prev, template: value as CafeTemplate,})); // şablon valueleri as ile eklendi types da sıkıntı olmasın diye.typesda olası valueler elle yazıldı bunun daha profesyonel bir yolu yok mu? CafeTemplate tipini kullanarak profesyonelleştirdik.
+                  } catch (err) {
+                    console.error("Şablon güncellenemedi:", err);
+                  }
+                }}
+                className={`px-4 py-2 rounded-xl font-semibold shadow-md transition ${
+                  cafe.template === value
+                    ? "bg-purple-600 text-white"
+                    : "bg-white text-purple-600"
+                }`}
+              >
+                {label}
+              </button>
+            ))}
+          </div>
+        </div>
+
         {/* Kafe Bilgisi Formu */}
         <div className="w-full max-w-md mx-auto p-6">
           <CafeForm cafe={cafe} slug={slug} onSaved={fetchCafeAndProducts} />

@@ -1,11 +1,10 @@
 const express = require("express");
 const router = express.Router();
-const { getMyCafe, updateCafe } = require("../controllers/cafe.controller");
+const { getMyCafe, updateCafe, getPublicMenu ,updateTemplate } = require("../controllers/cafe.controller");
 const authMiddleware = require("../middlewares/auth.middleware");
-const { getPublicMenu } = require("../controllers/cafe.controller");
 const Cafe = require("../models/cafe.model");
 
-// ✅ Tüm kafe sluglarını döndür
+// Tüm kafe sluglarını döndür
 router.get("/all-cafe-slugs", async (req, res) => {
     try {
       const cafes = await Cafe.find({}, "slug"); // sadece slug alanını getir
@@ -20,5 +19,8 @@ router.get("/all-cafe-slugs", async (req, res) => {
 router.get("/:slug", getPublicMenu); // Public menu
 router.get("/me", authMiddleware, getMyCafe);
 router.put("/:slug", authMiddleware, updateCafe);
+
+// Şablon güncelleme route'u
+router.patch("/admin/update-template", authMiddleware, updateTemplate);
 
 module.exports = router;

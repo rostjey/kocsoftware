@@ -59,6 +59,7 @@ const getPublicMenu = asyncHandler(async (req, res) => {
       name: cafe.name,
       logo: cafe.logo,
       instagram: cafe.instagram,
+      template: cafe.template || "scroll", // hangi şablon kullanılıyor
     },
     categories,
     products,
@@ -69,8 +70,32 @@ const getPublicMenu = asyncHandler(async (req, res) => {
   res.json(responseData);
 });
 
+const updateTemplate = asyncHandler(async (req, res) => {
+  const { template } = req.body;
+  const slug = req.user.cafeSlug;
+
+  const allowedTemplates = ["scroll", "category", "horizontal"];
+  if (!allowedTemplates.includes(template)) {
+    return res.status(400).json({ message: "Geçersiz şablon" });
+  }
+
+  const cafe = await Cafe.findOne({ slug });
+  if (!cafe) {
+    return res.status(404).json({ message: "Kafe bulunamadı" });
+  }
+
+  cafe.template = template;
+  await cafe.save();
+
+  await redis.del(`public_menu:${slug}`); // cache'i temizle
+
+  res.json({ message: "Şablon güncellendi", template });
+});
+
+
 module.exports = {
   getMyCafe,
   updateCafe,
   getPublicMenu,
+  updateTemplate
 };
