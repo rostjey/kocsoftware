@@ -1,4 +1,4 @@
-export const dynamic = "force-dynamic"; // ISR devre dışı — her seferinde taze veri
+export const dynamic = "force-dynamic";
 import Image from "next/image";
 import { CafeData } from "@/types";
 
@@ -49,9 +49,9 @@ export default async function FeaturedPage({ params }: { params: { slug: string 
   );
 }
 
+// ❗️BURADAKİ SORUNLUYDU, DÜZELTİLDİ 👇
 export function generateMetadata({ params }: { params: { slug: string } }) {
-  const { slug } = params;
   return {
-    title: `${slug} | Öne Çıkanlar`,
+    title: `${params.slug} | Öne Çıkanlar`,
   };
 }
