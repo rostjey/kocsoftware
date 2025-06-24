@@ -13,12 +13,15 @@ import { useRouter } from "next/navigation"; // App Router
 
 export default function AdminDashboard({
   slug,
-  initialCafe,
 }: {
   slug: string;
-  initialCafe: Cafe;
 }) {
-  const [cafe, setCafe] = useState<Cafe>(initialCafe);
+  const [cafe, setCafe] = useState<Cafe>({
+    name: "",
+    logo: "",
+    instagram: "",
+    template: "scroll",
+  });
   const [products, setProducts] = useState<Product[]>([]);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -27,14 +30,14 @@ export default function AdminDashboard({
 
   const fetchCafeAndProducts = useCallback(async () => {
     try {
-      const res = await api.get("/api/admin/me");
+      const res = await api.get("/api/admin/me", { withCredentials: true }); // backend yolu
       const cafeData = res.data;
 
       setCafe({
         name: cafeData.name || "",
         logo: cafeData.logo || "",
         instagram: cafeData.instagram || "",
-        template: cafeData.template !== undefined ? cafeData.template : "scroll" //burası önemli en son seçilen kategorinin logout sonrası gözükmesi için
+        template: cafeData.template || "scroll", //template: cafeData.template !== undefined ? cafeData.template : "scroll" //burası önemli en son seçilen kategorinin logout sonrası gözükmesi için
       });
 
       const productsRes = await api.get("/api/products");
@@ -43,7 +46,7 @@ export default function AdminDashboard({
       console.error("Veri alınamadı:", err);
       router.push("/admin/login"); // Eğer admin oturumu kapatıldıysa login sayfasına yönlendir
     }
-  }, []);
+  }, [router]);
 
   useEffect(() => {
     fetchCafeAndProducts();
