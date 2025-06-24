@@ -4,6 +4,7 @@ import { useState } from "react";
 import axios from "axios";
 import Image from "next/image";
 import {EditProductFormProps} from "@/types";
+import LoadingSpinner from "@/components/LoadingSpinner";
 
 
 export default function EditProductForm({ product, onClose, onUpdated }: EditProductFormProps) {
@@ -121,8 +122,6 @@ export default function EditProductForm({ product, onClose, onUpdated }: EditPro
           className="w-full px-4 py-3 bg-[#e9eaf3] border border-white text-black rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
         />
   
-        {uploading && <p className="text-yellow-600">Yükleniyor...</p>}
-  
         <div className="flex justify-between mt-4">
           <button
             type="button"
@@ -134,9 +133,9 @@ export default function EditProductForm({ product, onClose, onUpdated }: EditPro
           <button
             type="submit"
             disabled={uploading}
-            className="bg-white text-purple-700 font-semibold px-6 py-3 rounded-xl shadow-md transition hover:bg-gray-100 text-md"
+            className="bg-white text-purple-700 font-semibold px-6 py-3 rounded-xl shadow-md transition hover:bg-gray-100 text-md flex items-center justify-center gap-2 min-w-[120px]"
           >
-            Kaydet
+            {uploading ? <LoadingSpinner /> : "Kaydet"}
           </button>
         </div>
       </form>
