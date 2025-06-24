@@ -20,10 +20,13 @@ export default function QrCodeSection({ slug }: { slug: string }) {
   };
 
   return (
-    <div className="text-center space-y-4">
+    <div className="flex flex-col items-center space-y-4 w-full">
       <h3 className="text-xl font-semibold">QR Menü Kodu</h3>
 
-      <div ref={qrRef} className="inline-block bg-white p-4 rounded-xl shadow-md">
+      <div
+        ref={qrRef}
+        className="bg-white p-4 rounded-xl shadow-md"
+      >
         <QRCodeCanvas value={qrUrl} size={160} />
       </div>
 
@@ -36,3 +39,4 @@ export default function QrCodeSection({ slug }: { slug: string }) {
     </div>
   );
 }
+
