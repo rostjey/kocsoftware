@@ -101,7 +101,7 @@ export default function AdminDashboard({
 
         {/* Menü Şablonu Seçimi */}
         <div className="bg-white bg-opacity-10 p-6 rounded-xl shadow-md text-center space-y-4">
-          <h2 className="text-xl font-bold">Menü Şablonunuzu Seçin</h2>
+          <h2 className="text-xl font-bold text-purple-700 ">Menü Şablonunuzu Seçin</h2>
           <div className="flex justify-center gap-4 flex-wrap">
             {[
               { label: "Sadece Kaydır", value: "scroll" },
