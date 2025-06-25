@@ -1,9 +1,10 @@
 export const dynamic = "force-dynamic";
+
 import Image from "next/image";
 import { CafeData } from "@/types";
 
-export default async function FeaturedPage({ params }: { params: { slug: string } }) {
-  const { slug } = params;
+export default async function FeaturedPage(props: { params: { slug: string } }) {
+  const { slug } = props.params;
 
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/cafe/${slug}`, {
     next: { tags: [`cafe-${slug}`] },
@@ -49,9 +50,8 @@ export default async function FeaturedPage({ params }: { params: { slug: string 
   );
 }
 
-// ❗️BURADAKİ SORUNLUYDU, DÜZELTİLDİ 👇
-export function generateMetadata({ params }: { params: { slug: string } }) {
+export function generateMetadata(props: { params: { slug: string } }) {
   return {
-    title: `${params.slug} | Öne Çıkanlar`,
+    title: `${props.params.slug} | Öne Çıkanlar`,
   };
 }
