@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { CafeData } from "@/types";
-import { Metadata, ResolvingMetadata } from "next";
+import { Metadata} from "next";
 
 export const dynamic = "force-dynamic";
 
@@ -60,7 +60,6 @@ export default async function FeaturedPage({ params }: PageProps) {
 
 export async function generateMetadata(
   { params }: PageProps,
-  _parent: ResolvingMetadata // veya /* unused */_parent
 ): Promise<Metadata> {
   return {
     title: `${params.slug} | Öne Çıkanlar`,
