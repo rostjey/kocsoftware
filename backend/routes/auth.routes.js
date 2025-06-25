@@ -25,6 +25,7 @@ router.get("/me", authMiddleware, async (req, res) => {
           instagram: cafe.instagram,
           template: cafe.template,
           slug: cafe.slug,
+          avatar: cafe.avatar || "" // fallback avatar ımage içinde tanımlandı ve passport.js içinde boş dönülüyor belki burada da boş döndürmek gereksiz olabilir
       });
   } catch (err) {
       console.error("Cafe verisi alınamadı", err);

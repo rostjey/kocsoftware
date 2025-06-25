@@ -51,7 +51,7 @@ passport.use(new GoogleStrategy(
         email,
         googleId: profile.id,
         provider: "google",
-        avatar: profile.photos?.[0]?.value || ""
+        avatar: (profile.photos && profile.photos.length > 0 && profile.photos[0].value) || "" // googleın atadığı default profil fotosunu kullan yoksa boş dön
       });
 
       return done(null, newCafe);

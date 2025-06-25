@@ -91,7 +91,7 @@ export default function AdminDashboard({
         {/* Kullanıcı Karşılama */}
         <div className="flex items-center gap-4 mb-6">
           <Image
-            src={cafe.avatar || "/default-avatar.png"}
+            src={cafe.avatar || "/default-avatar.png"} // varsayılan avatar fallbacki burda kullanmak en doğrusu
             alt="Profil"
             width={56}
             height={56}
