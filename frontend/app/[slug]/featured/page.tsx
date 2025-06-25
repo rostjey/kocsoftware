@@ -3,8 +3,8 @@ export const dynamic = "force-dynamic";
 import Image from "next/image";
 import { CafeData } from "@/types";
 
-export default async function FeaturedPage(props: { params: { slug: string } }) {
-  const { slug } = props.params;
+export default async function FeaturedPage(props: { params: Promise<{ slug: string }> }) {
+  const { slug } = (await props.params);
 
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/cafe/${slug}`, {
     next: { tags: [`cafe-${slug}`] },
@@ -50,8 +50,8 @@ export default async function FeaturedPage(props: { params: { slug: string } }) 
   );
 }
 
-export function generateMetadata(props: { params: { slug: string } }) {
+export async function generateMetadata(props: { params: Promise<{ slug: string }> }) {
   return {
-    title: `${props.params.slug} | Öne Çıkanlar`,
+    title: `${(await props.params).slug} | Öne Çıkanlar`,
   };
 }
