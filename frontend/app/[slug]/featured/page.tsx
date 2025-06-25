@@ -1,13 +1,17 @@
 import Image from "next/image";
 import { CafeData } from "@/types";
+import { Metadata, ResolvingMetadata } from "next";
 
 export const dynamic = "force-dynamic";
 
-export default async function FeaturedPage({
-  params,
-}: {
-  params: { slug: string };
-}) {
+// Next.js 15 için uyumlu PageProps tanımı
+type PageProps = {
+  params: {
+    slug: string;
+  };
+};
+
+export default async function FeaturedPage({ params }: PageProps) {
   const { slug } = params;
 
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/cafe/${slug}`, {
@@ -54,11 +58,11 @@ export default async function FeaturedPage({
   );
 }
 
-export async function generateMetadata({
-  params,
-}: {
-  params: { slug: string };
-}) {
+// Metadata da aynı PageProps'i kullanacak
+export async function generateMetadata(
+  { params }: PageProps,
+  _parent?: ResolvingMetadata
+): Promise<Metadata> {
   return {
     title: `${params.slug} | Öne Çıkanlar`,
   };
