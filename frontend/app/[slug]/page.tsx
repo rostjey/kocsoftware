@@ -9,17 +9,14 @@ export async function generateStaticParams() {
   return slugs;
 }
 
+// ✅ BU SATIRLARDA ASLA "await params" KULLANMA
 export async function generateMetadata({ params }: { params: { slug: string } }) {
-  // ❗️await kaldırıldı
-  const { slug } = params;
-
   return {
-    title: `${slug} | Menü`,
+    title: `${params.slug} | Menü`,
   };
 }
 
 export default async function CafePage({ params }: { params: { slug: string } }) {
-  // ❗️await kaldırıldı
   const { slug } = params;
 
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/cafe/${slug}`, {
@@ -48,3 +45,4 @@ export default async function CafePage({ params }: { params: { slug: string } })
       return <ScrollTemplate {...sharedProps} />;
   }
 }
+
