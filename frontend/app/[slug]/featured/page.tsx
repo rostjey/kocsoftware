@@ -4,11 +4,12 @@ import type { Metadata } from "next";
 
 export const dynamic = "force-dynamic";
 
-interface PageProps {
+// ✅ Burada props'un tipi PageProps yerine inline olarak yazıldı
+export default async function FeaturedPage({
+  params,
+}: {
   params: { slug: string };
-}
-
-export default async function FeaturedPage({ params }: PageProps) {
+}) {
   const { slug } = params;
 
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/cafe/${slug}`, {
@@ -58,10 +59,13 @@ export default async function FeaturedPage({ params }: PageProps) {
   );
 }
 
-// ✅ generateMetadata için doğru TypeScript tanımı:
-export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
+// ✅ Metadata fonksiyonu params almalı ama tip açık ve sade olmalı
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}): Promise<Metadata> {
   return {
     title: `${params.slug} | Öne Çıkan Ürünler`,
-    description: "Kafenizin öne çıkan özel ürünlerini keşfedin.",
   };
 }
