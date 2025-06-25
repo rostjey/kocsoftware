@@ -1,10 +1,8 @@
 import ScrollTemplate from "@/components/templates/ScrollTemplate";
 import CategoryTemplate from "@/components/templates/CategoryTemplate";
 import HorizontalTemplate from "@/components/templates/HorizontalTemplate";
+import { CafeData } from "@/types";
 
-import { CafeData,} from "@/types";
-
-// ✅ Slugları çekip statik sayfalar üret
 export async function generateStaticParams() {
   const res = await fetch(`${process.env.API_URL}/api/cafe/all-cafe-slugs`);
   const slugs: { slug: string }[] = await res.json();
@@ -12,7 +10,8 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: { params: { slug: string } }) {
-  const { slug } = await params;
+  // ❗️await kaldırıldı
+  const { slug } = params;
 
   return {
     title: `${slug} | Menü`,
@@ -20,7 +19,8 @@ export async function generateMetadata({ params }: { params: { slug: string } })
 }
 
 export default async function CafePage({ params }: { params: { slug: string } }) {
-  const { slug } = await params;
+  // ❗️await kaldırıldı
+  const { slug } = params;
 
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/cafe/${slug}`, {
     cache: "no-store",
@@ -48,4 +48,3 @@ export default async function CafePage({ params }: { params: { slug: string } })
       return <ScrollTemplate {...sharedProps} />;
   }
 }
-
