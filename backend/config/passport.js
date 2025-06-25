@@ -10,6 +10,7 @@ passport.use(new GoogleStrategy(
     passReqToCallback: true // ✅ req.query.state kullanabilmek için
   },
   async (req, accessToken, refreshToken, profile, done) => {
+    console.log("Google profile:", profile);
     try {
       const signupKey = req.query.state; // ✅ signupKey burada geliyor
 
