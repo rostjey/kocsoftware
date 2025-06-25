@@ -58,9 +58,12 @@ export default async function FeaturedPage({ params }: PageProps) {
   );
 }
 
-export async function generateMetadata(
-  { params }: PageProps,
-): Promise<Metadata> {
+
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}): Promise<Metadata> {
   return {
     title: `${params.slug} | Öne Çıkanlar`,
   };
