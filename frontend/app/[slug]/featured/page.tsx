@@ -1,6 +1,6 @@
 import Image from "next/image";
 import { CafeData } from "@/types";
-import type { Metadata } from "next";
+import type { Metadata, ResolvingMetadata } from "next";
 
 export const dynamic = "force-dynamic";
 
@@ -59,13 +59,16 @@ export default async function FeaturedPage({
   );
 }
 
-// ✅ Metadata fonksiyonu params almalı ama tip açık ve sade olmalı
-export async function generateMetadata({
-  params,
-}: {
+type Props = {
   params: { slug: string };
-}): Promise<Metadata> {
+};
+
+export async function generateMetadata(
+  { params }: Props,
+  parent: ResolvingMetadata
+): Promise<Metadata> {
   return {
-    title: `${params.slug} | Öne Çıkan Ürünler`,
+    title: `${params.slug} | Öne Çıkanlar`,
   };
 }
+
