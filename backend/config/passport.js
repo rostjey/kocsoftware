@@ -45,7 +45,7 @@ passport.use(new GoogleStrategy(
         slug = `${baseSlug}-${counter++}`;
       }
 
-      const avatar = encodeURI(profile._json.picture || ""); // fallbackli profil fotoğrafı
+      const avatar = profile.photos?.[0]?.value || "/default-avatar.png"; // fallbackli profil fotoğrafı encode siz
 
       const newCafe = await Cafe.create({
         name: profile.displayName,
