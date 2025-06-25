@@ -3,13 +3,11 @@ import { CafeData } from "@/types";
 
 export const dynamic = "force-dynamic";
 
-interface Props {
-  params: {
-    slug: string;
-  };
-}
-
-export default async function FeaturedPage({ params }: Props) {
+export default async function FeaturedPage({
+  params,
+}: {
+  params: { slug: string };
+}) {
   const { slug } = params;
 
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/cafe/${slug}`, {
@@ -56,9 +54,12 @@ export default async function FeaturedPage({ params }: Props) {
   );
 }
 
-export async function generateMetadata({ params }: Props) {
+export async function generateMetadata({
+  params,
+}: {
+  params: { slug: string };
+}) {
   return {
     title: `${params.slug} | Öne Çıkanlar`,
   };
 }
-
