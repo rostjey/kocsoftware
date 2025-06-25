@@ -21,6 +21,7 @@ export default function AdminDashboard({
     name: "",
     logo: "",
     instagram: "",
+    avatar: "",
     template: "scroll",
   });
   const [products, setProducts] = useState<Product[]>([]);
@@ -39,6 +40,7 @@ export default function AdminDashboard({
         name: cafeData.name || "",
         logo: cafeData.logo || "",
         instagram: cafeData.instagram || "",
+        avatar: cafeData.avatar || "", // avatar eklenmişse kullan
         template: cafeData.template || "scroll", //template: cafeData.template !== undefined ? cafeData.template : "scroll" //burası önemli en son seçilen kategorinin logout sonrası gözükmesi için
       });
 
