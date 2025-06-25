@@ -58,10 +58,9 @@ export default async function FeaturedPage({ params }: PageProps) {
   );
 }
 
-// Metadata da aynı PageProps'i kullanacak
 export async function generateMetadata(
   { params }: PageProps,
-  _parent?: ResolvingMetadata
+  _parent: ResolvingMetadata // veya /* unused */_parent
 ): Promise<Metadata> {
   return {
     title: `${params.slug} | Öne Çıkanlar`,
