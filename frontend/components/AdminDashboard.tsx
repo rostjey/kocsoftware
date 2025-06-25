@@ -9,6 +9,7 @@ import QrCodeSection from "./QrCodeSection";
 import api from "@/lib/axios";
 import { Cafe, Product, CafeTemplate} from "@/types";
 import { useRouter } from "next/navigation"; // App Router
+import Image from "next/image";
 
 
 export default function AdminDashboard({
@@ -25,6 +26,7 @@ export default function AdminDashboard({
   const [products, setProducts] = useState<Product[]>([]);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [isLoading, setIsLoading] = useState(false);
+  const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
   const router = useRouter(); // yönlendirme 
 
@@ -85,7 +87,21 @@ export default function AdminDashboard({
   return (
     <div className="min-h-screen flex flex-col items-center bg-gradient-to-b from-purple-500 to-blue-400 px-4 py-10 text-white">
       <div className="w-full max-w-4xl space-y-10">
-  
+
+        {/* Kullanıcı Karşılama */}
+        <div className="flex items-center gap-4 mb-6">
+          <Image
+            src={cafe.avatar || "/default-avatar.png"}
+            alt="Profil"
+            width={56}
+            height={56}
+            className="rounded-full border border-white"
+          />
+          <h1 className="text-2xl font-bold text-white">
+            Hoş geldin, {capitalize(slug)}!
+          </h1>
+        </div>
+
         {/* Menü Görüntüle Linki ve Çıkış Butonu */}
         <div className="mb-8 text-center space-x-4">
           <a

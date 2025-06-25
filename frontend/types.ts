@@ -18,6 +18,7 @@ export interface Cafe {
     logo: string;
     instagram: string;
     template?: CafeTemplate;
+    avatar?: string;
 }
 export interface Props {
     initialName?: string;
