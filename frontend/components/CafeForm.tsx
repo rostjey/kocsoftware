@@ -5,6 +5,7 @@ import axios from "axios";
 import Image from "next/image";
 import { Cafe } from "@/types";
 import LoadingSpinner from "@/components/LoadingSpinner";
+import { useRouter } from "next/navigation";
 
 export default function CafeForm({
   cafe,
@@ -20,6 +21,8 @@ export default function CafeForm({
   const [instagram, setInstagram] = useState<string>("");
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
+  const [deleting, setDeleting] = useState(false);
+  const router = useRouter();
 
   // 🔁 Prop olarak gelen cafe bilgisi değiştiğinde formu güncelle
   useEffect(() => {
@@ -68,6 +71,27 @@ export default function CafeForm({
     }
   };
 
+  const handleDeleteAccount = async () => {
+    const confirmed = window.confirm("Hesabınızı kalıcı olarak silmek istediğinizden emin misiniz?");
+    if (!confirmed) return;
+  
+    setDeleting(true);
+    try {
+      await axios.delete(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/cafe/delete-account`,
+        { withCredentials: true }
+      );
+  
+      // Hesap silindikten sonra login sayfasına yönlendir
+      router.push("/admin/signup");
+    } catch (error) {
+      console.error("Hesap silme hatası:", error);
+      alert("Hesap silinirken bir hata oluştu.");
+    } finally {
+      setDeleting(false);
+    }
+  };  
+
   return (
     <form
       onSubmit={handleSubmit}
@@ -115,6 +139,26 @@ export default function CafeForm({
         className="w-full bg-white text-purple-700 font-semibold py-3 rounded-xl shadow-md transition hover:bg-gray-100 text-lg flex items-center justify-center gap-2"
       >
         {uploading ? <LoadingSpinner /> : "Kaydet"}
+      </button>
+
+      <button
+        type="button"
+        onClick={handleDeleteAccount}
+        disabled={deleting}
+        className={`w-full mt-4 font-semibold py-3 rounded-xl shadow-md transition text-lg ${
+          deleting
+            ? "bg-gray-300 text-gray-600 cursor-not-allowed"
+            : "bg-red-600 text-white hover:bg-red-700"
+        }`}
+      >
+        {deleting ? (
+          <div className="flex items-center justify-center gap-2">
+            <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
+            Siliniyor...
+          </div>
+        ) : (
+          "Hesabı Kalıcı Olarak Sil"
+        )}
       </button>
     </form>
   );

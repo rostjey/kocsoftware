@@ -92,10 +92,31 @@ const updateTemplate = asyncHandler(async (req, res) => {
   res.json({ message: "Şablon güncellendi", template });
 });
 
+const deleteAccount = asyncHandler(async (req, res) => {
+  const cafeSlug = req.user.cafeSlug;
+
+  const deletedCafe = await Cafe.findOneAndDelete({ slug: cafeSlug });
+
+  if (!deletedCafe) {
+    return res.status(404).json({ message: "Kafe bulunamadı." });
+  }
+
+  await Product.deleteMany({ cafeSlug }); // o kafenin tüm ürünlerini de sil
+
+  await redis.del(`public_menu:${cafeSlug}`); // menü cache'ini de temizle
+
+  res.clearCookie("accessToken");
+  res.clearCookie("refreshToken");
+
+  res.status(200).json({ message: "Hesap başarıyla silindi." });
+});
+
+
 
 module.exports = {
   getMyCafe,
   updateCafe,
   getPublicMenu,
-  updateTemplate
+  updateTemplate,
+  deleteAccount
 };
