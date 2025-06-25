@@ -1,29 +1,28 @@
-import ScrollTemplate from "@/components/templates/ScrollTemplate";
 import CategoryTemplate from "@/components/templates/CategoryTemplate";
 import HorizontalTemplate from "@/components/templates/HorizontalTemplate";
+import ScrollTemplate from "@/components/templates/ScrollTemplate"; 
 import { CafeData } from "@/types";
 
-export async function generateStaticParams() {
-  const res = await fetch(`${process.env.API_URL}/api/cafe/all-cafe-slugs`);
-  const slugs: { slug: string }[] = await res.json();
-  return slugs;
-}
-
-// ✅ Tip hatası yaşamamak için özel interface tanımlıyoruz
-interface Props {
-  params: {
-    slug: string;
-  };
-}
-
-export async function generateMetadata({ params }: Props) {
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
   return {
-    title: `${params.slug} | Menü`,
+    title: `${slug} | Menü`,
   };
 }
 
-export default async function CafePage({ params }: Props) {
-  const { slug } = params;
+
+
+// ✅ Next.js 15 ile uyumlu, hatasız tip
+export default async function CafePage({
+  params,
+}: {
+  params: Promise<{ slug: string }>;
+}) {
+  const { slug } = await params;
 
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/cafe/${slug}`, {
     cache: "no-store",
