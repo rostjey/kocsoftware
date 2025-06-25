@@ -1,6 +1,6 @@
 "use client";
 
-import { useState} from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import Image from "next/image";
 import { Cafe } from "@/types";
@@ -15,12 +15,18 @@ export default function CafeForm({
   slug: string;
   onSaved?: () => void;
 }) {
-  const [name, setName] = useState<string>(cafe.name || "");
-  const [logo] = useState<string>( cafe.logo || "");
-  const [instagram, setInstagram] = useState<string>( cafe.instagram || "");
+  const [name, setName] = useState("");
+  const [logo, setLogo] = useState("");
+  const [instagram, setInstagram] = useState("");
   const [logoFile, setLogoFile] = useState<File | null>(null);
   const [uploading, setUploading] = useState(false);
 
+  // 💡 Prop olarak gelen cafe bilgisi değiştiğinde state'leri güncelle
+  useEffect(() => {
+    setName(cafe.name || "");
+    setLogo(cafe.logo || "");
+    setInstagram(cafe.instagram || "");
+  }, [cafe]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -63,53 +69,35 @@ export default function CafeForm({
   };
 
   return (
-    <form
-      onSubmit={handleSubmit}
-      className="bg-white bg-opacity-10 backdrop-blur-md p-6 rounded-xl w-full max-w-md shadow-md space-y-5 text-black"
-    >
-      <h2 className="text-2xl font-bold text-purple-700 ">Kafe Bilgileri</h2>
-  
+    <form onSubmit={handleSubmit} className="space-y-4">
       <input
+        type="text"
+        placeholder="Kafe Adı"
         value={name}
         onChange={(e) => setName(e.target.value)}
-        placeholder="Kafe Adı"
-        className="w-full px-4 py-3 bg-[#e9eaf3] border border-white text-black placeholder-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
-        required
+        className="input"
       />
-  
       <input
+        type="text"
+        placeholder="Instagram"
         value={instagram}
         onChange={(e) => setInstagram(e.target.value)}
-        placeholder="Instagram Linki"
-        className="w-full px-4 py-3 bg-[#e9eaf3] border border-white text-black placeholder-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
+        className="input"
       />
-  
-      {logo && (
-        <div className="flex justify-center">
-          <Image
-            src={logo}
-            alt="Logo"
-            width={96}
-            height={96}
-            className="w-24 h-24 object-contain rounded-lg border border-white bg-[#e9eaf3] p-1"
-          />
-        </div>
-      )}
-  
       <input
         type="file"
         accept="image/*"
-        onChange={(e) => setLogoFile(e.target.files?.[0] ?? null)}
-        className="w-full px-4 py-3 bg-[#e9eaf3] border border-white text-black rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
+        onChange={(e) => setLogoFile(e.target.files?.[0] || null)}
+        className="input"
       />
-  
-      <button
-        type="submit"
-        disabled={uploading}
-        className="w-full bg-white text-purple-700 font-semibold py-3 rounded-xl shadow-md transition hover:bg-gray-100 text-lg flex items-center justify-center gap-2"
-      >
+      {logo && (
+        <div className="w-32 h-32 relative">
+          <Image src={logo} alt="Kafe logosu" fill className="object-contain" />
+        </div>
+      )}
+      <button type="submit" className="btn" disabled={uploading}>
         {uploading ? <LoadingSpinner /> : "Kaydet"}
       </button>
     </form>
-  );  
+  );
 }
