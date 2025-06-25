@@ -27,7 +27,7 @@ export default function AdminDashboard({
   const [products, setProducts] = useState<Product[]>([]);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  //const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+  const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
   const router = useRouter(); // yönlendirme 
 
@@ -99,7 +99,7 @@ export default function AdminDashboard({
             height={56}
             className="rounded-full border border-white"
           />
-          <h1>Hoş geldin, {decodeURIComponent(slug)}!</h1>
+            <h1>Hoş geldin, {capitalize(decodeURIComponent(slug))}!</h1>
         </div>
 
         {/* Menü Görüntüle Linki ve Çıkış Butonu */}
