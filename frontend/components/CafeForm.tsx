@@ -126,12 +126,22 @@ export default function CafeForm({
         </div>
       )}
 
+      {/* LOGO YÜKLEME GİZLİ FILE INPUT */}
       <input
         type="file"
         accept="image/*"
+        id="logoUpload"
         onChange={(e) => setLogoFile(e.target.files?.[0] ?? null)}
-        className="w-full px-4 py-3 bg-[#e9eaf3] border border-white text-black rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
+        className="hidden"
       />
+
+      {/* LOGO YÜKLEMEYE ÖZEL LABEL BUTTON */}
+      <label
+        htmlFor="logoUpload"
+        className="block w-full px-4 py-3 bg-[#e9eaf3] border border-white text-black rounded-lg cursor-pointer hover:bg-[#dcdde8] text-center"
+      >
+        {logoFile ? logoFile.name : "Kafe Logosu Yükle"}
+      </label>
 
       <button
         type="submit"
