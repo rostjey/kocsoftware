@@ -10,7 +10,6 @@ passport.use(new GoogleStrategy(
     passReqToCallback: true // ✅ req.query.state kullanabilmek için
   },
   async (req, accessToken, refreshToken, profile, done) => {
-    console.log("Google profile:", profile);
     try {
       const signupKey = req.query.state; // ✅ signupKey burada geliyor
 
@@ -46,13 +45,16 @@ passport.use(new GoogleStrategy(
         slug = `${baseSlug}-${counter++}`;
       }
 
+      const rawAvatar = profile.photos?.[0]?.value || "";
+      const cleanedAvatar = encodeURI(rawAvatar.replace("=s96-c", "")); // bu boyut parametresini kaldır, sadeleştir
+
       const newCafe = await Cafe.create({
         name: profile.displayName,
         slug,
         email,
         googleId: profile.id,
         provider: "google",
-        avatar: (profile.photos && profile.photos.length > 0 && profile.photos[0].value) || "" // googleın atadığı default profil fotosunu kullan yoksa boş dön
+        avatar: cleanedAvatar // googleın atadığı default profil fotosunu kullan yoksa boş dön encode güvenliği
       });
 
       return done(null, newCafe);

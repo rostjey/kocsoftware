@@ -99,9 +99,7 @@ export default function AdminDashboard({
             height={56}
             className="rounded-full border border-white"
           />
-          <h1 className="text-2xl font-bold text-white">
-            Hoş geldin, {capitalize(slug)}!
-          </h1>
+          <h1>Hoş geldin, {decodeURIComponent(slug)}!</h1>
         </div>
 
         {/* Menü Görüntüle Linki ve Çıkış Butonu */}
