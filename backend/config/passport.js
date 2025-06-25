@@ -45,8 +45,7 @@ passport.use(new GoogleStrategy(
         slug = `${baseSlug}-${counter++}`;
       }
 
-      const rawAvatar = profile.photos?.[0]?.value || "";
-      const cleanedAvatar = encodeURI(rawAvatar.replace("=s96-c", "")); // bu boyut parametresini kaldır, sadeleştir
+      const avatar = encodeURI(profile._json.picture || ""); // fallbackli profil fotoğrafı
 
       const newCafe = await Cafe.create({
         name: profile.displayName,
@@ -54,7 +53,7 @@ passport.use(new GoogleStrategy(
         email,
         googleId: profile.id,
         provider: "google",
-        avatar: cleanedAvatar // googleın atadığı default profil fotosunu kullan yoksa boş dön encode güvenliği
+        avatar, // googleın atadığı default profil fotosunu kullan yoksa boş dön encode güvenliği iptal jsonla 
       });
 
       return done(null, newCafe);
