@@ -27,7 +27,7 @@ export default function AdminDashboard({
   const [products, setProducts] = useState<Product[]>([]);
   const [editingProduct, setEditingProduct] = useState<Product | null>(null);
   const [isLoading, setIsLoading] = useState(false);
-  const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
+  //const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
 
   const router = useRouter(); // yönlendirme 
 
