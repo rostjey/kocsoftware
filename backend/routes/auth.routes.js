@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { signup, login,refreshTokenHandler, logout, googleLoginCallback, verifyEmailCode } = require("../controllers/auth.controller");
+const { signup, login,refreshTokenHandler, logout, googleLoginCallback, requestVerificationCode,verifyEmailCode } = require("../controllers/auth.controller");
 const authMiddleware = require("../middlewares/auth.middleware");
 const passport = require("passport");
 const Cafe = require("../models/cafe.model");
