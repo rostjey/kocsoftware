@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const asyncHandler = require("../middlewares/asyncHandler");
 const { generateAccessToken, generateRefreshToken } = require("../utils/generateTokens");
 const redis = require("../lib/redis");
-const sendEmail = require("../utils/sendEmail"); // bu fonksiyonu da birazdan yazacağız
+const sendEmail = require("../utils/sendEmail"); 
 require("dotenv").config();
 
 const refreshTokenHandler = asyncHandler(async (req, res) => {
@@ -149,6 +149,26 @@ const logout = asyncHandler(async (req, res) => {
 const googleLoginCallback = asyncHandler(async (req, res) => {
   const cafe = req.user;
 
+  // Redis’ten geçici veriyi al
+  const redisKey = `signup:google:${req.ip}`;
+  const cached = await redis.get(redisKey);
+  let hashedPassword = "";
+
+  if (cached) {
+    const parsed = JSON.parse(cached);
+    hashedPassword = parsed.password;
+
+    // Cafe zaten varsa sadece login yap
+    const existing = await Cafe.findOne({ email: cafe.email });
+    if (!existing) {
+      cafe.password = hashedPassword;
+      cafe.city = parsed.city;
+      await cafe.save();
+    }
+
+    await redis.del(redisKey);
+  }
+
   const payload = { cafeId: cafe._id, cafeSlug: cafe.slug };
   const accessToken = generateAccessToken(payload);
   const refreshToken = generateRefreshToken(payload);
@@ -282,5 +302,27 @@ const verifyEmailCode = asyncHandler(async (req, res) => {
   });
 });
 
+const preRegisterGoogle = asyncHandler(async (req, res) => {
+  const { signupKey, city, password } = req.body;
 
-module.exports = { login, refreshTokenHandler, logout, googleLoginCallback, requestVerificationCode, verifyEmailCode };
+  if (signupKey !== process.env.SIGNUP_KEY) {
+    return res.status(401).json({ message: "Geçersiz kayıt anahtarı" });
+  }
+
+  if (!city || !password) {
+    return res.status(400).json({ message: "Şehir ve şifre zorunludur" });
+  }
+
+  // Hash şifre
+  const hashedPassword = await bcrypt.hash(password, 12);
+
+  // Geçici verileri Redis’e kaydet (örnek: signup:google:ip)
+  const redisKey = `signup:google:${req.ip}`;
+  await redis.setex(redisKey, 600, JSON.stringify({ city, password: hashedPassword }));
+
+  res.status(200).json({ message: "Bilgiler alındı, yönlendiriliyor..." });
+});
+
+
+
+module.exports = { login, refreshTokenHandler, logout, googleLoginCallback, requestVerificationCode, verifyEmailCode, preRegisterGoogle };

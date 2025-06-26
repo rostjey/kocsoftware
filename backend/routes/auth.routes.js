@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { login,refreshTokenHandler, logout, googleLoginCallback, requestVerificationCode,verifyEmailCode } = require("../controllers/auth.controller");
+const { login,refreshTokenHandler, logout, googleLoginCallback, requestVerificationCode, verifyEmailCode, preRegisterGoogle} = require("../controllers/auth.controller");
 const authMiddleware = require("../middlewares/auth.middleware");
 const passport = require("passport");
 const Cafe = require("../models/cafe.model");
@@ -33,6 +33,13 @@ router.get("/me", authMiddleware, async (req, res) => {
   }
 });
 
+// Google pre-register endpoint önkayıt callbacden önce
+router.post("/google/pre-register", preRegisterGoogle);
+// Google callback
+router.get("/google/callback",
+    passport.authenticate("google", { session: false, failureRedirect: "/login" }),
+    googleLoginCallback
+);
 
 // Google Login-Signup? başlatma signupKey eklendi ama bu fonksiyon sadece google ile login yapanlar için mi yoksa hem login hem signup için mi kullanılacak?
 router.get("/google", (req, res, next) => {
@@ -43,17 +50,13 @@ router.get("/google", (req, res, next) => {
       session: false,
       state: signupKey || "no-key"
     })(req, res, next);
-  });
-
-// Google callback
-router.get("/google/callback",
-    passport.authenticate("google", { session: false, failureRedirect: "/login" }),
-    googleLoginCallback
-);
+});
 
 // onay kodu gönderme
 router.post("/request-verification-code", requestVerificationCode);
 // E-posta onay kodunu doğrulama
 router.post("/verify-email", verifyEmailCode);
+
+router.post("/google/pre-register", preRegisterGoogle);
 
 module.exports = router;
