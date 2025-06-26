@@ -53,6 +53,12 @@ passport.use(new GoogleStrategy(
         }
         existingByEmail.googleId = profile.id;
         existingByEmail.provider = "google";
+
+        // 🆕 Avatar ekle (sadece boşsa)
+        if (!existingEmailUser.avatar && profile.photos?.[0]?.value) {
+         existingEmailUser.avatar = profile.photos[0].value;
+        }
+
         await existingByEmail.save();
         await redis.del(redisKey);
         return done(null, existingByEmail);
