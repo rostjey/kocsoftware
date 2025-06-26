@@ -35,7 +35,7 @@ export default function SignupPage() {
         { withCredentials: true }
       );
 
-      if (res.status === 200) {
+      if (res.status === 201) {
         localStorage.setItem("pendingEmail", email);
         router.push("/admin/verify-email");
       }
