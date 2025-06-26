@@ -1,12 +1,12 @@
 const express = require("express");
 const router = express.Router();
-const { signup, login,refreshTokenHandler, logout, googleLoginCallback, requestVerificationCode,verifyEmailCode } = require("../controllers/auth.controller");
+const { login,refreshTokenHandler, logout, googleLoginCallback, requestVerificationCode,verifyEmailCode } = require("../controllers/auth.controller");
 const authMiddleware = require("../middlewares/auth.middleware");
 const passport = require("passport");
 const Cafe = require("../models/cafe.model");
 
 
-router.post("/signup", signup);
+//router.post("/signup", signup);
 router.post("/login", login);
 router.post("/refresh-token", refreshTokenHandler);
 router.post("/logout", logout);

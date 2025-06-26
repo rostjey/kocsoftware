@@ -24,7 +24,7 @@ export default function SignupPage() {
     setIsLoading(true); // yükleniyor 
     try {
       const res = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/admin/signup`,
+        `${process.env.NEXT_PUBLIC_API_URL}/api/admin/request-verification-code`,
         {
           name,
           slug,
