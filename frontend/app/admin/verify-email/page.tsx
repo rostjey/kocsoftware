@@ -27,7 +27,7 @@ export default function VerifyEmailPage() {
       if (res.status === 200) {
         router.push(`/admin/dashboard/${res.data.slug}`);
       }
-    } catch (err: any) {
+    } catch (error) {
       if (tries === 1) {
         router.push("/admin/verification-failed");
       } else {
@@ -41,7 +41,7 @@ export default function VerifyEmailPage() {
 
   return (
     <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-b from-purple-500 to-blue-400 px-6 text-white">
-      <h1 className="text-2xl font-bold mb-6">E-posta Doğrulama</h1>
+      <h1 className="text-2xl font-bold mb-6">E-posta Doğrulama Kodunuz</h1>
 
       <form onSubmit={handleVerify} className="space-y-4 w-full max-w-sm">
         {error && (
