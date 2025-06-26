@@ -19,6 +19,7 @@ export interface Cafe {
     instagram: string;
     template?: CafeTemplate;
     avatar?: string;
+    slug?: string;
 }
 export interface Props {
     initialName?: string;

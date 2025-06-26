@@ -34,7 +34,6 @@ export default function AdminDashboard({
   const fetchCafeAndProducts = useCallback(async () => {
     try {
       const res = await api.get("/api/admin/me", { withCredentials: true }); // backend yolu
-      console.log("Cafe verisi:", res.data);
       const cafeData = res.data;
 
       setCafe({
@@ -43,6 +42,7 @@ export default function AdminDashboard({
         instagram: cafeData.instagram || "",
         avatar: cafeData.avatar || "", // avatar eklenmişse kullan
         template: cafeData.template || "scroll", //template: cafeData.template !== undefined ? cafeData.template : "scroll" //burası önemli en son seçilen kategorinin logout sonrası gözükmesi için
+        slug: cafeData.slug || "", // 🔥 bunu ekle
       });
 
       const productsRes = await api.get("/api/products");
@@ -100,7 +100,7 @@ export default function AdminDashboard({
             height={56}
             className="rounded-full border border-white"
           />
-            <h1>Hoş geldin, {capitalizeEachWord(decodeURIComponent(slug))}!</h1>
+            <h1>Hoş geldin, {capitalizeEachWord(decodeURIComponent(cafe.slug || ""))}!</h1>
         </div>
 
         {/* Menü Görüntüle Linki ve Çıkış Butonu */}
