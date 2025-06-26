@@ -174,6 +174,9 @@ const googleLoginCallback = asyncHandler(async (req, res) => {
 
 // E-posta onay kodu gönderme
 const requestVerificationCode = asyncHandler(async (req, res) => {
+  console.log("➡️ Kod geldi:", verificationCode);
+  console.log("📧 Email gönderilecek:", email);
+
   const { name, slug, email, password, signupKey } = req.body;
 
   if (signupKey !== process.env.SIGNUP_KEY) {
