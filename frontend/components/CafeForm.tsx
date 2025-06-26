@@ -140,7 +140,7 @@ export default function CafeForm({
         htmlFor="logoUpload"
         className="block w-full px-4 py-3 bg-[#e9eaf3] border border-white text-black rounded-lg cursor-pointer hover:bg-[#dcdde8] text-center"
       >
-        {logoFile ? logoFile.name : "Kafe Logosu Yükle"}
+        {logoFile ? logoFile.name : "Kafe Logosu Yükleyin"}
       </label>
 
       <button

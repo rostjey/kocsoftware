@@ -1,6 +1,6 @@
 const express = require("express");
 const router = express.Router();
-const { signup, login,refreshTokenHandler, logout, googleLoginCallback } = require("../controllers/auth.controller");
+const { signup, login,refreshTokenHandler, logout, googleLoginCallback, verifyEmailCode } = require("../controllers/auth.controller");
 const authMiddleware = require("../middlewares/auth.middleware");
 const passport = require("passport");
 const Cafe = require("../models/cafe.model");
@@ -50,5 +50,10 @@ router.get("/google/callback",
     passport.authenticate("google", { session: false, failureRedirect: "/login" }),
     googleLoginCallback
 );
+
+// onay kodu gönderme
+router.post("/request-verification-code", requestVerificationCode);
+// E-posta onay kodunu doğrulama
+router.post("/verify-email", verifyEmailCode);
 
 module.exports = router;
