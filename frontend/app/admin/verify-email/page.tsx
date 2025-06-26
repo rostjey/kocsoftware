@@ -18,25 +18,29 @@ export default function VerifyEmailPage() {
     setError("");
 
     try {
-      const res = await axios.post(
-        `${process.env.NEXT_PUBLIC_API_URL}/api/admin/verify-email`,
-        { code },
-        { withCredentials: true }
-      );
-
-      if (res.status === 200) {
-        router.push(`/admin/dashboard/${res.data.slug}`);
+        const res = await axios.post(
+          `${process.env.NEXT_PUBLIC_API_URL}/api/admin/verify-email`,
+          { code },
+          { withCredentials: true }
+        );
+      
+        if (res.status === 200) {
+          router.push(`/admin/dashboard/${res.data.slug}`);
+        }
+      } catch (error) {
+        if (error instanceof Error) {
+          if (tries === 1) {
+            router.push("/admin/verification-failed");
+          } else {
+            setTries((prev) => prev + 1);
+            setError("Hatalı kod. Lütfen tekrar deneyin.");
+          }
+        } else {
+          setError("Bilinmeyen bir hata oluştu.");
+        }
+      } finally {
+        setIsLoading(false);
       }
-    } catch (error) {
-      if (tries === 1) {
-        router.push("/admin/verification-failed");
-      } else {
-        setTries((prev) => prev + 1);
-        setError("Hatalı kod. Lütfen tekrar deneyin.");
-      }
-    } finally {
-      setIsLoading(false);
-    }
   };
 
   return (
