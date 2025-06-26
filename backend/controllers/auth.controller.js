@@ -281,4 +281,4 @@ const verifyEmailCode = asyncHandler(async (req, res) => {
 });
 
 
-module.exports = { signup, login, refreshTokenHandler, logout, googleLoginCallback, requestVerificationCode, verifyEmailCode };
+module.exports = { login, refreshTokenHandler, logout, googleLoginCallback, requestVerificationCode, verifyEmailCode };
