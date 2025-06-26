@@ -212,8 +212,8 @@ const requestVerificationCode = asyncHandler(async (req, res) => {
   });
 });
 
-// Bu fonksiyon, onay kodunu doğrulamak için kullanılabilirconst verifyEmailCode = async (req, res) => {
-  const verifyEmailCode = async (req, res) => {
+// Bu fonksiyon, onay kodunu doğrulamak için kullanılabilir
+const verifyEmailCode = asyncHandler(async (req, res) => {
   const { email, code } = req.body;
 
   if (!email || !code) {
@@ -278,7 +278,7 @@ const requestVerificationCode = asyncHandler(async (req, res) => {
     cafeSlug: newCafe.slug,
     accessToken,
   });
-};
+});
 
 
 module.exports = { signup, login, refreshTokenHandler, logout, googleLoginCallback, requestVerificationCode, verifyEmailCode };
