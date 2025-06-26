@@ -225,7 +225,7 @@ const verifyEmailCode = asyncHandler(async (req, res) => {
     return res.status(400).json({ message: "Email ve kod zorunludur" });
   }
 
-  const redisKey = `signup:${email}`;
+  const redisKey = `verify:${email}`;
   const cachedData = await redis.get(redisKey);
 
   if (!cachedData) {
