@@ -30,7 +30,7 @@ export default function GoogleSignupKeyPage() {
       }
 
       // Başarılıysa yönlendir
-      window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/api/admin/google`;
+      window.location.href = `${process.env.NEXT_PUBLIC_API_URL}/api/admin/google?signupKey=${signupKey}`;
     } catch {
       setError("Sunucu hatası");
     }
