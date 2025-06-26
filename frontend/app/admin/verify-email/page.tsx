@@ -32,7 +32,7 @@ export default function VerifyEmailPage() {
         { withCredentials: true }
       );
 
-      if (res.status === 200) {
+      if (res.status === 201) {
         localStorage.removeItem("pendingEmail"); // temizle
         router.push(`/admin/dashboard/${res.data.slug}`);
       }
