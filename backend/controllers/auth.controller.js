@@ -4,7 +4,7 @@ const jwt = require("jsonwebtoken");
 const asyncHandler = require("../middlewares/asyncHandler");
 const { generateAccessToken, generateRefreshToken } = require("../utils/generateTokens");
 const redis = require("../lib/redis");
-const { sendVerificationEmail } = require("../utils/sendEmail"); // bu fonksiyonu da birazdan yazacağız
+const sendEmail = require("../utils/sendEmail"); // bu fonksiyonu da birazdan yazacağız
 require("dotenv").config();
 
 const refreshTokenHandler = asyncHandler(async (req, res) => {
@@ -205,7 +205,7 @@ const requestVerificationCode = asyncHandler(async (req, res) => {
   );
 
   // Gmail gönderimi (gerçek SMTP ayarlarını kullanarak)
-  await sendVerificationEmail(email, verificationCode);
+  await sendEmail(email, verificationCode);
 
   res.status(200).json({
     message: "Onay kodu e-posta adresinize gönderildi. Lütfen kontrol edin.",
