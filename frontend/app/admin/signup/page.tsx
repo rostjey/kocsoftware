@@ -36,7 +36,8 @@ export default function SignupPage() {
       );
 
       if (res.status === 201) {
-        router.push(`/admin/dashboard/${res.data.cafeSlug}`);
+        localStorage.setItem("pendingEmail", email);
+        router.push("/admin/verify-email");
       }
     } catch (err) {
       if (err instanceof AxiosError) {

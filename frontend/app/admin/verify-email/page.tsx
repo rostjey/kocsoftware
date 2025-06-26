@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
@@ -10,7 +10,15 @@ export default function VerifyEmailPage() {
   const [error, setError] = useState("");
   const [tries, setTries] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
+  const [email, setEmail] = useState<string | null>(null);
   const router = useRouter();
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      const storedEmail = localStorage.getItem("pendingEmail");
+      setEmail(storedEmail);
+    }
+  }, []);
 
   const handleVerify = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -18,29 +26,26 @@ export default function VerifyEmailPage() {
     setError("");
 
     try {
-        const res = await axios.post(
-          `${process.env.NEXT_PUBLIC_API_URL}/api/admin/verify-email`,
-          { code },
-          { withCredentials: true }
-        );
-      
-        if (res.status === 200) {
-          router.push(`/admin/dashboard/${res.data.slug}`);
-        }
-      } catch (error) {
-        if (error instanceof Error) {
-          if (tries === 1) {
-            router.push("/admin/verification-failed");
-          } else {
-            setTries((prev) => prev + 1);
-            setError("Hatalı kod. Lütfen tekrar deneyin.");
-          }
-        } else {
-          setError("Bilinmeyen bir hata oluştu.");
-        }
-      } finally {
-        setIsLoading(false);
+      const res = await axios.post(
+        `${process.env.NEXT_PUBLIC_API_URL}/api/admin/verify-email`,
+        { code },
+        { withCredentials: true }
+      );
+
+      if (res.status === 200) {
+        localStorage.removeItem("pendingEmail"); // temizle
+        router.push(`/admin/dashboard/${res.data.slug}`);
       }
+    } catch (err) {
+      if (tries === 1) {
+        router.push("/admin/verification-failed");
+      } else {
+        setTries((prev) => prev + 1);
+        setError("Hatalı kod. Lütfen tekrar deneyin.");
+      }
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -49,7 +54,15 @@ export default function VerifyEmailPage() {
 
       <form onSubmit={handleVerify} className="space-y-4 w-full max-w-sm">
         {error && (
-          <p className="text-red-300 text-center">{error}</p>
+          <div className="text-red-300 text-center space-y-1">
+            <p>{error}</p>
+            {tries >= 1 && email && (
+              <p className="text-xs mt-1">
+                E-posta adresiniz doğru mu?{" "}
+                <span className="font-semibold">{email}</span>
+              </p>
+            )}
+          </div>
         )}
 
         <input
