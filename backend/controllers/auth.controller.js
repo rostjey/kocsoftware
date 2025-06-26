@@ -174,9 +174,6 @@ const googleLoginCallback = asyncHandler(async (req, res) => {
 
 // E-posta onay kodu gönderme
 const requestVerificationCode = asyncHandler(async (req, res) => {
-  console.log("➡️ Kod geldi:", verificationCode);
-  console.log("📧 Email gönderilecek:", email);
-
   const { name, slug, email, password, signupKey } = req.body;
 
   if (signupKey !== process.env.SIGNUP_KEY) {
@@ -188,8 +185,12 @@ const requestVerificationCode = asyncHandler(async (req, res) => {
     return res.status(400).json({ message: "Bu e-posta zaten kayıtlı" });
   }
 
-  // 6 haneli onay kodu oluştur
+  // ✅ 6 haneli onay kodunu önce oluştur
   const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
+
+  // ✅ Kod üretildikten sonra logla
+  console.log("➡️ Kod geldi:", verificationCode);
+  console.log("📧 Email gönderilecek:", email);
 
   // Şifreyi hashle
   const hashedPassword = await bcrypt.hash(password, 12);
@@ -214,6 +215,7 @@ const requestVerificationCode = asyncHandler(async (req, res) => {
     message: "Onay kodu e-posta adresinize gönderildi. Lütfen kontrol edin.",
   });
 });
+
 
 // Bu fonksiyon, onay kodunu doğrulamak için kullanılabilir
 const verifyEmailCode = asyncHandler(async (req, res) => {
