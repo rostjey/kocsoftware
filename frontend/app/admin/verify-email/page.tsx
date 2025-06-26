@@ -36,13 +36,14 @@ export default function VerifyEmailPage() {
         localStorage.removeItem("pendingEmail"); // temizle
         router.push(`/admin/dashboard/${res.data.slug}`);
       }
-    } catch (err) {
+    } catch {
       if (tries === 1) {
         router.push("/admin/verification-failed");
       } else {
         setTries((prev) => prev + 1);
         setError("Hatalı kod. Lütfen tekrar deneyin.");
-      }
+      } 
+    
     } finally {
       setIsLoading(false);
     }
