@@ -55,8 +55,8 @@ passport.use(new GoogleStrategy(
         existingByEmail.provider = "google";
 
         // 🆕 Avatar ekle (sadece boşsa)
-        if (!existingEmailUser.avatar && profile.photos?.[0]?.value) {
-         existingEmailUser.avatar = profile.photos[0].value;
+        if (!existingByEmail.avatar && profile.photos?.[0]?.value) {
+         existingByEmail.avatar = profile.photos[0].value;
         }
 
         await existingByEmail.save();
