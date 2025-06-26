@@ -34,6 +34,7 @@ export default function AdminDashboard({
   const fetchCafeAndProducts = useCallback(async () => {
     try {
       const res = await api.get("/api/admin/me", { withCredentials: true }); // backend yolu
+      console.log("Cafe verisi:", res.data);
       const cafeData = res.data;
 
       setCafe({

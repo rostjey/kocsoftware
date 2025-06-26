@@ -192,9 +192,6 @@ const requestVerificationCode = asyncHandler(async (req, res) => {
   console.log("➡️ Kod geldi:", verificationCode);
   console.log("📧 Email gönderilecek:", email);
 
-  // Şifreyi hashle
-  const hashedPassword = await bcrypt.hash(password, 12);
-
   // Redis’e geçici kullanıcı verilerini kaydet (5 dakika süreyle)
   await redis.setex(
     `verify:${email}`,
@@ -203,7 +200,7 @@ const requestVerificationCode = asyncHandler(async (req, res) => {
       name,
       slug,
       email,
-      password: hashedPassword,
+      password, // hashed yapma zaten yapılacak
       code: verificationCode,
     })
   );
