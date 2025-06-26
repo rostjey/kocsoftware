@@ -37,7 +37,8 @@ router.get("/me", authMiddleware, async (req, res) => {
 router.post("/google/pre-register", preRegisterGoogle);
 // Google callback
 router.get("/google/callback",
-    passport.authenticate("google", { session: false, failureRedirect: "/login" }),
+    passport.authenticate("google", { session: false,failureRedirect: "https://kocsoftware.net/admin/login"
+    }),
     googleLoginCallback
 );
 
@@ -56,7 +57,5 @@ router.get("/google", (req, res, next) => {
 router.post("/request-verification-code", requestVerificationCode);
 // E-posta onay kodunu doğrulama
 router.post("/verify-email", verifyEmailCode);
-
-router.post("/google/pre-register", preRegisterGoogle);
 
 module.exports = router;
