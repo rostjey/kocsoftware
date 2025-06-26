@@ -151,6 +151,23 @@ export default function CafeForm({
         {uploading ? <LoadingSpinner /> : "Kaydet"}
       </button>
 
+      {/* Google Bağlantı Butonu: sadece local kullanıcıya göster */}
+      {cafe.provider === "local" && cafe.email && (
+        <button
+          type="button"
+          onClick={() => {
+            const redirectUrl = `${process.env.NEXT_PUBLIC_API_URL}/api/admin/google?email=${encodeURIComponent(
+              cafe.email || ""
+            )}`;
+            window.location.href = redirectUrl;
+          }}
+          className="w-full bg-blue-500 text-white font-semibold py-3 rounded-xl shadow-md transition hover:bg-blue-600 text-lg"
+        >
+          Google Hesabınızı Bağlayın
+        </button>
+      )}
+
+
       <button
         type="button"
         onClick={handleDeleteAccount}

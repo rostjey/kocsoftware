@@ -20,6 +20,8 @@ export interface Cafe {
     template?: CafeTemplate;
     avatar?: string;
     slug?: string;
+    email?: string;        
+    provider?: string; 
 }
 export interface Props {
     initialName?: string;

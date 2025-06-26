@@ -1,7 +1,7 @@
 const passport = require("passport");
 const GoogleStrategy = require("passport-google-oauth20").Strategy;
 const Cafe = require("../models/cafe.model");
-const redis = require("../lib/redis"); // 🔥 Redis eklendi
+const redis = require("../lib/redis");
 
 passport.use(new GoogleStrategy(
   {
@@ -13,7 +13,7 @@ passport.use(new GoogleStrategy(
   async (req, accessToken, refreshToken, profile, done) => {
     try {
       const signupKey = req.query.state;
-
+      const linkEmail = req.query.email; // 🌟 Google bağlama durumunda buradan geliyor
       const email = profile.emails?.[0]?.value;
       if (!email) return done(null, false);
 
@@ -28,31 +28,42 @@ passport.use(new GoogleStrategy(
         city = parsed.city;
       }
 
-      // 🔁 Eğer bu Google ID zaten varsa → direkt login
+      // 🔁 1. Google ID ile zaten kayıtlı mı?
       let user = await Cafe.findOne({ googleId: profile.id });
       if (user) return done(null, user);
 
-      // 🔁 Email kayıtlı mı?
-      let existingEmailUser = await Cafe.findOne({ email });
-      if (existingEmailUser) {
-        // Eğer şifre boşsa → yeni kayıt gibi işle (Google ile ilk defa kaydediliyorsa)
-        if (!existingEmailUser.password && cached) {
-          existingEmailUser.password = password;
-          existingEmailUser.city = city;
-        }
-        existingEmailUser.googleId = profile.id;
-        existingEmailUser.provider = "google";
-        await existingEmailUser.save();
-        await redis.del(redisKey); // Redis temizliği
-        return done(null, existingEmailUser);
+      // 🔁 2. Admin panelden gelen kullanıcı emailiyle eşleşme (Google bağlama)
+      if (linkEmail && linkEmail === email) {
+        const existing = await Cafe.findOne({ email: linkEmail });
+        if (!existing) return done(null, false); // Güvenlik
+
+        existing.googleId = profile.id;
+        existing.provider = "google";
+        await existing.save();
+        return done(null, existing);
       }
 
-      // 🔐 signupKey doğrulaması
+      // 🔁 3. Email zaten kayıtlı mı?
+      const existingByEmail = await Cafe.findOne({ email });
+      if (existingByEmail) {
+        // Eğer password yoksa → signup sayfasından gelen verileri kullan
+        if (!existingByEmail.password && cached) {
+          existingByEmail.password = password;
+          existingByEmail.city = city;
+        }
+        existingByEmail.googleId = profile.id;
+        existingByEmail.provider = "google";
+        await existingByEmail.save();
+        await redis.del(redisKey);
+        return done(null, existingByEmail);
+      }
+
+      // 🔐 4. Yeni kayıt için signupKey kontrolü
       if (signupKey !== process.env.SIGNUP_KEY) {
         return done(null, false);
       }
 
-      // 🆕 Yeni kullanıcı oluştur
+      // 🆕 5. Yeni kullanıcı oluştur
       const baseSlug = profile.displayName.toLowerCase().replace(/\s+/g, "-");
       let slug = baseSlug;
       let counter = 1;
@@ -73,8 +84,7 @@ passport.use(new GoogleStrategy(
         avatar,
       });
 
-      await redis.del(redisKey); // Redis temizliği
-
+      await redis.del(redisKey);
       return done(null, newCafe);
     } catch (err) {
       return done(err, null);
