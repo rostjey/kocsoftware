@@ -28,7 +28,7 @@ export default function VerifyEmailPage() {
     try {
       const res = await axios.post(
         `${process.env.NEXT_PUBLIC_API_URL}/api/admin/verify-email`,
-        { code },
+        { email,code },
         { withCredentials: true }
       );
 
