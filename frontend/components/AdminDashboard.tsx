@@ -43,6 +43,8 @@ export default function AdminDashboard({
         avatar: cafeData.avatar || "", // avatar eklenmişse kullan
         template: cafeData.template || "scroll", //template: cafeData.template !== undefined ? cafeData.template : "scroll" //burası önemli en son seçilen kategorinin logout sonrası gözükmesi için
         slug: cafeData.slug || "", // 🔥 bunu ekle
+        provider: cafeData.provider || "", // provider ekle
+        email: cafeData.email || "", // email ekle
       });
 
       const productsRes = await api.get("/api/products");
