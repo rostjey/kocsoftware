@@ -95,7 +95,7 @@ export default function SignupPage() {
           placeholder="Şehir"
           value={city}
           onChange={(e) => setCity(e.target.value)}
-          className="w-full px-4 py-3 bg-[#e9eaf3] border border-white text-black placeholder-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
+          className="w-full px-4 py-3 rounded-lg bg-transparent border border-white placeholder-gray-200 text-white focus:outline-none focus:ring-2 focus:ring-white"
         />
         <input
           type="email"

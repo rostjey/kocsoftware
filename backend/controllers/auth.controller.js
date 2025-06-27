@@ -208,20 +208,6 @@ const requestVerificationCode = asyncHandler(async (req, res) => {
   // ✅ 6 haneli onay kodunu önce oluştur
   const verificationCode = Math.floor(100000 + Math.random() * 900000).toString();
 
-  console.log("🔑 Onay kodu oluşturuldu:", verificationCode);
-  console.log("📧 E-posta adresi:", email);
-
-  // ✅ Kod üretildikten sonra logla
-console.log("📩 Redis’e kaydedilen veri:", {
-  name,
-  slug,
-  city,
-  email,
-  password,
-  code: verificationCode
-});
-
-
   // Redis’e geçici kullanıcı verilerini kaydet (5 dakika süreyle)
   await redis.setex(
     `verify:${email}`,
