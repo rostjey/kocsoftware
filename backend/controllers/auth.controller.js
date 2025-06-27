@@ -269,6 +269,7 @@ const verifyEmailCode = asyncHandler(async (req, res) => {
     name: parsed.name,
     slug: parsed.slug,
     email: parsed.email,
+    city: parsed.city,
     password: hashedPassword,
   });
 
