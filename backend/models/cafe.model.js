@@ -53,7 +53,11 @@ const CafeSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now
-    }
+    },
+    city: {
+        type: String,
+        default: ""
+    },
 });
 
 module.exports = mongoose.model("Cafe", CafeSchema);
