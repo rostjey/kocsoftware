@@ -41,7 +41,6 @@ const CafeSchema = new mongoose.Schema({
     },
     googleId: {
         type: String,
-        default: null,
         unique: true,
         sparse: true // sadece bazı kayıtlarda olur, boş olanlar hata vermez
     },
