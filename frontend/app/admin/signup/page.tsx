@@ -15,6 +15,7 @@ export default function SignupPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [signupKey, setSignupKey] = useState("");
+  const [city, setCity] = useState("");
   const [error, setError] = useState("");
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
@@ -28,6 +29,7 @@ export default function SignupPage() {
         {
           name,
           slug,
+          city,
           email,
           password,
           signupKey,
@@ -86,6 +88,14 @@ export default function SignupPage() {
           onChange={(e) => setSlug(e.target.value)}
           className="w-full px-4 py-3 rounded-lg bg-transparent border border-white placeholder-gray-200 text-white focus:outline-none focus:ring-2 focus:ring-white"
           required
+        />
+        <input
+          type="text"
+          name="city"
+          placeholder="Şehir"
+          value={city}
+          onChange={(e) => setCity(e.target.value)}
+          className="w-full px-4 py-3 bg-[#e9eaf3] border border-white text-black placeholder-gray-600 rounded-lg focus:outline-none focus:ring-2 focus:ring-white"
         />
         <input
           type="email"
