@@ -219,9 +219,9 @@ const requestVerificationCode = asyncHandler(async (req, res) => {
     JSON.stringify({
       name,
       slug,
-      city,
       email,
       password, // hashed yapma zaten yapılacak
+      city,
       code: verificationCode,
     })
   );
@@ -269,8 +269,8 @@ const verifyEmailCode = asyncHandler(async (req, res) => {
     name: parsed.name,
     slug: parsed.slug,
     email: parsed.email,
-    city: parsed.city,
     password: hashedPassword,
+    city: parsed.city,
   });
 
   // Redis’ten kaldır

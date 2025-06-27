@@ -22,6 +22,10 @@ const CafeSchema = new mongoose.Schema({
         type: String,
         required: false // Google ile giriş yapanlarda olmayacak
     },
+     city: {
+        type: String,
+        default: ""
+    },
     logo: {
         type: String,
         default: ""
@@ -53,10 +57,6 @@ const CafeSchema = new mongoose.Schema({
     createdAt: {
         type: Date,
         default: Date.now
-    },
-    city: {
-        type: String,
-        default: ""
     },
 });
 
