@@ -194,7 +194,7 @@ const googleLoginCallback = asyncHandler(async (req, res) => {
 
 // E-posta onay kodu gönderme
 const requestVerificationCode = asyncHandler(async (req, res) => {
-  const { name, slug, email, password, signupKey } = req.body;
+  const { name, slug, city ,email, password, signupKey } = req.body;
 
   if (signupKey !== process.env.SIGNUP_KEY) {
     return res.status(401).json({ message: "Geçersiz kayıt anahtarı" });
@@ -219,6 +219,7 @@ const requestVerificationCode = asyncHandler(async (req, res) => {
     JSON.stringify({
       name,
       slug,
+      city,
       email,
       password, // hashed yapma zaten yapılacak
       code: verificationCode,
