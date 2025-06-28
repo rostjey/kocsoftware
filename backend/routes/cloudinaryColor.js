@@ -1,6 +1,6 @@
 // backend/routes/cloudinaryColor.js
 
-import cloudinary from "cloudinary";
+const cloudinary = require("cloudinary");
 require("dotenv").config();
 
 cloudinary.v2.config({
