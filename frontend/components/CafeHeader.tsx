@@ -65,7 +65,7 @@ export default function CafeHeader({
             src={logo}
             alt="Logo"
             fill
-            className="object-contain max-h-[80%] p-4 z-10"
+            className="object-contain max-h-[80%] w-auto"
             />
         </div>
       </div>
