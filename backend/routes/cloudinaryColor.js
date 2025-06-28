@@ -1,8 +1,7 @@
-const express = require("express");
 const cloudinary = require("cloudinary");
+const express = require("express");
+const router = express.Router();
 require("dotenv").config();
-
-const router = express.Router(); // ⬅️ express app değil, router objesi
 
 cloudinary.v2.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -10,7 +9,7 @@ cloudinary.v2.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-router.get("/dominant-color", async (req, res) => {
+router.get("/api/dominant-color", async (req, res) => {
   const { public_id } = req.query;
 
   try {
@@ -18,8 +17,8 @@ router.get("/dominant-color", async (req, res) => {
       colors: true,
     });
 
-    const [rgbArray] = result.colors;
-    const rgb = rgbArray[0];
+    const [dominant] = result.colors; // örnek: [[34, 56, 78], 0.9]
+    const rgb = dominant[0]; // ✅ rgb = [34, 56, 78]
 
     res.json({ dominantColor: `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})` });
   } catch (err) {
