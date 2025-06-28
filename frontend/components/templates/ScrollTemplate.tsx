@@ -6,6 +6,7 @@ import { FaInstagram } from "react-icons/fa";
 import Image from "next/image";
 import { CafeClientProps } from "@/types";
 import ProductCardMenu from "../ProductCardMenu";
+import CafeHeader from "../CafeHeader";
 
 export default function ScrollTemplate({ name, logo, instagram, products }: CafeClientProps) {
   const router = useRouter();
@@ -50,59 +51,15 @@ export default function ScrollTemplate({ name, logo, instagram, products }: Cafe
       {/* 🔲 Ana içerik */}
       <main className="relative z-10 text-white p-4 max-w-6xl mx-auto">
 
-        {/* ✅ Logo + Başlık */}
-        <div className="text-center mb-6">
-          {logo ? (
-            <Image src={logo} alt="Logo" width={160} height={160} className="mx-auto rounded-full border border-white shadow-lg" />
-          ) : (
-            <div className="text-gray-400">Logo bulunamadı</div>
-          )}
-          <h1 className="blackletter text-4xl mt-2">{name || "Kafe İsmi"}</h1>
-        </div>
-
-        {/* ✅ Sticky Bar */}
-        <div className="sticky top-0 z-20 backdrop-blur-md bg-black/70 border-b border-white/10 p-3 flex flex-wrap justify-center gap-4 shadow">
-          <button
-            onClick={handleFeaturedClick}
-            className="blackletter bg-retrored hover:bg-retrohover text-white px-4 py-1.5 rounded-lg shadow"
-          >
-            Öne Çıkanlar
-          </button>
-
-          <div className="relative">
-            <button
-              onClick={() => setShowDropdown(!showDropdown)}
-              className="blackletter bg-gray-700 hover:bg-gray-600 text-white px-4 py-1.5 rounded-lg"
-            >
-              Kategoriler
-            </button>
-            {showDropdown && (
-              <div className="absolute top-full left-0 mt-2 bg-gray-800 border border-gray-600 rounded shadow z-30 w-40">
-                {categories.map((cat) => (
-                  <button
-                    key={cat}
-                    onClick={() => scrollToCategory(cat)}
-                    className="w-full text-left px-4 py-2 hover:bg-gray-700 capitalize"
-                  >
-                    {cat}
-                  </button>
-                ))}
-              </div>
-            )}
-          </div>
-
-          {instagram && (
-            <a
-              href={instagram}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex items-center gap-2 bg-gradient-to-r from-yellow-400 via-pink-500 to-purple-600 px-3 py-1.5 rounded-lg text-white shadow hover:opacity-90"
-            >
-              <FaInstagram />
-              <span className="blackletter hidden sm:inline">Instagram</span>
-            </a>
-          )}
-        </div>
+        {/* ✅ Logo ve Başlık */}
+        <CafeHeader
+          name={name}
+          logo={logo}
+          instagram={instagram}
+          categories={categories}
+          onFeaturedClick={handleFeaturedClick}
+          onCategoryClick={scrollToCategory}
+        />
 
         {/* ✅ Ürün Listesi */}
         {categories.map((cat) => (
