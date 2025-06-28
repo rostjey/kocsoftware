@@ -64,7 +64,8 @@ export default function CafeHeader({
           <Image
             src={logo}
             alt="Logo"
-            fill
+            width={180}
+            height={180}
             className="object-contain max-h-[80%] w-auto"
             />
         </div>
