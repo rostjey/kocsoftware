@@ -44,18 +44,19 @@ export default function ScrollTemplate({ name, logo, instagram, products }: Cafe
       {/* 🔳 Arka Plan */}
       <div className="fixed -z-10 inset-0 bg-[url('/deri3.jpg')] bg-cover bg-center bg-no-repeat"></div>
 
+
+      {/* ✅ Logo ve Başlık */}
+      <CafeHeader
+        name={name}
+        logo={logo}
+        instagram={instagram}
+        categories={categories}
+        onFeaturedClick={handleFeaturedClick}
+        onCategoryClick={scrollToCategory}
+      />
+      
       {/* 🔲 Ana içerik */}
       <main className="relative z-10 text-white p-4 max-w-6xl mx-auto">
-
-        {/* ✅ Logo ve Başlık */}
-        <CafeHeader
-          name={name}
-          logo={logo}
-          instagram={instagram}
-          categories={categories}
-          onFeaturedClick={handleFeaturedClick}
-          onCategoryClick={scrollToCategory}
-        />
 
         {/* ✅ Ürün Listesi */}
         {categories.map((cat) => (
