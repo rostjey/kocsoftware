@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState, createRef } from "react";
+import { useMemo, createRef } from "react";
 import { CafeClientProps } from "@/types";
 import { useRouter } from "next/navigation";
 import ProductCardMenu from "../ProductCardMenu";
