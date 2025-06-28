@@ -35,7 +35,7 @@ export default function ProductCardMenu({
         className={`cursor-pointer transition-all duration-300 ease-in-out ${
           expanded
             ? "fixed z-50 top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[90%] max-w-md scale-105"
-            : "relative"
+            : "relative min-w-[250px] sm:min-w-[300px]"
         } bg-white/10 backdrop-blur-md border border-white/10 hover:shadow-orange-400/30 rounded-xl overflow-hidden shadow-lg shadow-orange-500/10 animate-pulseShadow`}
       >
         <Image
