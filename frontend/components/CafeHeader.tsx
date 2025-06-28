@@ -14,7 +14,6 @@ type CafeHeaderProps = {
 };
 
 export default function CafeHeader({
-  name,
   logo,
   instagram,
   categories,
