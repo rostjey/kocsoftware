@@ -29,16 +29,14 @@ export default function CafeHeader({
   const fetchDominantColor = async () => {
     try {
       const url = new URL(logo);
-      const cloudName = url.hostname.split(".")[0];
       const publicId = url.pathname.split("/").slice(2).join("/").split(".")[0]; // dosya uzantısını at
 
-      const res = await fetch(`https://res.cloudinary.com/${cloudName}/image/upload/co_rgb.json?public_id=${publicId}`);
+      const res = await fetch(`/api/dominant-color?public_id=${publicId}`);
       const data = await res.json();
-      console.log("Cloudinary dominant color data:", data); // ✅ kontrol için
+      console.log("dominant color data", data);
 
-      const dominant = data.colors?.[0]?.[0]; // örn: [31, 40, 77]
-      if (dominant) {
-        setDominantColor(`rgb(${dominant[0]}, ${dominant[1]}, ${dominant[2]})`);
+      if (data.dominantColor) {
+        setDominantColor(data.dominantColor);
       }
     } catch (err) {
       console.error("Baskın renk alınamadı:", err);

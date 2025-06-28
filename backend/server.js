@@ -44,6 +44,7 @@ app.use("/api/admin", authRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/cafe", cafeRoutes);
 app.use("/api/upload", uploadRoutes);
+app.use("/api", cloudinaryColorRoute);
 
 app.use(errorMiddleware); // Global error handler en sonda olmalı
 
