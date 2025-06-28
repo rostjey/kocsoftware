@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import ProductCardMenu from "../ProductCardMenu";
 import CafeHeader from "../CafeHeader";
 
-export default function HorizontalTemplate({ name, logo, instagram, products }: CafeClientProps) {
+export default function HorizontalTemplate({ name, logo, instagram, products,dominantColor }: CafeClientProps) {
   const router = useRouter();
 
   const categories = useMemo(() => {
@@ -36,16 +36,17 @@ export default function HorizontalTemplate({ name, logo, instagram, products }: 
       {/* Arka Plan */}
       <div className="fixed -z-10 inset-0 bg-[url('/deri3.jpg')] bg-cover bg-center bg-no-repeat"></div>
 
-      <main className="relative z-10 text-white p-4 max-w-6xl mx-auto">
         {/*CafeHeader*/}
         <CafeHeader
           name={name}
           logo={logo}
+          dominantColor={dominantColor}
           instagram={instagram}
           categories={categories}
           onFeaturedClick={handleFeaturedClick}
           onCategoryClick={scrollToCategory}
         />
+      <main className="relative z-10 text-white p-4 max-w-6xl mx-auto">
 
         {/* Yatay Scroll Ürünler */}
         <div className="space-y-16 mt-8">

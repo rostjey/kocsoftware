@@ -10,6 +10,7 @@ export interface Product {
 export interface CafeData {
     cafe: Cafe;
     products: Product[];
+    cafeClient: CafeClientProps;
 }
 
 export type CafeTemplate = "scroll" | "category" | "horizontal";
@@ -35,6 +36,7 @@ export interface CafeClientProps {
     logo: string;
     instagram: string;
     products: Product[];
+    dominantColor: string;
 }
 
 export interface EditProductFormProps {

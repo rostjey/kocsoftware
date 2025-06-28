@@ -2,6 +2,7 @@ const Cafe = require("../models/cafe.model");
 const Product = require("../models/product.model");
 const redis = require("../lib/redis");
 const asyncHandler = require("../middlewares/asyncHandler");
+const { getDominantColor } = require("../utils/getDominantColor");
 
 const getMyCafe = asyncHandler(async (req, res) => {
   const cafe = await Cafe.findOne({ slug: req.user.cafeSlug });
@@ -54,12 +55,28 @@ const getPublicMenu = asyncHandler(async (req, res) => {
   const products = await Product.find({ cafeSlug: slug });
   const categories = [...new Set(products.map(p => p.category))];
 
+  let dominantColor = "#1f1f1f";
+  if (cafe.logo) {
+    try {
+      const url = new URL(cafe.logo);
+      const pathParts = url.pathname.split("/");
+      const uploadIndex = pathParts.findIndex((p) => p === "upload");
+      const publicIdParts = pathParts.slice(uploadIndex + 2);
+      const publicId = publicIdParts.join("/").split(".")[0];
+
+      dominantColor = await getDominantColor(publicId);
+    } catch (err) {
+      console.error("Dominant renk alınamadı:", err);
+    }
+  }
+
   const responseData = {
     cafe: {
       name: cafe.name,
       logo: cafe.logo,
       instagram: cafe.instagram,
       template: cafe.template || "scroll", // hangi şablon kullanılıyor
+      dominantColor,
     },
     categories,
     products,

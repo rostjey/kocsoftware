@@ -6,7 +6,7 @@ import { CafeClientProps } from "@/types";
 import ProductCardMenu from "../ProductCardMenu";
 import CafeHeader from "../CafeHeader";
 
-export default function ScrollTemplate({ name, logo, instagram, products }: CafeClientProps) {
+export default function ScrollTemplate({ name, logo, instagram, products, dominantColor }: CafeClientProps) {
   const router = useRouter();
   const [scrollVisible, setScrollVisible] = useState(false);
 
@@ -49,6 +49,7 @@ export default function ScrollTemplate({ name, logo, instagram, products }: Cafe
       <CafeHeader
         name={name}
         logo={logo}
+        dominantColor={dominantColor}
         instagram={instagram}
         categories={categories}
         onFeaturedClick={handleFeaturedClick}

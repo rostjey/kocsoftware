@@ -2,11 +2,12 @@
 
 import Image from "next/image";
 import { FaInstagram } from "react-icons/fa";
-import { useState, useEffect } from "react";
+import { useState} from "react";
 
 type CafeHeaderProps = {
   name: string;
   logo: string;
+  dominantColor: string;
   instagram?: string;
   categories: string[];
   onCategoryClick: (category: string) => void;
@@ -16,38 +17,12 @@ type CafeHeaderProps = {
 export default function CafeHeader({
   logo,
   instagram,
+  dominantColor,
   categories,
   onCategoryClick,
   onFeaturedClick,
 }: CafeHeaderProps) {
   const [showDropdown, setShowDropdown] = useState(false);
-  const [dominantColor, setDominantColor] = useState<string>("#1f1f1f");
-
-  useEffect(() => {
-    const fetchDominantColor = async () => {
-      try {
-        const url = new URL(logo);
-        const pathParts = url.pathname.split("/");
-
-        // upload/v123... kısmını atla → sadece public_id'yi al
-        const uploadIndex = pathParts.findIndex((p) => p === "upload");
-        const publicIdParts = pathParts.slice(uploadIndex + 2); // version numarasından sonra
-        const publicIdWithExt = publicIdParts.join("/"); // cafe-products/yedcqrvkuwcqwm70nmbw.png
-        const publicId = publicIdWithExt.split(".")[0]; // .png uzantısını sil
-
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/dominant-color?public_id=${publicId}`);
-        const data = await res.json();
-
-        if (data.dominantColor) {
-          setDominantColor(data.dominantColor);
-        }
-      } catch (err) {
-        console.error("Baskın renk alınamadı:", err);
-      }
-    };
-
-    if (logo) fetchDominantColor();
-  }, [logo]);
 
   return (
     <>
