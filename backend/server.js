@@ -6,6 +6,7 @@ const authRoutes = require("./routes/auth.routes");
 const productRoutes = require("./routes/product.routes");
 const cafeRoutes = require("./routes/cafe.routes");
 const uploadRoutes = require("./routes/upload.routes");
+const cloudinaryColor = require("./routes/cloudinaryColor");
 const errorMiddleware = require("./middlewares/error.middleware");
 require("dotenv").config();
 const passport = require("passport");
@@ -44,7 +45,7 @@ app.use("/api/admin", authRoutes);
 app.use("/api/products", productRoutes);
 app.use("/api/cafe", cafeRoutes);
 app.use("/api/upload", uploadRoutes);
-app.use("/api", cloudinaryColorRoute);
+app.use("/api", cloudinaryColor);
 
 app.use(errorMiddleware); // Global error handler en sonda olmalı
 
