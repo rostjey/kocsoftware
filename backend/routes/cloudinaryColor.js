@@ -1,6 +1,6 @@
-const cloudinary = require("cloudinary");
 const express = require("express");
 const router = express.Router();
+const cloudinary = require("cloudinary");
 require("dotenv").config();
 
 cloudinary.v2.config({
@@ -17,9 +17,8 @@ router.get("/api/dominant-color", async (req, res) => {
       colors: true,
     });
 
-    const [dominant] = result.colors; // örnek: [[34, 56, 78], 0.9]
-    const rgb = dominant[0]; // ✅ rgb = [34, 56, 78]
-
+    const [dominant] = result.colors;
+    const rgb = dominant[0]; // örn: [34, 56, 78]
     res.json({ dominantColor: `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})` });
   } catch (err) {
     console.error("Dominant color API error:", err);
