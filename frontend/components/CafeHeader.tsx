@@ -22,30 +22,33 @@ export default function CafeHeader({
   onFeaturedClick,
 }: CafeHeaderProps) {
   const [showDropdown, setShowDropdown] = useState(false);
-  const [dominantColor, setDominantColor] = useState<string>("#1f1f1f"); // default fallback
+  const [dominantColor, setDominantColor] = useState<string>("#1f1f1f");
 
-  // 🎨 Cloudinary dominant color fetch
- useEffect(() => {
-  const fetchDominantColor = async () => {
-    try {
-      const url = new URL(logo);
-      const publicId = url.pathname.split("/").slice(2).join("/").split(".")[0]; // `upload/v123/name.png` => name
+  useEffect(() => {
+    const fetchDominantColor = async () => {
+      try {
+        const url = new URL(logo);
+        const pathParts = url.pathname.split("/");
 
-      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/dominant-color?public_id=${publicId}`);
-      const data = await res.json();
-      console.log("dominant-color API:", data);
+        // upload/v123... kısmını atla → sadece public_id'yi al
+        const uploadIndex = pathParts.findIndex((p) => p === "upload");
+        const publicIdParts = pathParts.slice(uploadIndex + 2); // version numarasından sonra
+        const publicIdWithExt = publicIdParts.join("/"); // cafe-products/yedcqrvkuwcqwm70nmbw.png
+        const publicId = publicIdWithExt.split(".")[0]; // .png uzantısını sil
 
-      if (data.dominantColor) {
-        setDominantColor(data.dominantColor);
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/dominant-color?public_id=${publicId}`);
+        const data = await res.json();
+
+        if (data.dominantColor) {
+          setDominantColor(data.dominantColor);
+        }
+      } catch (err) {
+        console.error("Baskın renk alınamadı:", err);
       }
-    } catch (err) {
-      console.error("Baskın renk alınamadı:", err);
-    }
-  };
+    };
 
-  if (logo) fetchDominantColor();
-}, [logo]);
-
+    if (logo) fetchDominantColor();
+  }, [logo]);
 
   return (
     <>
@@ -61,7 +64,8 @@ export default function CafeHeader({
           className="object-contain max-h-[80%] p-4 z-10"
         />
       </div>
-     <h1 className="blackletter text-3xl text-white mt-4 text-center z-10 relative">{name}</h1>
+
+      <h1 className="blackletter text-3xl text-white mt-4 text-center z-10 relative">{name}</h1>
 
       {/* Sticky Navigasyon */}
       <div className="sticky top-0 z-20 backdrop-blur-md bg-black/70 border-b border-white/10 p-3 flex flex-wrap justify-center gap-4 shadow">
