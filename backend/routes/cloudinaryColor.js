@@ -1,7 +1,8 @@
-// backend/routes/cloudinaryColor.js
-
+const express = require("express");
 const cloudinary = require("cloudinary");
 require("dotenv").config();
+
+const router = express.Router(); // ⬅️ express app değil, router objesi
 
 cloudinary.v2.config({
   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
@@ -9,7 +10,7 @@ cloudinary.v2.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-app.get("/api/dominant-color", async (req, res) => {
+router.get("/dominant-color", async (req, res) => {
   const { public_id } = req.query;
 
   try {
@@ -17,7 +18,7 @@ app.get("/api/dominant-color", async (req, res) => {
       colors: true,
     });
 
-    const [rgbArray] = result.colors; // örnek: [[32,32,94], 0.9]
+    const [rgbArray] = result.colors;
     const rgb = rgbArray[0];
 
     res.json({ dominantColor: `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})` });
@@ -26,3 +27,5 @@ app.get("/api/dominant-color", async (req, res) => {
     res.status(500).json({ error: "Color fetch failed" });
   }
 });
+
+module.exports = router;
