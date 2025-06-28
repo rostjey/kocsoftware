@@ -8,7 +8,6 @@ import CafeHeader from "../CafeHeader";
 
 export default function HorizontalTemplate({ name, logo, instagram, products }: CafeClientProps) {
   const router = useRouter();
-  const [showDropdown, setShowDropdown] = useState(false);
 
   const categories = useMemo(() => {
     return [...new Set(products.filter((p) => !p.featured).map((p) => p.category))];
@@ -25,7 +24,6 @@ export default function HorizontalTemplate({ name, logo, instagram, products }: 
 
   const scrollToCategory = (cat: string) => {
     categoryRefs[cat]?.current?.scrollIntoView({ behavior: "smooth" });
-    setShowDropdown(false);
   };
 
   const handleFeaturedClick = () => {

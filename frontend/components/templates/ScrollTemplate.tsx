@@ -8,7 +8,6 @@ import CafeHeader from "../CafeHeader";
 
 export default function ScrollTemplate({ name, logo, instagram, products }: CafeClientProps) {
   const router = useRouter();
-  const [showDropdown, setShowDropdown] = useState(false);
   const [scrollVisible, setScrollVisible] = useState(false);
 
   const categories = useMemo(() => {
@@ -31,7 +30,6 @@ export default function ScrollTemplate({ name, logo, instagram, products }: Cafe
 
   const scrollToCategory = (cat: string) => {
     categoryRefs[cat]?.current?.scrollIntoView({ behavior: "smooth" });
-    setShowDropdown(false);
   };
 
   const scrollToTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
