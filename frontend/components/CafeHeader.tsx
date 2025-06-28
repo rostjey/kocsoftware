@@ -54,8 +54,11 @@ export default function CafeHeader({
     <>
       {/* Logo alanı */}
       <div
-        className="w-full h-[30vh] relative overflow-hidden flex items-center justify-center"
-        style={{ backgroundColor: dominantColor }}
+        className="w-full relative overflow-hidden flex items-center justify-center"
+        style={{ 
+            backgroundColor: dominantColor,
+            height: "min(25vh, 300px)",
+        }}
       >
         <Image
           src={logo}
