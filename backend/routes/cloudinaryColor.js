@@ -9,7 +9,7 @@ cloudinary.v2.config({
   api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
-router.get("/api/dominant-color", async (req, res) => {
+router.get("/dominant-color", async (req, res) => {
   const { public_id } = req.query;
 
   try {
@@ -18,8 +18,9 @@ router.get("/api/dominant-color", async (req, res) => {
     });
 
     const [dominant] = result.colors;
-    const rgb = dominant[0]; // örn: [34, 56, 78]
-    res.json({ dominantColor: `rgb(${rgb[0]}, ${rgb[1]}, ${rgb[2]})` });
+    const hex = dominant[0]; // bu zaten string: "#7f9f66"
+
+    res.json({ dominantColor: hex }); // ✅ doğru format
   } catch (err) {
     console.error("Dominant color API error:", err);
     res.status(500).json({ error: "Color fetch failed" });
