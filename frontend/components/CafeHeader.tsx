@@ -25,15 +25,15 @@ export default function CafeHeader({
   const [dominantColor, setDominantColor] = useState<string>("#1f1f1f"); // default fallback
 
   // 🎨 Cloudinary dominant color fetch
-  useEffect(() => {
+ useEffect(() => {
   const fetchDominantColor = async () => {
     try {
       const url = new URL(logo);
-      const publicId = url.pathname.split("/").slice(2).join("/").split(".")[0]; // dosya uzantısını at
+      const publicId = url.pathname.split("/").slice(2).join("/").split(".")[0]; // `upload/v123/name.png` => name
 
-      const res = await fetch(`/api/dominant-color?public_id=${publicId}`);
+      const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/dominant-color?public_id=${publicId}`);
       const data = await res.json();
-      console.log("dominant color data", data);
+      console.log("dominant-color API:", data);
 
       if (data.dominantColor) {
         setDominantColor(data.dominantColor);
@@ -43,9 +43,7 @@ export default function CafeHeader({
     }
   };
 
-  if (logo) {
-    fetchDominantColor();
-  }
+  if (logo) fetchDominantColor();
 }, [logo]);
 
 
