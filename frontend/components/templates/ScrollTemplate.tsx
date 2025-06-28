@@ -2,8 +2,6 @@
 
 import { useState, useEffect, useMemo, createRef } from "react";
 import { useRouter } from "next/navigation";
-import { FaInstagram } from "react-icons/fa";
-import Image from "next/image";
 import { CafeClientProps } from "@/types";
 import ProductCardMenu from "../ProductCardMenu";
 import CafeHeader from "../CafeHeader";

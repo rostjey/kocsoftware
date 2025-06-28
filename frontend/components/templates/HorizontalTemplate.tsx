@@ -2,8 +2,6 @@
 
 import { useMemo, useState, createRef } from "react";
 import { CafeClientProps } from "@/types";
-import Image from "next/image";
-import { FaInstagram } from "react-icons/fa";
 import { useRouter } from "next/navigation";
 import ProductCardMenu from "../ProductCardMenu";
 import CafeHeader from "../CafeHeader";
