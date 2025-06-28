@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { FaInstagram } from "react-icons/fa";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 type CafeHeaderProps = {
   name: string;
@@ -22,23 +22,43 @@ export default function CafeHeader({
   onFeaturedClick,
 }: CafeHeaderProps) {
   const [showDropdown, setShowDropdown] = useState(false);
+  const [dominantColor, setDominantColor] = useState<string>("#1f1f1f"); // default fallback
+
+  // 🎨 Cloudinary dominant color fetch
+  useEffect(() => {
+    const fetchDominantColor = async () => {
+      try {
+        const cloudinaryURL = logo + "?palette=json";
+        const res = await fetch(cloudinaryURL);
+        const data = await res.json();
+        if (data.colors?.dominant) {
+          setDominantColor(data.colors.dominant);
+        } else if (data[0]) {
+          setDominantColor(data[0][0]); // bazen array olarak gelir
+        }
+      } catch (err) {
+        console.error("Baskın renk alınamadı:", err);
+      }
+    };
+
+    if (logo) {
+      fetchDominantColor();
+    }
+  }, [logo]);
 
   return (
     <>
-      {/* Logo ve Başlık */}
-      <div className="text-center mb-6">
-        {logo ? (
-          <Image
-            src={logo}
-            alt="Logo"
-            width={160}
-            height={160}
-            className="mx-auto rounded-full border border-white shadow-lg"
-          />
-        ) : (
-          <div className="text-gray-400">Logo bulunamadı</div>
-        )}
-        <h1 className="blackletter text-4xl mt-2">{name || "Kafe İsmi"}</h1>
+      {/* Logo alanı */}
+      <div
+        className="w-full h-[30vh] relative overflow-hidden flex items-center justify-center"
+        style={{ backgroundColor: dominantColor }}
+      >
+        <Image
+          src={logo}
+          alt="Logo"
+          fill
+          className="object-contain max-h-[80%] p-4 z-10"
+        />
       </div>
 
       {/* Sticky Navigasyon */}
