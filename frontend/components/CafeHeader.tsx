@@ -59,8 +59,8 @@ export default function CafeHeader({
           fill
           className="object-contain max-h-[80%] p-4 z-10"
         />
-        <h1 className="blackletter text-3xl text-white mt-4 text-center z-10 relative">{name}</h1>
       </div>
+     <h1 className="blackletter text-3xl text-white mt-4 text-center z-10 relative">{name}</h1>
 
       {/* Sticky Navigasyon */}
       <div className="sticky top-0 z-20 backdrop-blur-md bg-black/70 border-b border-white/10 p-3 flex flex-wrap justify-center gap-4 shadow">
