@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { FaInstagram } from "react-icons/fa";
 import Image from "next/image";
 import { CafeClientProps } from "@/types";
+import ProductCardMenu from "../ProductCardMenu";
 
 export default function ScrollTemplate({ name, logo, instagram, products }: CafeClientProps) {
   const router = useRouter();
@@ -113,23 +114,13 @@ export default function ScrollTemplate({ name, logo, instagram, products }: Cafe
               {products
                 .filter((p) => p.category === cat && !p.featured)
                 .map((p) => (
-                  <div
+                 <ProductCardMenu
                     key={p._id}
-                    className="bg-white/10 backdrop-blur-md border border-white/10 hover:shadow-orange-400/30 rounded-xl overflow-hidden shadow-lg shadow-orange-500/10 animate-pulseShadow transition-all duration-1000 ease-in-out"
-                  >
-                    <Image
-                      src={p.image || "/no-image.png"}
-                      alt={p.name}
-                      width={500}
-                      height={300}
-                      className="w-full h-48 object-cover"
-                    />
-                    <div className="p-4 space-y-2">
-                      <h3 className="text-xl font-bold">{p.name}</h3>
-                      <p className="text-sm text-gray-300">{p.description}</p>
-                      <p className="text-lg font-semibold text-emerald-400">{p.price}₺</p>
-                    </div>
-                  </div>
+                    image={p.image}
+                    name={p.name}
+                    description={p.description}
+                    price={p.price}
+                  />
                 ))}
             </div>
           </div>
