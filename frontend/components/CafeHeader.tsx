@@ -26,25 +26,30 @@ export default function CafeHeader({
 
   // 🎨 Cloudinary dominant color fetch
   useEffect(() => {
-    const fetchDominantColor = async () => {
-      try {
-        const cloudinaryURL = logo + "?palette=json";
-        const res = await fetch(cloudinaryURL);
-        const data = await res.json();
-        if (data.colors?.dominant) {
-          setDominantColor(data.colors.dominant);
-        } else if (data[0]) {
-          setDominantColor(data[0][0]); // bazen array olarak gelir
-        }
-      } catch (err) {
-        console.error("Baskın renk alınamadı:", err);
-      }
-    };
+  const fetchDominantColor = async () => {
+    try {
+      const url = new URL(logo);
+      const cloudName = url.hostname.split(".")[0];
+      const publicId = url.pathname.split("/").slice(2).join("/").split(".")[0]; // dosya uzantısını at
 
-    if (logo) {
-      fetchDominantColor();
+      const res = await fetch(`https://res.cloudinary.com/${cloudName}/image/upload/co_rgb.json?public_id=${publicId}`);
+      const data = await res.json();
+      console.log("Cloudinary dominant color data:", data); // ✅ kontrol için
+
+      const dominant = data.colors?.[0]?.[0]; // örn: [31, 40, 77]
+      if (dominant) {
+        setDominantColor(`rgb(${dominant[0]}, ${dominant[1]}, ${dominant[2]})`);
+      }
+    } catch (err) {
+      console.error("Baskın renk alınamadı:", err);
     }
-  }, [logo]);
+  };
+
+  if (logo) {
+    fetchDominantColor();
+  }
+}, [logo]);
+
 
   return (
     <>
