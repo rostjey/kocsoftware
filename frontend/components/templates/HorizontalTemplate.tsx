@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 import ProductCardMenu from "../ProductCardMenu";
 import CafeHeader from "../CafeHeader";
 
-export default function HorizontalTemplate({ name, logo, instagram, products,dominantColor }: CafeClientProps) {
+export default function HorizontalTemplate({ name, logo, instagram, products}: CafeClientProps) {
   const router = useRouter();
 
   const categories = useMemo(() => {
@@ -40,7 +40,6 @@ export default function HorizontalTemplate({ name, logo, instagram, products,dom
         <CafeHeader
           name={name}
           logo={logo}
-          dominantColor={dominantColor}
           instagram={instagram}
           categories={categories}
           onFeaturedClick={handleFeaturedClick}

@@ -2,7 +2,6 @@ const Cafe = require("../models/cafe.model");
 const Product = require("../models/product.model");
 const redis = require("../lib/redis");
 const asyncHandler = require("../middlewares/asyncHandler");
-const { getDominantColor } = require("../utils/getDominantColor");
 
 const getMyCafe = asyncHandler(async (req, res) => {
   const cafe = await Cafe.findOne({ slug: req.user.cafeSlug });
@@ -30,24 +29,6 @@ const updateCafe = asyncHandler(async (req, res) => {
   cafe.name = name || cafe.name;
   cafe.instagram = instagram || cafe.instagram;
 
-  // Logo değişmişse, yeniden dominant rengi hesapla
-  if (logo && logo !== cafe.logo) {
-    cafe.logo = logo;
-    try {
-      const url = new URL(logo);
-      const pathParts = url.pathname.split("/");
-      const uploadIndex = pathParts.findIndex((p) => p === "upload");
-      const publicIdParts = pathParts.slice(uploadIndex + 2);
-      const publicId = publicIdParts.join("/").split(".")[0];
-
-      const dominantColor = await getDominantColor(publicId);
-      cafe.dominantColor = dominantColor;
-    } catch (err) {
-      console.error("Dominant renk alınamadı:", err);
-      cafe.dominantColor = "#1f1f1f"; // fallback
-    }
-  }
-
   await cafe.save();
   await redis.del(`public_menu:${slug}`);
 
@@ -68,25 +49,6 @@ const getPublicMenu = asyncHandler(async (req, res) => {
     return res.status(404).json({ message: "Kafe bulunamadı" });
   }
 
-  // ✅ Dominant renk eksikse hesapla ve kaydet
-  if (!cafe.dominantColor && cafe.logo) {
-    try {
-      const url = new URL(cafe.logo);
-      const pathParts = url.pathname.split("/");
-      const uploadIndex = pathParts.findIndex((p) => p === "upload");
-      const publicIdParts = pathParts.slice(uploadIndex + 2);
-      const publicId = publicIdParts.join("/").split(".")[0];
-
-      const cloudinaryImageUrl = `https://res.cloudinary.com/${process.env.CLOUDINARY_CLOUD_NAME}/image/upload/${publicId}.jpg`;
-      const dominantColor = await getDominantColor(cloudinaryImageUrl);
-      cafe.dominantColor = dominantColor;
-      await cafe.save(); // kaydet ki bir daha hesaplanmasın
-    } catch (err) {
-      console.error("Dominant renk alınamadı:", err);
-      cafe.dominantColor = "#1f1f1f";
-    }
-  }
-
   const products = await Product.find({ cafeSlug: slug });
   const categories = [...new Set(products.map(p => p.category))];
 
@@ -96,7 +58,6 @@ const getPublicMenu = asyncHandler(async (req, res) => {
       logo: cafe.logo,
       instagram: cafe.instagram,
       template: cafe.template || "scroll",
-      dominantColor: cafe.dominantColor, // ✅ artık garanti var
     },
     categories,
     products,

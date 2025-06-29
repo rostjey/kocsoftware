@@ -20,7 +20,6 @@ export default function AdminDashboard({
   const [cafe, setCafe] = useState<Cafe>({
     name: "",
     logo: "",
-    dominantColor: "#1f1f1f",
     instagram: "",
     avatar: "",
     template: "scroll",
@@ -40,7 +39,6 @@ export default function AdminDashboard({
       setCafe({
         name: cafeData.name || "",
         logo: cafeData.logo || "",
-        dominantColor: cafeData.dominantColor || "#1f1f1f",
         instagram: cafeData.instagram || "",
         avatar: cafeData.avatar || "", // avatar eklenmişse kullan
         template: cafeData.template || "scroll", //template: cafeData.template !== undefined ? cafeData.template : "scroll" //burası önemli en son seçilen kategorinin logout sonrası gözükmesi için
@@ -68,7 +66,7 @@ export default function AdminDashboard({
       await api.post("/api/admin/logout", {}, { withCredentials: true }); // backend yolu
 
       // cafe ve ürünleri temizle
-      setCafe({ name: "", logo: "", instagram: "" ,dominantColor: "#1f1f1f"});
+      setCafe({ name: "", logo: "", instagram: "" });
       setProducts([]);
 
       router.push("/admin/login"); // logout sonrası login sayfasına yönlendirme

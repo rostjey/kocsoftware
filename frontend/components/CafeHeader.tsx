@@ -7,7 +7,6 @@ import { useState} from "react";
 type CafeHeaderProps = {
   name: string;
   logo: string;
-  dominantColor: string;
   instagram?: string;
   categories: string[];
   onCategoryClick: (category: string) => void;
@@ -17,7 +16,6 @@ type CafeHeaderProps = {
 export default function CafeHeader({
   logo,
   instagram,
-  dominantColor,
   categories,
   onCategoryClick,
   onFeaturedClick,
@@ -30,7 +28,7 @@ export default function CafeHeader({
       <div
         className="w-full relative flex items-center justify-center"
         style={{ 
-            backgroundColor: dominantColor,
+            backgroundColor: "#1f1f1f",
             height: "min(25vh, 300px)",
         }}
       >
