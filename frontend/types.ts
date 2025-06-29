@@ -10,13 +10,13 @@ export interface Product {
 export interface CafeData {
     cafe: Cafe;
     products: Product[];
-    dominantColor: string;
 }
 
 export type CafeTemplate = "scroll" | "category" | "horizontal";
 export interface Cafe {
     name: string;
     logo: string;
+    dominantColor: string;
     instagram: string;
     template?: CafeTemplate;
     avatar?: string;
