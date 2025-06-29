@@ -28,6 +28,7 @@ const updateCafe = asyncHandler(async (req, res) => {
 
   cafe.name = name || cafe.name;
   cafe.instagram = instagram || cafe.instagram;
+  cafe.logo = logo || cafe.logo;
 
   await cafe.save();
   await redis.del(`public_menu:${slug}`);
