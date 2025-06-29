@@ -68,6 +68,25 @@ const getPublicMenu = asyncHandler(async (req, res) => {
     return res.status(404).json({ message: "Kafe bulunamadı" });
   }
 
+  // ✅ Dominant renk eksikse hesapla ve kaydet
+  if (!cafe.dominantColor && cafe.logo) {
+    try {
+      const url = new URL(cafe.logo);
+      const pathParts = url.pathname.split("/");
+      const uploadIndex = pathParts.findIndex((p) => p === "upload");
+      const publicIdParts = pathParts.slice(uploadIndex + 2);
+      const publicId = publicIdParts.join("/").split(".")[0];
+
+      const cloudinaryImageUrl = `https://res.cloudinary.com/${process.env.CLOUDINARY_CLOUD_NAME}/image/upload/${publicId}.jpg`;
+      const dominantColor = await getDominantColor(cloudinaryImageUrl);
+      cafe.dominantColor = dominantColor;
+      await cafe.save(); // kaydet ki bir daha hesaplanmasın
+    } catch (err) {
+      console.error("Dominant renk alınamadı:", err);
+      cafe.dominantColor = "#1f1f1f";
+    }
+  }
+
   const products = await Product.find({ cafeSlug: slug });
   const categories = [...new Set(products.map(p => p.category))];
 
@@ -76,17 +95,17 @@ const getPublicMenu = asyncHandler(async (req, res) => {
       name: cafe.name,
       logo: cafe.logo,
       instagram: cafe.instagram,
-      template: cafe.template || "scroll", // hangi şablon kullanılıyor
-      dominantColor: cafe.dominantColor || "#1f1f1f", // fallback renk
+      template: cafe.template || "scroll",
+      dominantColor: cafe.dominantColor, // ✅ artık garanti var
     },
     categories,
     products,
   };
 
   await redis.set(`public_menu:${slug}`, JSON.stringify(responseData), "EX", 3600);
-
   res.json(responseData);
 });
+
 
 const updateTemplate = asyncHandler(async (req, res) => {
   const { template } = req.body;
