@@ -6,23 +6,22 @@ import { CafeData } from "@/types";
 export async function generateMetadata({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: { slug: string };
 }) {
-  const { slug } = await params;
+  const { slug } = params;
   return {
     title: `${slug} | Menü`,
   };
 }
 
 
-
 // ✅ Next.js 15 ile uyumlu, hatasız tip
 export default async function CafePage({
   params,
 }: {
-  params: Promise<{ slug: string }>;
+  params: { slug: string };
 }) {
-  const { slug } = await params;
+  const { slug } = params;
 
   const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${slug}`, {
     cache: "no-store",
