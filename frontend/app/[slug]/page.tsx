@@ -24,7 +24,7 @@ export default async function CafePage({
 }) {
   const { slug } = await params;
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/cafe/${slug}`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${slug}`, {
     cache: "no-store",
   });
 

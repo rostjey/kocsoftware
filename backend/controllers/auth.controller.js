@@ -27,62 +27,6 @@ const refreshTokenHandler = asyncHandler(async (req, res) => {
   }
 });
 
-
-//const signup = asyncHandler(async (req, res) => {
-  //const { name, slug, email, password, signupKey } = req.body;
-  //console.log("Signup key from env:", process.env.SIGNUP_KEY);
-
-  //if (signupKey !== process.env.SIGNUP_KEY) {
-    //return res.status(401).json({ message: "Geçersiz kayıt anahtarı" });
-  //}
-
-  //const existingCafe = await Cafe.findOne({ email });
-  //if (existingCafe) {
-    //return res.status(400).json({ message: "Bu e-posta zaten kullanılıyor" });
-  //}
-
-  //const hashedPassword = await bcrypt.hash(password, 12);
-
-  //const newCafe = await Cafe.create({
-    //name,
-    //slug,
-    //email,
-    //password: hashedPassword,
-  //});
-
-  //const payload = { cafeId: newCafe._id, cafeSlug: newCafe.slug };
-
-  //const accessToken = generateAccessToken(payload);
-  //const refreshToken = generateRefreshToken(payload);
-
-  //// Refresh token → cookie
-  //// Secure ve sameSite ayarları, cross-site cookie kullanımını destekler
-  //res.cookie("accessToken", accessToken, {
-    //httpOnly: true,
-    //secure: true,
-    //sameSite: "none",
-    //domain: ".kocsoftware.net", // ← bu önemli: subdomain'leri de kapsar
-    //maxAge: 15 * 60 * 1000
-  //});
-  
-  //// Refresh token → cookie
-  //// Secure ve sameSite ayarları, cross-site cookie kullanımını destekler
-  //res.cookie("refreshToken", refreshToken, {
-    //httpOnly: true,
-    //secure: true,
-    //sameSite: "none",
-    //domain: ".kocsoftware.net",
-    //maxAge: 7 * 24 * 60 * 60 * 1000,
-  //});
-  
-  //// Access token → response
-  //res.status(201).json({
-    //message: "Kafe başarıyla oluşturuldu",
-    //accessToken,
-    //cafeSlug: newCafe.slug,
-  //});
-//});
-
 const login = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
 

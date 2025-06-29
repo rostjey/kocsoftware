@@ -6,7 +6,6 @@ const passport = require("passport");
 const Cafe = require("../models/cafe.model");
 
 
-//router.post("/signup", signup);
 router.post("/login", login);
 router.post("/refresh-token", refreshTokenHandler);
 router.post("/logout", logout);
