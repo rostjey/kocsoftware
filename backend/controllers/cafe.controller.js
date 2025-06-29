@@ -23,21 +23,37 @@ const updateCafe = asyncHandler(async (req, res) => {
   const { name, logo, instagram } = req.body;
 
   const cafe = await Cafe.findOne({ slug });
-
   if (!cafe) {
     return res.status(404).json({ message: "Kafe bulunamadı" });
   }
 
   cafe.name = name || cafe.name;
-  cafe.logo = logo || cafe.logo;
   cafe.instagram = instagram || cafe.instagram;
 
-  await cafe.save();
+  // Logo değişmişse, yeniden dominant rengi hesapla
+  if (logo && logo !== cafe.logo) {
+    cafe.logo = logo;
+    try {
+      const url = new URL(logo);
+      const pathParts = url.pathname.split("/");
+      const uploadIndex = pathParts.findIndex((p) => p === "upload");
+      const publicIdParts = pathParts.slice(uploadIndex + 2);
+      const publicId = publicIdParts.join("/").split(".")[0];
 
+      const dominantColor = await getDominantColor(publicId);
+      cafe.dominantColor = dominantColor;
+    } catch (err) {
+      console.error("Dominant renk alınamadı:", err);
+      cafe.dominantColor = "#1f1f1f"; // fallback
+    }
+  }
+
+  await cafe.save();
   await redis.del(`public_menu:${slug}`);
 
   res.json({ message: "Kafe güncellendi", cafe });
 });
+
 
 const getPublicMenu = asyncHandler(async (req, res) => {
   const { slug } = req.params;
@@ -55,28 +71,13 @@ const getPublicMenu = asyncHandler(async (req, res) => {
   const products = await Product.find({ cafeSlug: slug });
   const categories = [...new Set(products.map(p => p.category))];
 
-  let dominantColor = "#1f1f1f";
-  if (cafe.logo) {
-    try {
-      const url = new URL(cafe.logo);
-      const pathParts = url.pathname.split("/");
-      const uploadIndex = pathParts.findIndex((p) => p === "upload");
-      const publicIdParts = pathParts.slice(uploadIndex + 2);
-      const publicId = publicIdParts.join("/").split(".")[0];
-
-      dominantColor = await getDominantColor(publicId);
-    } catch (err) {
-      console.error("Dominant renk alınamadı:", err);
-    }
-  }
-
   const responseData = {
     cafe: {
       name: cafe.name,
       logo: cafe.logo,
       instagram: cafe.instagram,
       template: cafe.template || "scroll", // hangi şablon kullanılıyor
-      dominantColor,
+      dominantColor: cafe.dominantColor || "#1f1f1f", // fallback renk
     },
     categories,
     products,

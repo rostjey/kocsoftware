@@ -30,6 +30,10 @@ const CafeSchema = new mongoose.Schema({
         type: String,
         default: ""
     },
+    dominantColor: {
+        type: String,
+        default: "#1f1f1f", // fallback renk
+    },
     instagram: {
         type: String,
         default: ""
