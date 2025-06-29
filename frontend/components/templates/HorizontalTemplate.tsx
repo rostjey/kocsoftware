@@ -10,7 +10,7 @@ export default function HorizontalTemplate({ name, logo, instagram, products}: C
   const router = useRouter();
 
   const categories = useMemo(() => {
-    return [...new Set(products.filter((p) => !p.featured).map((p) => p.category))];
+    return [...new Set(products.map((p) => p.category))];
   }, [products]);
 
   // 🔧 createRef ile tip güvenli ref yapısı
@@ -56,7 +56,7 @@ export default function HorizontalTemplate({ name, logo, instagram, products}: C
               </h2>
               <div className="flex overflow-x-auto space-x-4 pb-2">
                 {products
-                  .filter((p) => p.category === cat && !p.featured)
+                  .filter((p) => p.category === cat)
                   .map((p) => (
                     <ProductCardMenu
                       key={p._id}

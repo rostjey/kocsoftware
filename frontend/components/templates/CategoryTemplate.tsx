@@ -11,7 +11,7 @@ export default function CategoryTemplate({ name, logo, instagram, products }: Ca
   const router = useRouter();
 
   const categories = useMemo(() => {
-    return [...new Set(products.filter((p) => !p.featured).map((p) => p.category))];
+    return [...new Set(products.map((p)=> p.category))];
   }, [products]);
 
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
@@ -22,7 +22,7 @@ export default function CategoryTemplate({ name, logo, instagram, products }: Ca
   };
 
   const filteredProducts = selectedCategory
-    ? products.filter((p) => p.category === selectedCategory && !p.featured)
+    ? products.filter((p) => p.category === selectedCategory)
     : [];
 
   return (
