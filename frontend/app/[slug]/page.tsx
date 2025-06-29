@@ -38,8 +38,8 @@ export default async function CafePage({
     name: data.cafe.name,
     logo: data.cafe.logo,
     instagram: data.cafe.instagram,
-    products: data.products,
-    dominantColor: data.cafeClient.dominantColor,
+    products: data.products,  
+    dominantColor: data.dominantColor,
   };
 
   switch (data.cafe.template) {
