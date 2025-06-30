@@ -5,7 +5,7 @@ import { CafeData } from "@/types";
 
 // Bu tanımı ekle
 type Props = {
-  params: Promise<{ slug: string }>; // ← bunu Promise olarak yazıyoruz çünkü Next.js bunu bekliyor
+  params: Promise<{ slug: string }>; 
 };
 
 export async function generateMetadata({ params }: Props) {
@@ -18,7 +18,7 @@ export async function generateMetadata({ params }: Props) {
 export default async function CafePage({ params }: Props) {
   const { slug } = await params;
 
-  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/${slug}`, {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/api/cafe/${slug}`, {
     cache: "no-store",
   });
 
